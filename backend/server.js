@@ -31,7 +31,6 @@ app.get('/login', (req, res) => {
 app.get('/callback', (req, res) => {
     const code = req.query.code || null;
 
-
     axios({
         method: 'post',
         url: 'https://accounts.spotify.com/api/token',
@@ -42,24 +41,23 @@ app.get('/callback', (req, res) => {
         }),
         headers: {
             'content-type': 'application/x-www-form-urlencoded',
-            Authorization: `Basic ${new Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')}`
+            Authorization: `Basic ${new Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')}`,
         },
     })
         .then(response => {
             if (response.status === 200) {
+                const { access_token, refresh_token, expires_in } = response.data;
 
-                const { refresh_token } = response.data;
+                const queryParams = querystring.stringify({
+                    access_token,
+                    refresh_token,
+                    expires_in,
+                });
 
-                axios.get(`http://localhost:8888/refresh_token?refresh_token=${refresh_token}`)
-                    .then(response => {
-                        res.send(`<pre>${JSON.stringify(response.data, null, 2)}</pre>`);
-                    })
-                    .catch(error => {
-                        res.send(error);
-                    });
+                res.redirect(`http://localhost:3000/?${queryParams}`);
 
             } else {
-                res.send(response);
+                res.redirect(`/?${querystring.stringify({ error: 'invalid_token' })}`);
             }
         })
         .catch(error => {
@@ -67,27 +65,27 @@ app.get('/callback', (req, res) => {
         });
 });
 
-app.get('/refresh_token', (req, res) => {
-    const { refresh_token } = req.query;
+app.get('/refresh_token', function (req, res) {
 
-    axios({
-        method: 'post',
+    var refresh_token = req.query.refresh_token;
+    var authOptions = {
         url: 'https://accounts.spotify.com/api/token',
-        data: querystring.stringify({
+        headers: { 'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')) },
+        form: {
             grant_type: 'refresh_token',
             refresh_token: refresh_token
-        }),
-        headers: {
-            'content-type': 'application/x-www-form-urlencoded',
-            Authorization: `Basic ${new Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')}`,
         },
-    })
-        .then(response => {
-            res.send(response.data);
-        })
-        .catch(error => {
-            res.send(error);
-        });
+        json: true
+    };
+
+    request.post(authOptions, function (error, response, body) {
+        if (!error && response.statusCode === 200) {
+            var access_token = body.access_token;
+            res.send({
+                'access_token': access_token
+            });
+        }
+    });
 });
 
 
