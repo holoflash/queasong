@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
-import { accessToken, logout, getCurrentUserProfile, getCurrentUserPlaylist } from './spotify';
+import { accessToken } from './services/spotifyKeys';
+import { getCurrentUserProfile } from './services/getCurrentUserProfile';
+import { getCurrentUserPlaylists } from './services/getCurrentUserPlaylists'
 import { catchErrors } from './utils';
 import './App.css';
 
@@ -8,28 +10,30 @@ function App() {
   const [profile, setProfile] = useState(null);
   const [playlists, setPlaylists] = useState(null);
 
+
   useEffect(() => {
-    setToken(accessToken);
-    if (accessToken) {
+    (async () => {
+      setToken(await accessToken())
+    })()
+    if (token) {
       const fetchData = async () => {
-        const { data } = await getCurrentUserProfile();
+        const { data } = await getCurrentUserProfile(token);
         setProfile(data);
       };
       catchErrors(fetchData());
     }
-  }, []);
+  }, [token]);
 
 
   useEffect(() => {
-    if (accessToken && profile) {
+    if (token && profile) {
       const fetchData = async () => {
-        const { data } = await getCurrentUserPlaylist(profile.id);
+        const { data } = await getCurrentUserPlaylists(profile.id, token);
         setPlaylists(data.items);
       };
       catchErrors(fetchData());
     }
-  }, [profile]);
-  console.log(playlists)
+  }, [profile, token]);
 
   return (<>
     <header className="header">
@@ -39,7 +43,6 @@ function App() {
         </a>
       ) : (
         <>
-          <button onClick={logout}>Log Out</button>
           {profile && (
             <div className='profile'>
               {profile.images.length && profile.images[0].url && (
@@ -52,7 +55,6 @@ function App() {
         </>
       )}
     </header>
-
     {
       playlists && (
         <div className='playlists'>

@@ -12,6 +12,7 @@ const stateKey = 'spotify_auth_state'
 
 const app = express()
 app.use(express.json());
+
 const port = 8888
 
 app.get('/login', (req, res) => {
@@ -89,7 +90,7 @@ app.get('/refresh_token', function (req, res) {
     });
 });
 
-app.get('/api/keys/view/', async (req, res) => {
+app.get('/api/keys/', async (req, res) => {
     try {
         const results = await db.collection("queasong").find({ "KEYS": { $exists: true } }).toArray();
         res.send(results[0].KEYS).status(200);
@@ -100,7 +101,7 @@ app.get('/api/keys/view/', async (req, res) => {
 
 });
 
-app.put('/api/keys/update/', async (req, res) => {
+app.put('/api/keys/', async (req, res) => {
     try {
         await db.collection("queasong").findOneAndReplace(
             { "KEYS": { $exists: true } },
