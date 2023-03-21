@@ -3,6 +3,7 @@ import axios from 'axios'
 import querystring from 'querystring'
 import 'dotenv/config'
 import { generateRandomString } from './generateRandomString.js'
+import { db, connectToDb } from './db.js';
 
 const CLIENT_ID = process.env.CLIENT_ID
 const CLIENT_SECRET = process.env.CLIENT_SECRET
@@ -10,6 +11,7 @@ const REDIRECT_URI = process.env.REDIRECT_URI
 const stateKey = 'spotify_auth_state'
 
 const app = express()
+app.use(express.json());
 const port = 8888
 
 app.get('/login', (req, res) => {
@@ -66,11 +68,10 @@ app.get('/callback', (req, res) => {
 });
 
 app.get('/refresh_token', function (req, res) {
-
-    var refresh_token = req.query.refresh_token;
-    var authOptions = {
+    const refresh_token = req.query.refresh_token;
+    const authOptions = {
         url: 'https://accounts.spotify.com/api/token',
-        headers: { 'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')) },
+        headers: { 'Authorization': `Basic ${new Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')}` },
         form: {
             grant_type: 'refresh_token',
             refresh_token: refresh_token
@@ -80,7 +81,7 @@ app.get('/refresh_token', function (req, res) {
 
     request.post(authOptions, function (error, response, body) {
         if (!error && response.statusCode === 200) {
-            var access_token = body.access_token;
+            const access_token = body.access_token;
             res.send({
                 'access_token': access_token
             });
@@ -88,7 +89,44 @@ app.get('/refresh_token', function (req, res) {
     });
 });
 
+app.get('/api/keys/view/', async (req, res) => {
+    try {
+        const results = await db.collection("queasong").find({ "KEYS": { $exists: true } }).toArray();
+        res.send(results[0].KEYS).status(200);
 
-app.listen(port, () => {
-    console.log('Listening on ' + port)
+    } catch (error) {
+        res.status(500).json({ errorCode: 500, message: 'Internal server error' });
+    }
+
+});
+
+app.put('/api/keys/update/', async (req, res) => {
+    try {
+        await db.collection("queasong").findOneAndReplace(
+            { "KEYS": { $exists: true } },
+            req.body
+        )
+
+        const results = await db.collection("queasong").find({ "KEYS": { $exists: true } }).toArray();
+        res.send(results[0].KEYS).status(200);
+    } catch (error) {
+        res.status(500).json({ errorCode: 500, message: 'Internal server error' });
+    }
+})
+
+//==== UPDATE DATABASE =====//
+// app.put('/api/keys/push/', async (req, res) => {
+//     try {
+//         const result = await db.collection("queasong").insertOne(req.body);
+//         res.send(result).status(204)
+//     } catch (error) {
+//         res.status(500).json({ errorCode: 500, message: 'Internal server error' });
+//     }
+// });
+
+connectToDb(() => {
+    console.log('Connected to database!');
+    app.listen(port, () => {
+        console.log('Listening on ' + port)
+    })
 })
