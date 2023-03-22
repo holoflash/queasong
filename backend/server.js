@@ -4,6 +4,7 @@ import querystring from 'querystring'
 import 'dotenv/config'
 import { generateRandomString } from './generateRandomString.js'
 import { db, connectToDb } from './db.js';
+import { Party } from './PartySchema.js'
 
 const CLIENT_ID = process.env.CLIENT_ID
 const CLIENT_SECRET = process.env.CLIENT_SECRET
@@ -14,6 +15,10 @@ const app = express()
 app.use(express.json());
 
 const port = 8888
+
+//////////////////////////////////////////
+////////////=====SPOTIFY======////////////
+//////////////////////////////////////////
 
 app.get('/login', (req, res) => {
     const state = generateRandomString(16);
@@ -68,62 +73,60 @@ app.get('/callback', (req, res) => {
         });
 });
 
-app.get('/refresh_token', function (req, res) {
-    const refresh_token = req.query.refresh_token;
-    const authOptions = {
+app.get('/refresh_token', (req, res) => {
+    const { refresh_token } = req.query;
+
+    axios({
+        method: 'post',
         url: 'https://accounts.spotify.com/api/token',
-        headers: { 'Authorization': `Basic ${new Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')}` },
-        form: {
+        data: querystring.stringify({
             grant_type: 'refresh_token',
             refresh_token: refresh_token
+        }),
+        headers: {
+            'content-type': 'application/x-www-form-urlencoded',
+            Authorization: `Basic ${new Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')}`,
         },
-        json: true
-    };
-
-    request.post(authOptions, function (error, response, body) {
-        if (!error && response.statusCode === 200) {
-            const access_token = body.access_token;
-            res.send({
-                'access_token': access_token
-            });
-        }
-    });
+    })
+        .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            res.send(error);
+        });
 });
 
-app.get('/api/keys/', async (req, res) => {
+//////////////////////////////////////////
+////////////===MONGO ATLAS====////////////
+//////////////////////////////////////////
+
+app.post('/api/party', async (req, res) => {
     try {
-        const results = await db.collection("queasong").find({ "KEYS": { $exists: true } }).toArray();
-        res.send(results[0].KEYS).status(200);
-
-    } catch (error) {
-        res.status(500).json({ errorCode: 500, message: 'Internal server error' });
-    }
-
-});
-
-app.put('/api/keys/', async (req, res) => {
-    try {
-        await db.collection("queasong").findOneAndReplace(
-            { "KEYS": { $exists: true } },
-            req.body
-        )
-
-        const results = await db.collection("queasong").find({ "KEYS": { $exists: true } }).toArray();
-        res.send(results[0].KEYS).status(200);
-    } catch (error) {
-        res.status(500).json({ errorCode: 500, message: 'Internal server error' });
+        const party = new Party(req.body)
+        const result = await party.save();
+        res.json(result)
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: "Internal server error" })
     }
 })
 
-//==== UPDATE DATABASE =====//
-// app.put('/api/keys/push/', async (req, res) => {
-//     try {
-//         const result = await db.collection("queasong").insertOne(req.body);
-//         res.send(result).status(204)
-//     } catch (error) {
-//         res.status(500).json({ errorCode: 500, message: 'Internal server error' });
-//     }
-// });
+app.put('/api/party/:id/suggestions', async (req, res) => {
+    const { id } = req.params
+
+    try {
+        const party = await Party.findOne({ _id: id });
+        if (!party) {
+            return res.status(404).json({ message: 'Party not found' });
+        }
+        party.suggestions.push(req.body)
+        await party.save()
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
 
 connectToDb(() => {
     console.log('Connected to database!');

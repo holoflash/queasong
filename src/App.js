@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
-import { accessToken } from './services/spotifyKeys';
+import { accessToken, logout } from './services/spotifyAuthLocalStorage'
 import { getCurrentUserProfile } from './services/getCurrentUserProfile';
 import { getCurrentUserPlaylists } from './services/getCurrentUserPlaylists'
 import { catchErrors } from './utils';
+import { submitParty } from './services/createParty';
+import { addSuggestion } from './services/addSuggestion';
+import { usePartyId } from './hooks/usePartyId'
 import './App.css';
 
 function App() {
@@ -10,11 +13,8 @@ function App() {
   const [profile, setProfile] = useState(null);
   const [playlists, setPlaylists] = useState(null);
 
-
   useEffect(() => {
-    (async () => {
-      setToken(await accessToken())
-    })()
+    setToken(accessToken)
     if (token) {
       const fetchData = async () => {
         const { data } = await getCurrentUserProfile(token);
@@ -37,6 +37,7 @@ function App() {
 
   return (<>
     <header className="header">
+      <div>{usePartyId()}</div>
       {!token ? (
         <a className="App-link" href="http://localhost:8888/login">
           Log in to Spotify
@@ -50,6 +51,16 @@ function App() {
               )}
               <div>{profile.display_name}</div>
               <div>{profile.followers.total} Followers</div>
+              <button onClick={logout}>Log Out</button>
+              <button onClick={submitParty}>postParty</button>
+              <button onClick={() => addSuggestion(
+                {
+                  song_info: 'Pooo Sonh',
+                  song_url: 'a website',
+                  approved_by: ["Billy", "Yoma Ma"],
+                  suggested_by: 'Billy'
+                }
+              )}>addSuggestion</button>
             </div>
           )}
         </>
