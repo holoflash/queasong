@@ -1,16 +1,9 @@
-import { addSuggestion } from '../services/addSuggestion';
+import { AddSuggestion } from "../components/AddSuggestion"
 
-export const HostHomePage = () => {
+export const GuestHomePage = () => {
     return (
         <>
-            <button onClick={() => addSuggestion(
-                {
-                    song_info: 'Pooo Sonh',
-                    song_url: 'a website',
-                    approved_by: ["Billy", "Yoma Ma"],
-                    suggested_by: 'Billy'
-                }
-            )}>addSuggestion</button>
+            <AddSuggestion />
         </>
     )
 }
