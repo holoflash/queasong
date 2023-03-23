@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const LOCALSTORAGE_KEYS = {
+export const LOCALSTORAGE_KEYS = {
     accessToken: 'spotify_access_token',
     refreshToken: 'spotify_refresh_token',
     expireTime: 'spotify_token_expire_time',
@@ -37,6 +37,7 @@ const getAccessToken = () => {
             localStorage.setItem(property, queryParams[property]);
         }
         localStorage.setItem(LOCALSTORAGE_KEYS.timestamp, Date.now());
+
         return queryParams[LOCALSTORAGE_KEYS.accessToken];
     }
     return false;
@@ -58,7 +59,10 @@ const refreshToken = async () => {
             (Date.now() - Number(LOCALSTORAGE_VALUES.timestamp) / 1000) < 1000
         ) {
             console.error('No refresh token available');
-            logout();
+            for (const property in LOCALSTORAGE_KEYS) {
+                localStorage.removeItem(LOCALSTORAGE_KEYS[property]);
+            }
+            window.location = window.location.origin;
         }
         const { data } = await axios.get(`/refresh_token?refresh_token=${LOCALSTORAGE_VALUES.refreshToken}`);
 
@@ -69,13 +73,6 @@ const refreshToken = async () => {
     } catch (e) {
         console.error(e);
     }
-};
-
-export const logout = () => {
-    for (const property in LOCALSTORAGE_KEYS) {
-        localStorage.removeItem(LOCALSTORAGE_KEYS[property]);
-    }
-    window.location = window.location.origin;
 };
 
 export const accessToken = getAccessToken();

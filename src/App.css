@@ -1,0 +1,9 @@
+nav {
+    background-color: black;
+    width: 100vw;
+    padding: 50px;
+    font-size: 2vh;
+}
+nav > * {
+    margin: 10px;
+}

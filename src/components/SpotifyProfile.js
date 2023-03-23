@@ -1,4 +1,4 @@
-import { logout } from '../services/spotifyAuthLocalStorage'
+import { Logout } from './Logout';
 import { useSpotifyProfile } from '../hooks/useSpotifyProfile';
 
 export const SpotifyProfile = () => {
@@ -13,7 +13,7 @@ export const SpotifyProfile = () => {
                     )}
                     <div>{profile.display_name}</div>
                     <div>{profile.followers.total} Followers</div>
-                    <button onClick={logout}>Log Out</button>
+                    <Logout />
                 </div>
             )}
         </>)
