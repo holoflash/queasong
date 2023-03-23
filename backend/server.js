@@ -3,7 +3,7 @@ import axios from 'axios'
 import querystring from 'querystring'
 import 'dotenv/config'
 import { generateRandomString } from './generateRandomString.js'
-import { db, connectToDb } from './db.js';
+import { connectToDb } from './db.js';
 import { Party } from './PartySchema.js'
 
 const CLIENT_ID = process.env.CLIENT_ID
@@ -38,6 +38,9 @@ app.get('/login', (req, res) => {
 
 app.get('/callback', (req, res) => {
     const code = req.query.code || null;
+    const authString = `${CLIENT_ID}:${CLIENT_SECRET}`;
+    const base64Auth = Buffer.from(authString).toString('base64');
+    const authHeader = `Basic ${base64Auth}`;
 
     axios({
         method: 'post',
@@ -49,7 +52,7 @@ app.get('/callback', (req, res) => {
         }),
         headers: {
             'content-type': 'application/x-www-form-urlencoded',
-            Authorization: `Basic ${new Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')}`,
+            Authorization: authHeader
         },
     })
         .then(response => {
@@ -75,6 +78,9 @@ app.get('/callback', (req, res) => {
 
 app.get('/refresh_token', (req, res) => {
     const { refresh_token } = req.query;
+    const authString = `${CLIENT_ID}:${CLIENT_SECRET}`;
+    const base64Auth = Buffer.from(authString).toString('base64');
+    const authHeader = `Basic ${base64Auth}`;
 
     axios({
         method: 'post',
@@ -85,7 +91,7 @@ app.get('/refresh_token', (req, res) => {
         }),
         headers: {
             'content-type': 'application/x-www-form-urlencoded',
-            Authorization: `Basic ${new Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')}`,
+            Authorization: authHeader
         },
     })
         .then(response => {
