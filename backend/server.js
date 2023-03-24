@@ -101,6 +101,41 @@ app.get('/refresh_token', (req, res) => {
             res.send(error);
         });
 });
+/////====For making requests using the "client credential flow" 
+async function getAccessToken() {
+    const authString = `${CLIENT_ID}:${CLIENT_SECRET}`;
+    const base64Auth = Buffer.from(authString).toString('base64');
+    const authHeader = `Basic ${base64Auth}`;
+
+    const response = await axios({
+        method: 'post',
+        url: 'https://accounts.spotify.com/api/token',
+        data: querystring.stringify({
+            grant_type: 'client_credentials'
+        }),
+        headers: {
+            'content-type': 'application/x-www-form-urlencoded',
+            Authorization: authHeader
+        }
+    });
+    return response.data.access_token;
+}
+
+app.get('/api/search/:query', async (req, res) => {
+    const query = req.params.query;
+    const accessToken = await getAccessToken();
+    const response = await axios({
+        method: 'get',
+        url: `https://api.spotify.com/v1/search?q=track:${query}&type=track&market=US`,
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'content-type': 'application/json',
+        }
+    });
+    const data = response.data;
+    res.json(data)
+});
+
 
 //////////////////////////////////////////
 ////////////===MONGO ATLAS====////////////
