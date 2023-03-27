@@ -10,6 +10,6 @@ export const AddSuggestion = () => {
                     approved_by: ["Billy", "Yoma Ma"],
                     suggested_by: 'Billy'
                 }
-            )}>addSuggestion</button>
+            )}>ADD SUGGESTION</button>
         </>)
 }

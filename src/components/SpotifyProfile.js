@@ -7,10 +7,11 @@ export const SpotifyProfile = () => {
     return (
         <>
             {profile && (
-                <div className='profile'>
-                    {profile.images.length && profile.images[0].url && (
-                        <img id="profile-pic" src={profile.images[0].url} alt="Avatar" />
-                    )}
+                <div className='flex-col-center add-space'>
+                    <div className='img-frame'>
+                        <img src={profile.images[0].url} alt="Avatar" />
+                    </div>
+
                     <div>{profile.display_name}</div>
                     <div>{profile.followers.total} Followers</div>
                     <Logout />

@@ -4,8 +4,7 @@ import { useState } from "react";
 export const SongSearch = () => {
     const [query, setQuery] = useState('');
     return (
-        <>
-            <h3>Search:</h3>
+        <div className="flex-row add-space">
             <input
                 required
                 type="text"
@@ -15,5 +14,5 @@ export const SongSearch = () => {
                 onChange={e => setQuery(e.target.value)}
             />
             <button onClick={() => songSearch(query)}>Click to search</button>
-        </>)
+        </div>)
 }

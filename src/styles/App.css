@@ -1,0 +1,134 @@
+:root {
+    --primary-color: #355070;
+    --background-color: rgb(84, 85, 100);
+    --font-color: white;
+    --splash3: #6d597a;
+    --maintext: min(16px, 4vw);
+}
+
+body,
+html > * {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    margin: 0;
+    background-color: var(--background-color);
+    color: var(--font-color);
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
+        sans-serif;
+    font-size: var(--maintext);
+}
+
+nav {
+    position: sticky;
+    top: 0;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background-color: black;
+    width: 100vw;
+}
+
+.flex-col-center {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+}
+
+.flex-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+}
+
+.add-space > * {
+    margin: 1vh;
+}
+
+.add-v-mass {
+    padding-block: 1vh;
+}
+.add-h-mass {
+    padding-inline: 1vh;
+}
+
+.add-mass {
+    padding: 1vh;
+}
+
+.fix-height {
+    height: 50vh;
+}
+
+button {
+    display: inline-block;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    background-color: #1db954;
+    color: #ffffff;
+    text-decoration: none;
+    transition: background-color 0.3s ease-in-out;
+    box-shadow: none;
+    border: none;
+}
+
+button:hover {
+    background-color: #126a31;
+    color: #ffffff;
+}
+
+button:active {
+    background-color: #126a31;
+    color: #ffffff;
+}
+
+input {
+    background-color: #ffffff;
+    border: 1px solid #b3b3b3;
+    border-radius: 4px;
+    color: #121212;
+    font-size: 14px;
+    padding: 8px 12px;
+    transition: border-color 0.2s ease-in-out;
+}
+
+input:focus {
+    border-color: #1db954;
+    outline: none;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+a:hover {
+    color: #1db954;
+}
+
+.img-frame {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-color: #000000;
+    overflow: hidden;
+}
+
+.img-frame img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

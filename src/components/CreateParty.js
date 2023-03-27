@@ -3,7 +3,7 @@ import { usePartyId } from '../hooks/usePartyId'
 
 export const CreateParty = () => {
     return (
-        <>
+        <div className='flex-col-center add-space'>
             <div>{usePartyId()}</div>
             <button onClick={() => submitParty(
                 {
@@ -24,6 +24,6 @@ export const CreateParty = () => {
                     songs_all_approve: []
                 }
             )}>postParty</button>
-        </>
+        </div>
     )
 }
