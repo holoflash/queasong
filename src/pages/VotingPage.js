@@ -1,6 +1,6 @@
 export const VotingPage = () => {
     return (
-        < div className="flex-col-center" >
+        <div className="page">
             <p>Yes or no?</p>
         </div >
     )

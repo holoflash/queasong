@@ -3,7 +3,7 @@ import { CreateParty } from '../components/CreateParty';
 
 export const HostHomePage = () => {
     return (
-        <div className="flex-col-center">
+        <div className="page">
             <SpotifyProfile />
             <CreateParty />
         </div>

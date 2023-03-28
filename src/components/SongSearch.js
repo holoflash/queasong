@@ -4,7 +4,7 @@ import { useState } from "react";
 export const SongSearch = () => {
     const [query, setQuery] = useState('');
     return (
-        <div className="flex-row add-space">
+        <div id="song-search">
             <input
                 required
                 type="text"

@@ -35,11 +35,13 @@ export const CreateParty = () => {
     };
 
     return (
-        <div id="form" className='flex-col-center add-space'>
+        <div id="create-party">
             {profile && <div>Party hosted by: {profile.display_name}</div>}
             <label>
                 Number of Guests:
-                <select value={numMembers} onChange={(e) => setNumMembers(parseInt(e.target.value))}>
+                <select
+                    value={numMembers}
+                    onChange={(e) => setNumMembers(parseInt(e.target.value))}>
                     {Array.from({ length: MAX_GUESTS }, (_, i) => i + 1).map((n) => (
                         <option key={n} value={n}>{n}</option>
                     ))}
@@ -47,16 +49,21 @@ export const CreateParty = () => {
             </label>
             <label>
                 Songs per Guest:
-                <select value={songsPerMember} onChange={(e) => setSongsPerMember(parseInt(e.target.value))}>
+                <select
+                    value={songsPerMember}
+                    onChange={(e) => setSongsPerMember(parseInt(e.target.value))}>
                     {Array.from({ length: MAX_SONGS_PER_GUEST }, (_, i) => i + 1).map((n) => (
                         <option key={n} value={n}>{n}</option>
                     ))}
                 </select>
             </label>
             {members.map((member, i) => (
-                <label key={i}>
-                    Guest {i + 1} Name:
-                    <input type="text" value={member.name} onChange={(e) => handleMemberNameChange(i, e.target.value)} />
+                <label key={member.name}>
+                    <input
+                        placeholder={"Guest " + (i + 1) + " name"}
+                        type="text"
+                        value={member.name}
+                        onChange={(e) => handleMemberNameChange(i, e.target.value)} />
                 </label>
             ))}
             <button onClick={handleSubmit}>CREATE PARTY</button>

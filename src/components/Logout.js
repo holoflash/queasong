@@ -10,8 +10,8 @@ export const Logout = () => {
         navigate('/login')
     }
     return (
-        <>
+        <div id="logout">
             <button onClick={logout}>Log Out</button>
-        </>
+        </div>
     )
 }

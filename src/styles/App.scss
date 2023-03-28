@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap');
+@import './variables';
+@import './mixins';
+
+button {
+    all: unset;
+    width: 80vw;
+    max-width: 500px;
+    height: fit-content;
+    padding: 10px;
+    outline: solid $splash3 1px;
+    cursor: pointer;
+    color: $font-color;
+    background-color: black;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 900;
+    &:hover {
+        background-color: $splash3;
+        box-shadow: 0px 0px 18px #ab82c939;
+        outline: solid $primary-color 1px;
+    }
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body,
+html {
+    @include flex-col();
+    margin: 0;
+    background-color: $primary-color;
+    font-family: 'JetBrains Mono', monospace;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: $font-color;
+}
+
+nav {
+    position: sticky;
+    top: 0;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background-color: black;
+    width: 100vw;
+    > * {
+        all: unset;
+        display: inline-block;
+        text-transform: uppercase;
+        padding-inline: 15px;
+        padding: 10px;
+        text-decoration: none;
+        color: $font-color;
+        font-weight: bold;
+    }
+    :hover {
+        background: $splash3;
+        box-shadow: none;
+    }
+    button {
+        color: $primary-color;
+    }
+    .about {
+        text-transform: lowercase;
+    }
+}
+
+input {
+    border-radius: 5px;
+    all: unset;
+    padding: 10px;
+    font-size: $maintext;
+    outline: solid $splash3 1px;
+    width: 80vw;
+    max-width: 500px;
+    background-color: white;
+    color: $primary-color;
+    cursor: text;
+    &:focus {
+        box-shadow: 0px 0px 20px #ac82c983;
+        transition: border-bottom 0.3s ease;
+    }
+}
+
+.page {
+    @include flex-col();
+}
+
+#create-party,
+#add-suggestion,
+#profile,
+#song-search {
+    @include flex-col();
+}
+
+.App-link {
+    all: unset;
+}

@@ -1,6 +1,6 @@
 export const ResultsPage = () => {
     return (
-        <div className="flex-col-center">
+        <div className="page">
             <p>Here's the final playlist! Tell your friends!</p>
         </div>
     )

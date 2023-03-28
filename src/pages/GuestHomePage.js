@@ -3,7 +3,7 @@ import { SongSearch } from "../components/SongSearch"
 
 export const GuestHomePage = () => {
     return (
-        <div className="flex-col-center">
+        <div className="page">
             <SongSearch />
             <AddSuggestion />
         </div>

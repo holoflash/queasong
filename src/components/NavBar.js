@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 const NavBar = () => {
     return (
-        <nav className='add-space add-mass'>
+        <nav>
             <Link to="/login">LOGIN</Link>
             <Link to="/">HOME</Link>
             <Link to="/submit">GUEST</Link>
