@@ -2,13 +2,13 @@ import { Logout } from './Logout';
 import { useSpotifyProfile } from '../hooks/useSpotifyProfile';
 
 export const SpotifyProfile = () => {
-    const profile = useSpotifyProfile()
+    const profile = useSpotifyProfile();
 
     return (
         <>
             {profile && (
                 <div id="profile">
-                    <div className='img-frame'>
+                    <div className="img-frame">
                         <img src={profile.images[0].url} alt="Avatar" />
                     </div>
                     <div>{profile.display_name}</div>
@@ -16,5 +16,6 @@ export const SpotifyProfile = () => {
                     <Logout />
                 </div>
             )}
-        </>)
-}
+        </>
+    );
+};

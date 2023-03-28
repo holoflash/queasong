@@ -1,5 +1,5 @@
-import { AddSuggestion } from "../components/AddSuggestion"
-import { SongSearch } from "../components/SongSearch"
+import { AddSuggestion } from '../components/AddSuggestion';
+import { SongSearch } from '../components/SongSearch';
 
 export const GuestHomePage = () => {
     return (
@@ -7,5 +7,5 @@ export const GuestHomePage = () => {
             <SongSearch />
             <AddSuggestion />
         </div>
-    )
-}
+    );
+};

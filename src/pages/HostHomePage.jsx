@@ -7,5 +7,5 @@ export const HostHomePage = () => {
             <SpotifyProfile />
             <CreateParty />
         </div>
-    )
-}
+    );
+};
