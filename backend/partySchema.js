@@ -4,17 +4,39 @@ mongoose.connect(process.env.ATLAS_URI)
 
 const partySchema = new Schema(
     {
-        host_name: String,
+        host_name: {
+            type: String,
+            default: "host"
+        },
+
         settings: {
-            number_of_members: Number,
-            songs_per_member: Number,
+            number_of_members: {
+                type: Number,
+                default: 1
+            },
+            songs_per_member: {
+                type: Number,
+                default: 10
+            },
         },
         members: [
             {
-                name: String,
-                is_chossing: Boolean,
-                is_done: Boolean,
-                songs_suggested: Number
+                name: {
+                    type: String,
+                    default: "member"
+                },
+                is_choosing: {
+                    type: Boolean,
+                    default: false
+                },
+                is_done: {
+                    type: Boolean,
+                    default: false
+                },
+                songs_to_suggest: {
+                    type: Number,
+                    default: 0
+                }
             }
         ],
         suggestions: [
