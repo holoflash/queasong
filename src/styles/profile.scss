@@ -1,0 +1,29 @@
+@import './variables';
+@import './mixins';
+
+#profile {
+    @include outline();
+    width: 100vw;
+    background-color: black;
+
+    @include flex-row;
+    justify-content: space-between;
+    padding: 10px;
+    > * {
+        padding: 10px;
+    }
+    img {
+        border-radius: 50%;
+        height: 100px;
+    }
+    #logout > button {
+        @include button;
+        width: fit-content;
+    }
+    h1 {
+        margin: 0;
+        font-size: 3rem;
+        color: $vibrant;
+        font-style: italic;
+    }
+}

@@ -1,5 +1,6 @@
 import { Logout } from './Logout';
 import { useSpotifyProfile } from '../hooks/useSpotifyProfile';
+import '../styles/profile.scss'
 
 export const SpotifyProfile = () => {
     const profile = useSpotifyProfile();
@@ -8,11 +9,8 @@ export const SpotifyProfile = () => {
         <>
             {profile && (
                 <div id="profile">
-                    <div className="img-frame">
-                        <img src={profile.images[0].url} alt="Avatar" />
-                    </div>
-                    <div>{profile.display_name}</div>
-                    <div>{profile.followers.total} Followers</div>
+                    <img src={profile.images[0].url} alt="Avatar" />
+                    <h1>que-a-song</h1>
                     <Logout />
                 </div>
             )}

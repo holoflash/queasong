@@ -1,0 +1,45 @@
+@import './variables';
+@import './mixins';
+
+#create-party {
+    padding-top: 50px;
+    max-width: 1000px;
+    @include flex-col;
+    margin: 10px;
+    #party-options {
+        > * {
+            @include flex-row;
+            width: 100%;
+        }
+    }
+    label {
+        margin-bottom: 1rem;
+        > select {
+            @include select;
+        }
+        > input {
+            @include input;
+        }
+    }
+    button {
+        @include button;
+    }
+    span {
+        color: $orang;
+    }
+    p {
+        text-align: justify;
+    }
+    #guests {
+        margin: 20px;
+        background-color: black;
+        @include flex-row;
+        > * {
+            margin-left: 10px;
+        }
+    }
+    h1 {
+        font-size: 3rem;
+        text-shadow: 0px 0px 10px $vibrant;
+    }
+}

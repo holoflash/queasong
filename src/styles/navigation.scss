@@ -1,0 +1,22 @@
+@import './variables';
+@import './mixins';
+
+nav {
+    width: 100vw;
+    @include flex-row;
+    background-color: black;
+    > * {
+        all: unset;
+        display: inline-block;
+        text-transform: uppercase;
+        padding-inline: 15px;
+        padding: 10px;
+        text-decoration: none;
+        color: $font-color;
+        font-weight: bold;
+    }
+    :hover {
+        background: $splash3;
+        box-shadow: none;
+    }
+}

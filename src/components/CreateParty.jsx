@@ -2,6 +2,9 @@ import { submitParty } from '../services/createParty';
 import { useState, useEffect } from 'react';
 import { useSpotifyProfile } from '../hooks/useSpotifyProfile';
 import { useNavigate } from 'react-router-dom';
+import '../styles/create-party.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-regular-svg-icons';
 
 const MAX_GUESTS = 10;
 const MAX_SONGS_PER_GUEST = 25;
@@ -12,15 +15,15 @@ export const CreateParty = () => {
     const [numMembers, setNumMembers] = useState(1);
     const [songsPerMember, setSongsPerMember] = useState(1);
     const [members, setMembers] = useState([]);
+    const [partyTitle, setPartyTitle] = useState("")
 
     useEffect(() => {
         setMembers(
             Array.from({ length: numMembers }, () => ({
                 name: '',
-                songs_to_suggest: songsPerMember,
             }))
         );
-    }, [numMembers, songsPerMember]);
+    }, [numMembers]);
 
     const handleMemberNameChange = (index, value) => {
         setMembers(
@@ -33,6 +36,7 @@ export const CreateParty = () => {
     const handleSubmit = () => {
         const newParty = {
             host_name: profile.display_name,
+            party_title: partyTitle,
             settings: {
                 number_of_members: numMembers + 1,
                 songs_per_member: songsPerMember,
@@ -44,7 +48,10 @@ export const CreateParty = () => {
                     is_done: false,
                     songs_to_suggest: songsPerMember,
                 },
-                ...members,
+                ...members.map((member) => ({
+                    ...member,
+                    songs_to_suggest: songsPerMember,
+                })),
             ],
         };
         submitParty(newParty);
@@ -53,42 +60,51 @@ export const CreateParty = () => {
 
     return (
         <div id="create-party">
-            {profile && <div>Party hosted by: {profile.display_name}</div>}
-            <label>
-                Number of Guests:
-                <select
-                    value={numMembers}
-                    onChange={(e) => setNumMembers(parseInt(e.target.value))}
-                >
-                    {Array.from({ length: MAX_GUESTS }, (_, i) => i + 1).map(
-                        (n) => (
-                            <option key={n} value={n}>
-                                {n}
-                            </option>
-                        )
-                    )}
-                </select>
-            </label>
-            <label>
-                Songs per Guest:
-                <select
-                    value={songsPerMember}
+            {profile && <h1>Hello {profile.display_name}!</h1>}
+            <label>Party title:
+                <input
+                    placeholder="Untitled Party"
+                    type="text"
+                    value={partyTitle}
                     onChange={(e) =>
-                        setSongsPerMember(parseInt(e.target.value))
+                        setPartyTitle(e.target.value)
                     }
-                >
-                    {Array.from(
-                        { length: MAX_SONGS_PER_GUEST },
-                        (_, i) => i + 1
-                    ).map((n) => (
-                        <option key={n} value={n}>
-                            {n}
-                        </option>
-                    ))}
-                </select>
+                />
             </label>
+            <p>Select how many guests will be joining the party and how many songs each of you can pick.
+                A playlist titled {partyTitle ? <span>{partyTitle} </span> : (<span>Untitled Party </span>)}
+                will be created, and a special party link will be generated. Make sure to give each guest
+                a unique name, as it will be used by your guests to sign in via the party link.
+            </p>
+            <div id="party-options">
+                <label>
+                    Number of Guests:
+                    <select
+                        value={numMembers}
+                        onChange={(e) => setNumMembers(parseInt(e.target.value))}
+                    >
+                        {Array.from({ length: MAX_GUESTS }, (_, i) => i + 1)
+                            .map((n) => (
+                                <option key={n} value={n}>{n}</option>
+                            ))}
+                    </select>
+                </label>
+                <label>
+                    Songs per Guest:
+                    <select
+                        value={songsPerMember}
+                        onChange={(e) => setSongsPerMember(parseInt(e.target.value))}
+                    >
+                        {Array.from({ length: MAX_SONGS_PER_GUEST }, (_, i) => i + 1)
+                            .map((n) => (
+                                <option key={n} value={n}>{n}</option>
+                            ))}
+                    </select>
+                </label>
+            </div>
             {members.map((member, i) => (
-                <label key={member.name}>
+                <label id="guests" key={i}>
+                    <FontAwesomeIcon icon={faUser} size="xl" />
                     <input
                         placeholder={'Guest ' + (i + 1) + ' name'}
                         type="text"

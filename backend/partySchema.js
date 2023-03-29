@@ -8,7 +8,10 @@ const partySchema = new Schema(
             type: String,
             default: "host"
         },
-
+        party_title: {
+            type: String,
+            default: "Untitled Party"
+        },
         settings: {
             number_of_members: {
                 type: Number,

@@ -3,9 +3,66 @@
     max-width: 800px;
 }
 
+@mixin outline {
+    outline: solid $splash3 1px;
+}
+
 @mixin flex-col {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+}
+
+@mixin flex-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+@mixin input {
+    border-radius: 5px;
+    all: unset;
+    padding: 10px;
+    font-size: $maintext;
+    @include outline();
+    width: 90%;
+    background-color: white;
+    color: $primary-color;
+    cursor: text;
+    &:focus {
+        box-shadow: 0px 0px 20px #ac82c983;
+        transition: border-bottom 0.3s ease;
+    }
+}
+
+@mixin button {
+    all: unset;
+    width: fit-content;
+    height: fit-content;
+    padding: 10px;
+    @include outline();
+    background-color: black;
+    color: $font-color;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 900;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    &:hover {
+        background-color: $splash3;
+        box-shadow: 0px 0px 18px #ab82c939;
+        outline: solid $primary-color 1px;
+    }
+}
+
+@mixin select {
+    margin: 10px;
+    padding-inline: 10px;
+    @include outline();
+    font-size: 16px;
+    &:hover {
+        box-shadow: 0px 0px 18px #ab82c939;
+    }
 }

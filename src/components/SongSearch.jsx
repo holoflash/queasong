@@ -1,10 +1,14 @@
+import '../styles/song-search.scss';
 import { songSearch } from '../services/songSearch';
 import { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye } from '@fortawesome/free-regular-svg-icons';
 
 export const SongSearch = () => {
     const [query, setQuery] = useState('');
     return (
         <div id="song-search">
+            <button onClick={() => songSearch(query)}><FontAwesomeIcon icon={faEye} size="xl" /></button>
             <input
                 required
                 type="text"
@@ -13,7 +17,6 @@ export const SongSearch = () => {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
             />
-            <button onClick={() => songSearch(query)}>Click to search</button>
         </div>
     );
 };

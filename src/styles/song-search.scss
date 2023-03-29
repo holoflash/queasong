@@ -1,0 +1,16 @@
+@import './variables';
+@import './mixins';
+
+#song-search {
+    margin: 20px;
+    background-color: black;
+    @include flex-row;
+    button {
+        all: unset;
+        cursor: pointer;
+        padding: 10px;
+    }
+    input {
+        @include input;
+    }
+}

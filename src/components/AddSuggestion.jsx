@@ -1,4 +1,5 @@
 import { addSuggestion } from '../services/addSuggestion';
+import '../styles/add-suggestion.scss';
 
 export const AddSuggestion = () => {
     return (
