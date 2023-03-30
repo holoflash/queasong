@@ -16,6 +16,7 @@ html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: $font-color;
+    font-size: 20px;
 }
 
 .App-link {
@@ -24,6 +25,6 @@ html {
 
 .page {
     @include flex-col;
-    justify-content: flex-start;
+
     height: 100%;
 }

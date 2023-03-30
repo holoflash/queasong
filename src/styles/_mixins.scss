@@ -22,11 +22,10 @@
 }
 
 @mixin input {
-    border-radius: 5px;
     all: unset;
+    border-radius: $radius;
     padding: 10px;
     font-size: $maintext;
-    @include outline();
     width: 90%;
     background-color: white;
     color: $primary-color;
@@ -39,6 +38,7 @@
 
 @mixin button {
     all: unset;
+    border-radius: $radius;
     width: fit-content;
     height: fit-content;
     padding: 10px;
@@ -50,10 +50,14 @@
     font-weight: 900;
     transition: background-color 0.3s ease;
     cursor: pointer;
-    &:hover {
+    &:hover:not([disabled]) {
         background-color: $splash3;
         box-shadow: 0px 0px 18px #ab82c939;
-        outline: solid $primary-color 1px;
+        outline: solid $vibrant 1px;
+    }
+    &:disabled {
+        opacity: 0.1;
+        cursor: inherit;
     }
 }
 

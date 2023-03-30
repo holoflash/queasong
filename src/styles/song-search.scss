@@ -8,7 +8,7 @@
     button {
         all: unset;
         cursor: pointer;
-        padding: 10px;
+        padding-inline: 10px;
     }
     input {
         @include input;

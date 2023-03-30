@@ -3,13 +3,13 @@ import { useState, useEffect } from 'react';
 import { useSpotifyProfile } from '../hooks/useSpotifyProfile';
 import { useNavigate } from 'react-router-dom';
 import '../styles/create-party.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { createPlaylist } from '../services/createPlaylist';
 import { playlistDescription } from '../utils/playlistDescription'
-
-const MAX_GUESTS = 10;
-const MAX_SONGS_PER_GUEST = 25;
+import { Greeting } from './Greeting';
+import { PartyTitle } from './PartyTitle';
+import { GuestList } from './GuestList';
+import { PartyOptions } from './PartyOptions';
+import { PartyInstructions } from './PartyInstructions';
 
 export const CreateParty = () => {
     const navigate = useNavigate();
@@ -56,69 +56,42 @@ export const CreateParty = () => {
                 })),
             ],
         };
-        // submitParty(newParty);
-        createPlaylist(profile.id, partyTitle, playlistDescription(profile.display_name, members), "https://picsum.photos/300")
+        submitParty(newParty);
+        createPlaylist(profile.id, partyTitle, playlistDescription(profile.display_name, members))
         navigate('/submit');
     };
 
     return (
         <div id="create-party">
-            {profile && <h1>Hello {profile.display_name}!</h1>}
-            <label>Party title:
-                <input
-                    placeholder="Untitled Party"
-                    type="text"
-                    value={partyTitle}
-                    onChange={(e) =>
-                        setPartyTitle(e.target.value)
-                    }
-                />
-            </label>
-            <p>Select how many guests will be joining the party and how many songs each of you can pick.
-                A playlist titled {partyTitle ? <span>{partyTitle} </span> : (<span>Untitled Party </span>)}
-                will be created, and a special party link will be generated. Make sure to give each guest
-                a unique name, as it will be used by your guests to sign in via the party link.
-            </p>
-            <div id="party-options">
-                <label>
-                    Number of Guests:
-                    <select
-                        value={numMembers}
-                        onChange={(e) => setNumMembers(parseInt(e.target.value))}
-                    >
-                        {Array.from({ length: MAX_GUESTS }, (_, i) => i + 1)
-                            .map((n) => (
-                                <option key={n} value={n}>{n}</option>
-                            ))}
-                    </select>
-                </label>
-                <label>
-                    Songs per Guest:
-                    <select
-                        value={songsPerMember}
-                        onChange={(e) => setSongsPerMember(parseInt(e.target.value))}
-                    >
-                        {Array.from({ length: MAX_SONGS_PER_GUEST }, (_, i) => i + 1)
-                            .map((n) => (
-                                <option key={n} value={n}>{n}</option>
-                            ))}
-                    </select>
-                </label>
-            </div>
-            {members.map((member, i) => (
-                <label id="guests" key={i}>
-                    <FontAwesomeIcon icon={faUser} size="xl" />
-                    <input
-                        placeholder={'Guest ' + (i + 1) + ' name'}
-                        type="text"
-                        value={member.name}
-                        onChange={(e) =>
-                            handleMemberNameChange(i, e.target.value)
-                        }
-                    />
-                </label>
-            ))}
-            <button onClick={handleSubmit}>CREATE PARTY</button>
-        </div>
+            <Greeting profile={profile} />
+            <PartyTitle
+                partyTitle={partyTitle}
+                setPartyTitle={setPartyTitle}
+            />
+            <PartyInstructions partyTitle={partyTitle} />
+            <PartyOptions
+                numMembers={numMembers}
+                setNumMembers={setNumMembers}
+                songsPerMember={songsPerMember}
+                setSongsPerMember={setSongsPerMember}
+            />
+            <GuestList
+                members={members}
+                handleMemberNameChange={handleMemberNameChange}
+            />
+
+            {partyTitle ? (<button
+                className="submit-button"
+                onClick={handleSubmit}
+                disabled={!partyTitle}
+            >CREATE PARTY</button>) :
+                (<button
+                    className="submit-button"
+                    disabled={!partyTitle}
+                >PARTY TITLE MISSING</button>)
+            }
+
+
+        </div >
     );
-};
+}
