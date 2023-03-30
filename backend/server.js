@@ -24,7 +24,8 @@ app.get('/login', (req, res) => {
     const state = generateRandomString(16);
     res.cookie(stateKey, state);
 
-    const scope = "user-read-private user-read-email";
+    const scope = `user-read-private user-read-email ugc-image-upload playlist-modify-private playlist-modify-public
+    `;
 
     const queryParams = querystring.stringify({
         client_id: CLIENT_ID,
@@ -101,6 +102,7 @@ app.get('/refresh_token', (req, res) => {
             res.send(error);
         });
 });
+
 /////====For making requests using the "client credential flow" 
 async function getAccessToken() {
     const authString = `${CLIENT_ID}:${CLIENT_SECRET}`;
@@ -121,21 +123,47 @@ async function getAccessToken() {
     return response.data.access_token;
 }
 
+//SPOTIFY song search
 app.get('/api/search/:query', async (req, res) => {
     const query = req.params.query;
     const accessToken = await getAccessToken();
-    const response = await axios({
-        method: 'get',
-        url: `https://api.spotify.com/v1/search?q=track:${query}&type=track&market=US`,
-        headers: {
-            Authorization: `Bearer ${accessToken}`,
-            'content-type': 'application/json',
-        }
-    });
-    const data = response.data;
-    res.json(data)
+    try {
+        const response = await axios({
+            method: 'get',
+            url: `https://api.spotify.com/v1/search?q=track:${query}&type=track&market=US`,
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+                'content-type': 'application/json',
+            }
+        });
+        const data = response.data;
+        res.json(data)
+    } catch (err) {
+        console.log(err)
+    }
 });
 
+//SPOTIFY create a playlist
+app.post('/api/create-playlist/:user_id', async (req, res) => {
+    const user_id = req.params.user_id;
+    const token = req.headers.authorization.split(' ')[1];
+    const body = req.body;
+    try {
+        const response = await axios({
+            method: 'post',
+            url: `https://api.spotify.com/v1/users/${user_id}/playlists`,
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'content-type': 'application/json',
+            },
+            data: body,
+        });
+        const data = response.data;
+        res.json(data);
+    } catch (err) {
+        console.log(err);
+    }
+});
 
 //////////////////////////////////////////
 ////////////===MONGO ATLAS====////////////

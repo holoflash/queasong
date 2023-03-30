@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/create-party.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
+import { createPlaylist } from '../services/createPlaylist';
+import { playlistDescription } from '../utils/playlistDescription'
 
 const MAX_GUESTS = 10;
 const MAX_SONGS_PER_GUEST = 25;
@@ -54,7 +56,8 @@ export const CreateParty = () => {
                 })),
             ],
         };
-        submitParty(newParty);
+        // submitParty(newParty);
+        createPlaylist(profile.id, partyTitle, playlistDescription(profile.display_name, members), "https://picsum.photos/300")
         navigate('/submit');
     };
 
