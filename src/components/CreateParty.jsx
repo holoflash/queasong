@@ -1,4 +1,4 @@
-import { submitParty } from '../services/createParty';
+import { createPartyDb } from '../services/createPartyDb';
 import { useState, useEffect } from 'react';
 import { useSpotifyProfile } from '../hooks/useSpotifyProfile';
 import { useNavigate } from 'react-router-dom';
@@ -10,6 +10,7 @@ import { PartyTitle } from './PartyTitle';
 import { GuestList } from './GuestList';
 import { PartyOptions } from './PartyOptions';
 import { PartyInstructions } from './PartyInstructions';
+import { PartyLink } from './PartyLink';
 
 export const CreateParty = () => {
     const navigate = useNavigate();
@@ -18,6 +19,8 @@ export const CreateParty = () => {
     const [songsPerMember, setSongsPerMember] = useState(1);
     const [members, setMembers] = useState([]);
     const [partyTitle, setPartyTitle] = useState("")
+    const [partyCreated, setPartyCreated] = useState(false)
+    const [party_id, setPartyId] = useState(null);
 
     useEffect(() => {
         setMembers(
@@ -35,7 +38,7 @@ export const CreateParty = () => {
         );
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         const newParty = {
             host_name: profile.display_name,
             party_title: partyTitle,
@@ -56,42 +59,49 @@ export const CreateParty = () => {
                 })),
             ],
         };
-        submitParty(newParty);
+        setPartyId(await createPartyDb(newParty));
         createPlaylist(profile.id, partyTitle, playlistDescription(profile.display_name, members))
-        navigate('/submit');
+        setPartyCreated(true)
     };
 
     return (
-        <div id="create-party">
-            <Greeting profile={profile} />
-            <PartyTitle
-                partyTitle={partyTitle}
-                setPartyTitle={setPartyTitle}
-            />
-            <PartyInstructions partyTitle={partyTitle} />
-            <PartyOptions
-                numMembers={numMembers}
-                setNumMembers={setNumMembers}
-                songsPerMember={songsPerMember}
-                setSongsPerMember={setSongsPerMember}
-            />
-            <GuestList
-                members={members}
-                handleMemberNameChange={handleMemberNameChange}
-            />
+        <>
+            {!partyCreated &&
+                <div id="create-party">
+                    <Greeting profile={profile} />
+                    <PartyTitle
+                        partyTitle={partyTitle}
+                        setPartyTitle={setPartyTitle}
+                    />
+                    <PartyInstructions partyTitle={partyTitle} />
+                    <PartyOptions
+                        numMembers={numMembers}
+                        setNumMembers={setNumMembers}
+                        songsPerMember={songsPerMember}
+                        setSongsPerMember={setSongsPerMember}
+                    />
+                    <GuestList
+                        members={members}
+                        handleMemberNameChange={handleMemberNameChange}
+                    />
 
-            {partyTitle ? (<button
-                className="submit-button"
-                onClick={handleSubmit}
-                disabled={!partyTitle}
-            >CREATE PARTY</button>) :
-                (<button
-                    className="submit-button"
-                    disabled={!partyTitle}
-                >PARTY TITLE MISSING</button>)
+                    {partyTitle ? (<button
+                        className="submit-button"
+                        onClick={handleSubmit}
+                        disabled={!partyTitle}
+                    >CREATE PARTY</button>) :
+                        (<button
+                            className="submit-button"
+                            disabled={!partyTitle}
+                        >PARTY TITLE MISSING</button>)
+                    }
+                </div >}
+            {partyCreated &&
+                <div>
+                    <PartyLink party_id={party_id} />
+                    <button onClick={() => navigate(`/${party_id}`)}>GO TO SUGGESTIONS PAGE</button>
+                </div>
             }
-
-
-        </div >
+        </>
     );
 }

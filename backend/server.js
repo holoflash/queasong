@@ -196,6 +196,20 @@ app.put('/api/party/:id/suggestions', async (req, res) => {
     }
 });
 
+app.get('/api/party/:id', async (req, res) => {
+    try {
+        const party = await Party.findById(req.params.id);
+        if (!party) {
+            return res.status(404).json({ message: 'Party not found' });
+        }
+        res.json(party);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
+
 
 connectToDb(() => {
     console.log('Connected to database!');

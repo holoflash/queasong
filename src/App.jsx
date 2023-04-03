@@ -17,6 +17,7 @@ function App() {
                 <Route path="/submit" element={<GuestHomePage />} />
                 <Route path="/vote" element={<VotingPage />} />
                 <Route path="/share" element={<ResultsPage />} />
+                <Route path="/:party_id" element={<GuestHomePage />} />
             </Routes>
         </BrowserRouter>
     );
