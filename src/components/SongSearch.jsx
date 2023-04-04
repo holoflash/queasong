@@ -7,6 +7,7 @@ import { faEye } from '@fortawesome/free-regular-svg-icons';
 export const SongSearch = () => {
     const [query, setQuery] = useState('');
     return (
+
         <div id="song-search">
             <button onClick={() => songSearch(query)}><FontAwesomeIcon icon={faEye} size="xl" /></button>
             <input

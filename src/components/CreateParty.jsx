@@ -99,7 +99,7 @@ export const CreateParty = () => {
             {partyCreated &&
                 <div>
                     <PartyLink party_id={party_id} />
-                    <button onClick={() => navigate(`/${party_id}`)}>GO TO SUGGESTIONS PAGE</button>
+                    <button onClick={() => navigate(`/${profile.display_name}/${party_id}`)}>GO TO SUGGESTIONS PAGE</button>
                 </div>
             }
         </>
