@@ -1,9 +1,14 @@
 import axios from 'axios';
 
-export const addSuggestion = async (suggestion) => {
+export const addSuggestion = async (party_id, song_info, song_url, suggested_by) => {
+    const suggestion = {
+        song_info: song_info,
+        song_url: song_url,
+        suggested_by: suggested_by
+    }
+
     try {
-        const partyId = window.localStorage.getItem("party_id");
-        const response = await axios.put(`/api/party/${partyId}/suggestions/`, suggestion);
+        const response = await axios.put(`/api/party/${party_id}/suggestions/${suggested_by}`, suggestion);
         console.log(response.data)
     } catch (err) {
         console.error(err);

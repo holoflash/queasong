@@ -1,41 +1,32 @@
 import { SongSearch } from '../components/SongSearch'
-import { AddSuggestion } from '../components/AddSuggestion'
 import { useParams } from 'react-router-dom';
 import { usePartyData } from '../hooks/usePartyData';
+
+const SongSearchList = ({ n, party_id, suggested_by }) => {
+    const songSearchComponents = Array.from({ length: n }).map((_, index) => (
+        <SongSearch key={index} party_id={party_id} suggested_by={suggested_by} />
+    ));
+    return <div>{songSearchComponents}</div>;
+};
 
 export const SubmitPage = () => {
     const { party_member, party_id } = useParams();
     const party = usePartyData(party_id);
 
+    const thisMember = party?.members.find(member => member.name === party_member);
     return (
         <>
-            <p>Hello {party_member}!! Go ahead and add your songs!</p>
-
-            <div className="page">
-                <SongSearch />
-                <AddSuggestion />
-            </div>
-            {party_id &&
-                <label> Party ID:
-                    <h1>{party_id}</h1>
-                </label>
+            {party && (
+                <div className="page">
+                    <div>
+                        <p>Hello {thisMember.name}!! Go ahead and add your songs.</p>
+                        <p>Songs left to suggest: {thisMember.songs_to_suggest}</p>
+                    </div>
+                    <SongSearchList n={thisMember.songs_to_suggest} party_id={party_id} suggested_by={party_member} />
+                </div>
+            )
             }
 
-            {party && (
-                <>
-                    <h2>Title: {party.party_title}</h2>
-                    <h2>Hosted by: {party.host_name}</h2>
-                    Members:
-                    {party.members.map((member, i) => (
-                        <div key={member._id}>
-                            Name:
-                            <div>{member.name}</div>
-                            Songs to suggest:
-                            <div>{member.songs_to_suggest}</div>
-                        </div>
-                    ))}
-                </>
-            )}
         </>
     );
 };

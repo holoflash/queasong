@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
-export const PartyLink = ({ party_id }) => {
+export const PartyLink = ({ party_member, party_id }) => {
     const [linkCopied, setLinkCopied] = useState(false);
-    const URL = `http://localhost:3000/${party_id}`;
+    const URL = `http://localhost:3000/${party_member}/${party_id}`;
 
     function copyToClipboard(text) {
         navigator.clipboard.writeText(text).then(() => {

@@ -3,8 +3,8 @@ import axios from 'axios';
 export const songSearch = async (query) => {
     try {
         const response = await axios.get(`/api/search/${query}`);
-        console.log(response.data)
+        return response.data.tracks.items
     } catch (err) {
-        console.error(err);
+        return err
     }
 };

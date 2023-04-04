@@ -4,7 +4,9 @@
 #song-search {
     margin: 20px;
     background-color: black;
-    @include flex-row;
+    @include flex-col;
+    padding: 10px;
+    width: fit-content;
     button {
         all: unset;
         cursor: pointer;
@@ -12,5 +14,30 @@
     }
     input {
         @include input;
+    }
+
+    #searchbar {
+        @include flex-row;
+    }
+
+    #search-results {
+        font-size: 80%;
+        outline: solid $primary-color 1px;
+        width: 100%;
+        padding: 10px;
+        margin: 10px;
+        @include flex-col;
+
+        &:nth-of-type(odd) {
+        }
+        &:nth-of-type(even) {
+        }
+        #track-name {
+            font-style: italic;
+            color: $vibrant;
+        }
+        #track-artist {
+            color: $orang;
+        }
     }
 }

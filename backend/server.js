@@ -130,7 +130,7 @@ app.get('/api/search/:query', async (req, res) => {
     try {
         const response = await axios({
             method: 'get',
-            url: `https://api.spotify.com/v1/search?q=track:${query}&type=track&market=US`,
+            url: `https://api.spotify.com/v1/search?q=track:${query}&type=track&market=US&limit=10`,
             headers: {
                 Authorization: `Bearer ${accessToken}`,
                 'content-type': 'application/json',
@@ -180,21 +180,31 @@ app.post('/api/party', async (req, res) => {
     }
 })
 
-app.put('/api/party/:id/suggestions', async (req, res) => {
-    const { id } = req.params
+app.put('/api/party/:id/suggestions/:suggested_by', async (req, res) => {
+    const { id, suggested_by } = req.params;
 
     try {
         const party = await Party.findOne({ _id: id });
         if (!party) {
             return res.status(404).json({ message: 'Party not found' });
         }
-        party.suggestions.push(req.body)
-        await party.save()
+
+        const memberIndex = party.members.findIndex(member => member.name === suggested_by);
+        if (memberIndex === -1) {
+            return res.status(404).json({ message: 'Member not found' });
+        }
+
+        party.members[memberIndex].songs_to_suggest -= 1;
+        party.suggestions.push(req.body);
+        await party.save();
+
+        res.status(200).json({ message: 'Suggestion added successfully' });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Internal server error' });
     }
 });
+
 
 app.get('/api/party/:id', async (req, res) => {
     try {
