@@ -2,10 +2,8 @@
 @import './mixins';
 
 #profile {
-    @include outline();
     width: 100vw;
     background-color: black;
-
     @include flex-row;
     justify-content: space-between;
     padding: 10px;

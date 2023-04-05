@@ -1,6 +1,5 @@
 import { Logout } from './Logout';
 import { useSpotifyProfile } from '../hooks/useSpotifyProfile';
-import '../styles/profile.scss'
 
 export const SpotifyProfile = () => {
     const profile = useSpotifyProfile();

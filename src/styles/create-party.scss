@@ -43,3 +43,23 @@
         text-shadow: 0px 0px 10px $vibrant;
     }
 }
+
+#submission-links {
+    display: flex;
+    flex-direction: column;
+    button {
+        @include button;
+    }
+}
+#submission-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    input {
+        @include input;
+    }
+    button {
+        @include button;
+    }
+}

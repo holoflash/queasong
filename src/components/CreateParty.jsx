@@ -1,8 +1,9 @@
+import '../styles/create-party.scss';
 import { createPartyDb } from '../services/createPartyDb';
 import { useState, useEffect } from 'react';
 import { useSpotifyProfile } from '../hooks/useSpotifyProfile';
+import { usePartyData } from '../hooks/usePartyData'
 import { useNavigate } from 'react-router-dom';
-import '../styles/create-party.scss';
 import { createPlaylist } from '../services/createPlaylist';
 import { playlistDescription } from '../utils/playlistDescription'
 import { Greeting } from './Greeting';
@@ -11,6 +12,8 @@ import { GuestList } from './GuestList';
 import { PartyOptions } from './PartyOptions';
 import { PartyInstructions } from './PartyInstructions';
 import { PartyLink } from './PartyLink';
+import { DeleteParty } from './DeleteParty';
+import { AllLinks } from './AllLinks';
 
 export const CreateParty = () => {
     const navigate = useNavigate();
@@ -19,8 +22,8 @@ export const CreateParty = () => {
     const [songsPerMember, setSongsPerMember] = useState(1);
     const [members, setMembers] = useState([]);
     const [partyTitle, setPartyTitle] = useState("")
-    const [partyCreated, setPartyCreated] = useState(false)
-    const [party_id, setPartyId] = useState(null);
+    const [party_id, setPartyId] = useState(localStorage.getItem("party_id") || null);
+    const partyData = usePartyData(party_id)
 
     useEffect(() => {
         setMembers(
@@ -41,7 +44,7 @@ export const CreateParty = () => {
     const handleSubmit = async () => {
         const newParty = {
             host_name: profile.display_name,
-            party_title: partyTitle,
+            party_title: partyTitle.trim() === "" ? "Untitled Party" : partyTitle,
             settings: {
                 number_of_members: numMembers + 1,
                 songs_per_member: songsPerMember,
@@ -53,20 +56,23 @@ export const CreateParty = () => {
                     is_done: false,
                     songs_to_suggest: songsPerMember,
                 },
-                ...members.map((member) => ({
-                    ...member,
-                    songs_to_suggest: songsPerMember,
-                })),
+                ...members.map((member, index) => {
+                    const name = member.name.trim() === "" ? `Guest ${index + 1}` : member.name;
+                    return {
+                        ...member,
+                        name: name,
+                        songs_to_suggest: songsPerMember,
+                    };
+                }),
             ],
         };
         setPartyId(await createPartyDb(newParty));
-        createPlaylist(profile.id, partyTitle, playlistDescription(profile.display_name, members))
-        setPartyCreated(true)
+        // createPlaylist(profile.id, partyTitle, playlistDescription(profile.display_name, members))
     };
 
     return (
         <>
-            {!partyCreated &&
+            {!party_id && profile &&
                 <div id="create-party">
                     <Greeting profile={profile} />
                     <PartyTitle
@@ -85,22 +91,16 @@ export const CreateParty = () => {
                         handleMemberNameChange={handleMemberNameChange}
                     />
 
-                    {partyTitle ? (<button
+                    <button
                         className="submit-button"
                         onClick={handleSubmit}
-                        disabled={!partyTitle}
-                    >CREATE PARTY</button>) :
-                        (<button
-                            className="submit-button"
-                            disabled={!partyTitle}
-                        >PARTY TITLE MISSING</button>)
-                    }
+                    >CREATE PARTY</button>
+
                 </div >}
-            {partyCreated &&
-                <div>
-                    <PartyLink party_member={profile.display_name} party_id={party_id} />
-                    <button onClick={() => navigate(`/${profile.display_name}/${party_id}`)}>GO TO SUGGESTIONS PAGE</button>
-                </div>
+            {party_id && profile && partyData && <>
+                <AllLinks partyData={partyData} profile={profile} party_id={party_id} />
+                <DeleteParty party_id={party_id} />
+            </>
             }
         </>
     );
