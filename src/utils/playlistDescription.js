@@ -1,10 +1,12 @@
-export function playlistDescription(hostName, members) {
-    const memberNames = members.map((member) => member.name);
-    const lastMemberName = memberNames.pop();
-    const allOtherMembers = memberNames.join(", ");
-    if (allOtherMembers.length === 0) {
-        return `A playlist created by ${hostName} and ${lastMemberName}.`;
+export const playlistDescription = (members) => {
+    if (!members) {
+        return "Something went wrong while creating a description."
+    }
+    const memberNames = members.map((member) => member.name)
+
+    if (members.length === 2) {
+        return `A playlist created by ${memberNames.join(" and ")}.`
     } else {
-        return `A playlist created by ${allOtherMembers} and ${lastMemberName}.`;
+        return `A playlist created by ${memberNames.slice(0, -1).join(", ")} and ${memberNames.slice(-1)}.`
     }
 }
