@@ -6,7 +6,7 @@ const partySchema = new Schema(
     {
         host_name: {
             type: String,
-            default: "host"
+            default: "Host"
         },
         party_title: {
             type: String,
@@ -19,18 +19,14 @@ const partySchema = new Schema(
             },
             songs_per_member: {
                 type: Number,
-                default: 10
+                default: 5
             },
         },
         members: [
             {
                 name: {
                     type: String,
-                    default: "member"
-                },
-                is_choosing: {
-                    type: Boolean,
-                    default: false
+                    default: "Member"
                 },
                 is_done: {
                     type: Boolean,

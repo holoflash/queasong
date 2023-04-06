@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
 import { addSuggestion } from '../services/addSuggestion';
 
-export const SongSearch = ({ party_id, suggested_by }) => {
+const SongSearch = ({ party_id, suggested_by }) => {
     const [query, setQuery] = useState('');
     const [searchResults, setSearchResults] = useState(null)
 
@@ -38,6 +38,18 @@ export const SongSearch = ({ party_id, suggested_by }) => {
                         )}
                     </div>)
             )}
+        </div>
+    );
+};
+
+export const SongSearchList = ({ n, party_id, suggested_by }) => {
+    const songSearchComponents = Array.from({ length: n }).map((_, index) => (
+        <SongSearch key={index} party_id={party_id} suggested_by={suggested_by} />
+    ));
+
+    return (
+        <div>
+            {songSearchComponents}
         </div>
     );
 };

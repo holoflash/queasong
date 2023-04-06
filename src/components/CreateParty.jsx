@@ -17,7 +17,7 @@ export const CreateParty = ({ profile, setParty_id, }) => {
     const handleSubmit = async () => {
         const party_title = partyTitle.trim() === "" ? "Untitled Party" : partyTitle;
         const updatedMembers = [
-            { name: profile.display_name, is_choosing: false, is_done: false, songs_to_suggest: songsPerMember },
+            { name: profile.display_name, is_done: false, songs_to_suggest: songsPerMember },
             ...members
         ].map((member, index) => ({
             ...member,

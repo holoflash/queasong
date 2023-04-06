@@ -1,0 +1,81 @@
+#party-data {
+    @import './variables';
+    @import './mixins';
+
+    @include flex-col;
+    border: 1px solid #ccc;
+    padding: 1rem;
+
+    .settings {
+        // styles for the settings section
+        margin-bottom: 1rem;
+
+        .setting {
+            // styles for each setting
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+
+            .setting-label {
+                // styles for the setting label
+                font-weight: bold;
+                margin-right: 0.5rem;
+            }
+
+            .setting-value {
+                // styles for the setting value
+                font-style: italic;
+            }
+        }
+    }
+
+    .host-name {
+        // styles for the host name
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+    }
+
+    .party-title {
+        // styles for the party title
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+    }
+
+    .members {
+        // styles for the members section
+        display: flex;
+        flex-wrap: wrap;
+
+        .member {
+            // styles for each member
+            width: calc(50% - 1rem);
+            margin-right: 1rem;
+            margin-bottom: 1rem;
+
+            &:nth-child(even) {
+                margin-right: 0;
+            }
+
+            .member-name {
+                // styles for the member name
+                font-weight: bold;
+            }
+
+            .member-detail {
+                // styles for the member details
+                display: flex;
+                flex-wrap: wrap;
+                margin-top: 0.5rem;
+
+                span {
+                    // styles for each member detail
+                    margin-right: 0.5rem;
+
+                    &:last-child {
+                        margin-right: 0;
+                    }
+                }
+            }
+        }
+    }
+}
