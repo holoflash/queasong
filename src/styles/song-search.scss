@@ -1,43 +1,97 @@
-@import './variables';
-@import './mixins';
-
 #song-search {
-    margin: 20px;
-    background-color: black;
-    @include flex-col;
-    padding: 10px;
-    width: fit-content;
-    button {
-        all: unset;
-        cursor: pointer;
-        padding-inline: 10px;
-    }
-    input {
-        @include input;
-    }
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #181818;
 
     #searchbar {
-        @include flex-row;
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+
+        button {
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            margin-right: 10px;
+            padding: 5px;
+            color: #b3b3b3;
+
+            &:hover {
+                color: #fff;
+            }
+        }
+
+        input {
+            border: none;
+            background-color: #282828;
+            font-size: 16px;
+            padding: 5px;
+            width: 100%;
+            color: #fff;
+
+            &:focus {
+                outline: none;
+            }
+        }
     }
 
-    #search-results {
-        font-size: 80%;
-        outline: solid $primary-color 1px;
-        width: 100%;
-        padding: 10px;
-        margin: 10px;
-        @include flex-col;
+    .dropdown {
+        position: relative;
 
-        &:nth-of-type(odd) {
+        .dropdown-content {
+            background-color: #282828;
+            border: none;
+            border-radius: 4px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            max-height: 50vh;
+            overflow-y: auto;
+            position: absolute;
+            width: 100%;
+            z-index: 1;
+
+            .result {
+                border-bottom: 1px solid #b3b3b3;
+                padding: 5px;
+                color: #fff;
+
+                &:hover {
+                    background-color: #1db954;
+                }
+            }
         }
-        &:nth-of-type(even) {
+    }
+
+    #selected-songs {
+        margin-top: 20px;
+
+        p {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #fff;
         }
-        #track-name {
-            font-style: italic;
-            color: $vibrant;
-        }
-        #track-artist {
-            color: $orang;
+
+        div {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+
+            button {
+                border: none;
+                background-color: transparent;
+                color: #fff;
+                cursor: pointer;
+                padding: 5px 10px;
+                border-radius: 30px;
+                border: 1px solid #fff;
+
+                &:hover {
+                    background-color: #fff;
+                    color: #000;
+                }
+            }
         }
     }
 }

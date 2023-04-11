@@ -34,7 +34,6 @@ const partySchema = new Schema(
                 },
                 songs_to_suggest: {
                     type: Number,
-                    default: 0
                 }
             }
         ],

@@ -130,7 +130,7 @@ app.get('/api/search/:query', async (req, res) => {
     try {
         const response = await axios({
             method: 'get',
-            url: `https://api.spotify.com/v1/search?q=track:${query}&type=track&market=US&limit=10`,
+            url: `https://api.spotify.com/v1/search?q=track:${query}&type=track&market=US`,
             headers: {
                 Authorization: `Bearer ${accessToken}`,
                 'content-type': 'application/json',
@@ -189,12 +189,11 @@ app.put('/api/party/:id/suggestions/:suggested_by', async (req, res) => {
             return res.status(404).json({ message: 'Party not found' });
         }
 
-        const memberIndex = party.members.findIndex(member => member.name === suggested_by);
-        if (memberIndex === -1) {
-            return res.status(404).json({ message: 'Member not found' });
-        }
+        await Party.updateOne(
+            { _id: id, 'members.name': suggested_by },
+            { $inc: { 'members.$.songs_to_suggest': -1 }, $set: { 'members.$.is_done': true } }
+        );
 
-        party.members[memberIndex].songs_to_suggest -= 1;
         party.suggestions.push(req.body);
         await party.save();
 
