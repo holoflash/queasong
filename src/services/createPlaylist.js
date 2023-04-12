@@ -14,9 +14,8 @@ export const createPlaylist = async (user_id, partyTitle, description) => {
     };
     try {
         const response = await axios.post(`/api/create-playlist/${user_id}`, body, { headers });
-        const playlist_id = response.data.id;
-        return playlist_id
-
+        localStorage.setItem("playlist_id", response.data.id);
+        return response.data.id
     } catch (err) {
         return err;
     }

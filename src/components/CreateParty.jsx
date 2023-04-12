@@ -9,7 +9,7 @@ import { createPartyDb } from '../services/createPartyDb';
 import { createPlaylist } from '../services/createPlaylist';
 import { playlistDescription } from '../utils/playlistDescription'
 
-export const CreateParty = ({ profile, setParty_id, }) => {
+export const CreateParty = ({ profile, setParty_id, setPlaylist_id }) => {
     const { members, numMembers, setNumMembers, handleMemberNameChange } = useMembers(1);
     const [songsPerMember, setSongsPerMember] = useState(5);
     const [partyTitle, setPartyTitle] = useState("")
@@ -31,7 +31,7 @@ export const CreateParty = ({ profile, setParty_id, }) => {
             members: updatedMembers
         };
         setParty_id(await createPartyDb(newParty));
-        await createPlaylist(profile.id, partyTitle, playlistDescription(updatedMembers));
+        setPlaylist_id(await createPlaylist(profile.id, partyTitle, playlistDescription(updatedMembers)));
     };
 
     return (
