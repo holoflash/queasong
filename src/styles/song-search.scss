@@ -54,10 +54,17 @@
             .result {
                 border-bottom: 1px solid #b3b3b3;
                 padding: 5px;
+                height: fit-content;
                 color: #fff;
 
-                &:hover {
-                    background-color: #1db954;
+                > * {
+                    margin: 0;
+                }
+                #track-name {
+                    color: yellow;
+                }
+                img:hover {
+                    outline: solid 5px white;
                 }
             }
         }
@@ -77,6 +84,9 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 10px;
+            p {
+                text-decoration: underline;
+            }
 
             button {
                 border: none;

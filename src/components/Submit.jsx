@@ -1,4 +1,4 @@
-import { SongSearchList } from '../components/SongSearch'
+import { SongSearch } from '../components/SongSearch'
 import { useParams } from 'react-router-dom';
 import { usePartyData } from '../hooks/usePartyData';
 
@@ -15,7 +15,7 @@ export const Submit = () => {
                         <p>Hello {thisMember.name}!! Go ahead and add your songs.</p>
                         <p>Songs left to suggest: {thisMember.songs_to_suggest}</p>
                     </div>
-                    <SongSearchList n={thisMember.songs_to_suggest} party_id={party_id} suggested_by={party_member} />
+                    <SongSearch songs_to_suggest={thisMember.songs_to_suggest} party_id={party_id} suggested_by={party_member} />
                 </>
             )
             }

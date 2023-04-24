@@ -1,18 +1,16 @@
-import { useNavigate } from 'react-router-dom';
 import { PartyLink } from "./PartyLink"
 
-export const AllLinks = ({ partyData, profile, party_id }) => {
-    const navigate = useNavigate();
+export const AllLinks = ({ partyData, party_id }) => {
     return (
         <>
             <div id="submission-links">
                 {partyData.members.map((member, i) =>
                     <div key={i} id="submission-link">
-                        {member.name}
-                        {member.name !== profile.display_name &&
-                            <PartyLink party_member={member.name} party_id={party_id} />}
-                        {member.name === profile.display_name &&
-                            <button onClick={() => navigate(`/${member.name}/${party_id}`)}>GO TO SUGGESTIONS PAGE</button>}
+                        {partyData.members.indexOf(member) !== 0 &&
+                            <>
+                                {member.name}'s submission link
+                                <PartyLink party_member={member.name} party_id={party_id} />
+                            </>}
                     </div>
                 )}
             </div>
