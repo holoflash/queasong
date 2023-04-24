@@ -20,11 +20,11 @@ export const SongSearchList = ({ n, party_id, suggested_by }) => {
     };
 
     const removeSong = (song) => {
-        setSelectedSongs(selectedSongs.filter((s) => s.id !== song.id));
+        setSelectedSongs(selectedSongs.filter((s) => s.uri !== song.uri));
         setSongSearchResults((prevState) => {
             const newState = [...prevState];
             newState.forEach((song, index) => {
-                if (selectedSongs.find((s) => s.id === song.searchResults.id)) {
+                if (selectedSongs.find((s) => s.uri === song.searchResults.uri)) {
                     newState[index].showInput = false;
                 } else {
                     newState[index].showInput = true;
@@ -36,7 +36,7 @@ export const SongSearchList = ({ n, party_id, suggested_by }) => {
 
     const submitSuggestions = () => {
         selectedSongs.forEach((song) => {
-            addSuggestion(party_id, song.name, song.id, suggested_by);
+            addSuggestion(party_id, song.name, song.uri, suggested_by);
         });
         setSelectedSongs([]);
     };
@@ -90,14 +90,14 @@ export const SongSearchList = ({ n, party_id, suggested_by }) => {
                         <div className="dropdown">
                             <div className="dropdown-content">
                                 {song.searchResults.map((result) => (
-                                    <div className="result" key={result.id}>
+                                    <div className="result" key={result.uri}>
                                         <p id="track-name">{result.name}</p>
                                         {result.artists.map((artist) => (
                                             <p id="track-artist" key={artist.id}>
                                                 {artist.name}
                                             </p>
                                         ))}
-                                        {selectedSongs.some((song) => song.id === result.id) ? (
+                                        {selectedSongs.some((song) => song.uri === result.uri) ? (
                                             <button onClick={() => removeSong(result)}>Remove</button>
                                         ) : (
                                             <button id="add" onClick={() => addSong(result, index)}>
@@ -116,7 +116,7 @@ export const SongSearchList = ({ n, party_id, suggested_by }) => {
                 <div id="selected-songs">
                     <p>Selected songs:</p>
                     {selectedSongs.map((song) => (
-                        <div key={song.id}>
+                        <div key={song.uri}>
                             <p>{song.name}</p>
                             <button onClick={() => removeSong(song)}>Remove</button>
                         </div>

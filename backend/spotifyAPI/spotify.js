@@ -153,4 +153,27 @@ router.post('/api/create-playlist/:user_id', async (req, res) => {
     }
 });
 
+//Add songs to playlist
+router.post('/api/add-songs-to-playlist/:playlist_id', async (req, res) => {
+    const playlist_id = req.params.playlist_id;
+    const token = req.headers.authorization.split(' ')[1];
+    const body = req.body;
+    try {
+        const response = await axios({
+            method: 'post',
+            url: `https://api.spotify.com/v1/playlists/${playlist_id}/tracks`,
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'content-type': 'application/json',
+            },
+            data: body,
+        });
+        const data = response.data;
+        res.json(data);
+    } catch (err) {
+        console.log(err);
+    }
+});
+
+
 export { router as spotifyRouter };

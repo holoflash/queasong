@@ -6,6 +6,7 @@ import { DeleteParty } from './DeleteParty';
 import { AllLinks } from './AllLinks';
 import { CreateParty } from './CreateParty';
 import { PartyData } from './PartyData';
+import { AddToPlaylist } from './AddToPlaylist';
 
 export const HostMain = () => {
     const profile = useSpotifyProfile();
@@ -24,6 +25,7 @@ export const HostMain = () => {
                     <PartyData partyData={partyData} />
                     <AllLinks partyData={partyData} profile={profile} party_id={party_id} />
                     <DeleteParty party_id={party_id} playlist_id={playlist_id} />
+                    <AddToPlaylist party_id={party_id} playlist_id={playlist_id} />
                 </>
             }
         </>

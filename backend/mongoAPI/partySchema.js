@@ -40,7 +40,7 @@ const partySchema = new Schema(
         suggestions: [
             {
                 song_info: String,
-                song_url: String,
+                song_uri: String,
                 approved_by: [String],
                 suggested_by: String
             }
