@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 
-export const SongPreview = ({ result, addSong, index }) => {
+export const SongPreview = ({ result }) => {
     const prevAudioRef = useRef(null);
     const [currentAudio, setCurrentAudio] = useState(null);
     const handleMouseOver = (previewUrl) => {
@@ -26,7 +26,6 @@ export const SongPreview = ({ result, addSong, index }) => {
             alt=""
             onMouseOver={() => handleMouseOver(result.preview_url)}
             onMouseLeave={handleMouseLeave}
-            onClick={() => addSong(result, index, currentAudio)}
         />
     )
 }

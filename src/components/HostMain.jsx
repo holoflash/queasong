@@ -24,14 +24,7 @@ export const HostMain = () => {
             {(party_id && profile && partyData) &&
                 <>
                     <PartyData partyData={partyData} />
-                    {hostData.songs_to_suggest !== 0 &&
-                        <>
-                            <div>
-                                <p>Hello {hostData.name}!! Go ahead and add your songs.</p>
-                                <p>Songs left to suggest: {hostData.songs_to_suggest}</p>
-                            </div>
-                            <SongSearch songs_to_suggest={hostData.songs_to_suggest} party_id={party_id} suggested_by={hostData.name} />
-                        </>}
+                    <SongSearch songs_to_suggest={hostData.songs_to_suggest} party_id={party_id} suggested_by={hostData.name} />
                     <AllLinks partyData={partyData} profile={profile} party_id={party_id} />
                     debugger:/start over?
                     <DeleteParty party_id={party_id} playlist_id={playlist_id} />

@@ -5,7 +5,7 @@ export const AllLinks = ({ partyData, party_id }) => {
         <>
             <div id="submission-links">
                 {partyData.members.map((member, i) =>
-                    <div key={i} id="submission-link">
+                    <div key={member.name} id="submission-link">
                         {partyData.members.indexOf(member) !== 0 &&
                             <>
                                 {member.name}'s submission link
