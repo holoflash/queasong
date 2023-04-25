@@ -9,8 +9,8 @@ export const addSuggestion = async (party_id, song_info, song_uri, suggested_by)
 
     try {
         const response = await axios.put(`/api/party/${party_id}/suggestions/${suggested_by}`, suggestion);
-        console.log(response.data)
+        return response
     } catch (err) {
-        console.error(err);
+        return err
     }
 };

@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 
-export const useSongsLeft = (songsToSuggest, selectedSongs) => {
+export const useSongsLeft = (songsToSuggest, submittedSongs) => {
     const [songsLeft, setSongsLeft] = useState(songsToSuggest);
 
     useEffect(() => {
-        setSongsLeft(songsToSuggest - selectedSongs.length);
-    }, [songsToSuggest, selectedSongs]);
+        setSongsLeft(songsToSuggest - submittedSongs);
+    }, [songsToSuggest, submittedSongs]);
 
     return songsLeft;
 };

@@ -12,10 +12,8 @@ export const addSongsToPlaylist = async (playlist_id, uris) => {
     };
     try {
         const response = await axios.post(`/api/add-songs-to-playlist/${playlist_id}`, body, { headers });
-        console.log(response)
         return response.data.id
     } catch (err) {
-        console.log(err)
         return err;
     }
 };
