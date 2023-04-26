@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 export const PartyLink = ({ party_member, party_id }) => {
     const [linkCopied, setLinkCopied] = useState(false);
-    const URL = `http://localhost:8888/${party_member}/${party_id}`;
+    const URL = `${process.env.FRONTEND_URI}/${party_member}/${party_id}`;
 
     function copyToClipboard(text) {
         navigator.clipboard.writeText(text).then(() => {
