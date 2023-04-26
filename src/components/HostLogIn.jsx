@@ -3,7 +3,6 @@ export const HostLogin = () => {
         process.env.NODE_ENV !== 'production'
             ? 'http://localhost:8888/login'
             : 'https://queasong.onrender.com/login';
-    console.log(LOGIN_URI)
     return (
         <div id="login">
             <button

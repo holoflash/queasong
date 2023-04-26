@@ -28,7 +28,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server": "nodemon ./backend/server.js",
+    "server": "NODE_ENV=development nodemon ./backend/server.js",
     "prod": "NODE_ENV=production && npm install && npm run build"
   },
   "eslintConfig": {
