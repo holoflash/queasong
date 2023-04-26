@@ -15,7 +15,6 @@ app.use(express.static(path.resolve(__dirname, './build')));
 
 const PORT = process.env.PORT || 8888
 
-
 app.use('/', spotifyRouter);
 app.use('/', mongoRouter);
 
@@ -23,9 +22,13 @@ app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, './build', 'index.html'));
 });
 
-connectToDb(() => {
-    console.log('Connected to database!');
-    app.listen(PORT, () => {
-        console.log('Listening on ' + PORT)
-    })
-})
+try {
+    connectToDb(() => {
+        console.log('Connected to database!');
+        app.listen(PORT, () => {
+            console.log('Listening on ' + PORT)
+        })
+    });
+} catch (error) {
+    console.error('Failed to connect to database:', error);
+}

@@ -12,19 +12,24 @@ const FRONTEND_URI = process.env.FRONTEND_URI;
 const stateKey = 'spotify_auth_state';
 
 router.get('/login', (req, res) => {
-    const state = generateRandomString(16);
-    res.cookie(stateKey, state);
+    try {
+        const state = generateRandomString(16);
+        res.cookie(stateKey, state);
 
-    const scope = `user-read-private user-read-email ugc-image-upload playlist-modify-private playlist-modify-public`;
+        const scope = `user-read-private user-read-email ugc-image-upload playlist-modify-private playlist-modify-public`;
 
-    const queryParams = querystring.stringify({
-        client_id: CLIENT_ID,
-        response_type: 'code',
-        redirect_uri: REDIRECT_URI,
-        state: state,
-        scope: scope,
-    });
-    res.redirect(`https://accounts.spotify.com/authorize?${queryParams}`)
+        const queryParams = querystring.stringify({
+            client_id: CLIENT_ID,
+            response_type: 'code',
+            redirect_uri: REDIRECT_URI,
+            state: state,
+            scope: scope,
+        });
+        res.redirect(`https://accounts.spotify.com/authorize?${queryParams}`)
+    } catch (err) {
+        console.error(err)
+        res.status(500).send('Internal Server Error')
+    }
 })
 
 router.get('/callback', (req, res) => {
@@ -49,7 +54,6 @@ router.get('/callback', (req, res) => {
         .then(response => {
             if (response.status === 200) {
                 const { access_token, refresh_token, expires_in } = response.data;
-
                 const queryParams = querystring.stringify({
                     access_token,
                     refresh_token,
@@ -97,19 +101,23 @@ async function getAccessToken() {
     const authString = `${CLIENT_ID}:${CLIENT_SECRET}`;
     const base64Auth = Buffer.from(authString).toString('base64');
     const authHeader = `Basic ${base64Auth}`;
-
-    const response = await axios({
-        method: 'post',
-        url: 'https://accounts.spotify.com/api/token',
-        data: querystring.stringify({
-            grant_type: 'client_credentials'
-        }),
-        headers: {
-            'content-type': 'application/x-www-form-urlencoded',
-            Authorization: authHeader
-        }
-    });
-    return response.data.access_token;
+    try {
+        const response = await axios({
+            method: 'post',
+            url: 'https://accounts.spotify.com/api/token',
+            data: querystring.stringify({
+                grant_type: 'client_credentials'
+            }),
+            headers: {
+                'content-type': 'application/x-www-form-urlencoded',
+                Authorization: authHeader
+            }
+        });
+        return response.data.access_token;
+    } catch (err) {
+        console.error(err)
+        res.status(500).send('Internal Server Error')
+    }
 }
 
 //SPOTIFY song search
