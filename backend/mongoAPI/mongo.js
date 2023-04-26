@@ -1,5 +1,5 @@
 import express from 'express';
-import { Party } from './PartySchema.js';
+import { Party } from './partySchema.js';
 
 const router = express.Router();
 
