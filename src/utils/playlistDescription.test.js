@@ -41,4 +41,14 @@ describe("playlistDescription function", () => {
         );
     });
 
+    it("returns correct description for 300 character limit", () => {
+        const members = [
+            { name: "Host" },
+            { name: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec." }
+        ];
+        expect(playlistDescription(members)).toBe(
+            "A playlist created by Host and too many amazing people to name."
+        );
+    });
+
 });

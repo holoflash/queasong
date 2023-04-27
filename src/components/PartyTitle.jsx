@@ -5,6 +5,7 @@ export const PartyTitle = ({ partyTitle, setPartyTitle }) => {
             <input
                 placeholder="Untitled Party"
                 type="text"
+                maxLength={100}
                 value={partyTitle}
                 onChange={(e) => setPartyTitle(e.target.value)}
             />

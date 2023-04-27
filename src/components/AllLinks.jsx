@@ -9,7 +9,7 @@ export const AllLinks = ({ partyData, party_id }) => {
                         {partyData.members.indexOf(member) !== 0 &&
                             <>
                                 {member.name}'s submission link
-                                <PartyLink party_member={member.name} party_id={party_id} />
+                                <PartyLink party_member={encodeURIComponent(member.name)} party_id={party_id} />
                             </>}
                     </div>
                 )}

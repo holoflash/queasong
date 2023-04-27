@@ -10,6 +10,7 @@ export const GuestList = ({ members, handleMemberNameChange }) => {
                     <input
                         placeholder={'Guest ' + (i + 1) + ' name'}
                         type="text"
+                        maxLength={50}
                         value={member.name}
                         onChange={(e) => handleMemberNameChange(i, e.target.value)}
                     />

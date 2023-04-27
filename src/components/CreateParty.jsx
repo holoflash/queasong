@@ -15,13 +15,13 @@ export const CreateParty = ({ profile, setParty_id, setPlaylist_id }) => {
     const [partyTitle, setPartyTitle] = useState("")
 
     const handleSubmit = async () => {
-        const party_title = partyTitle.trim() === "" ? "Untitled Party" : partyTitle;
+        const party_title = partyTitle.trim() === "" ? "Untitled Party" : encodeURIComponent(partyTitle);
         const updatedMembers = [
             { name: profile.display_name, is_done: false, songs_to_suggest: songsPerMember },
             ...members
         ].map((member, index) => ({
             ...member,
-            name: member.name.trim() === "" ? `Guest ${index}` : member.name,
+            name: member.name.trim() === "" ? `Guest ${index}` : encodeURIComponent(member.name),
             songs_to_suggest: songsPerMember
         }));
         const newParty = {

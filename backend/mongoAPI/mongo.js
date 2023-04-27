@@ -15,7 +15,8 @@ router.post('/api/party', async (req, res) => {
 })
 
 router.put('/api/party/:id/suggestions/:suggested_by', async (req, res) => {
-    const { id, suggested_by } = req.params;
+    const { id } = req.params;
+    const suggested_by = encodeURIComponent(req.params.suggested_by);
 
     try {
         const party = await Party.findOne({ _id: id });

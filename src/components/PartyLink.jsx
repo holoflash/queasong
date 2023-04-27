@@ -4,9 +4,8 @@ export const PartyLink = ({ party_member, party_id }) => {
     const [linkCopied, setLinkCopied] = useState(false);
     const URL =
         process.env.NODE_ENV !== 'production'
-            ? 'http://localhost:8888'
+            ? 'http://localhost:3000'
             : 'https://queasong.onrender.com';
-
 
     const fullUrl = `${URL}/${party_member}/${party_id}`;
 

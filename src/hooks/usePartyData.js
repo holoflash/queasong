@@ -17,5 +17,20 @@ export const usePartyData = (party_id) => {
         })();
     }, [party_id]);
 
-    return party;
+    if (!party) {
+        return null;
+    }
+
+    const decodedMembers = party.members.map(member => {
+        return {
+            ...member,
+            name: decodeURIComponent(member.name)
+        };
+    });
+
+    return {
+        ...party,
+        members: decodedMembers,
+        party_title: decodeURIComponent(party.party_title)
+    };
 };
