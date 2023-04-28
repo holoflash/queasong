@@ -8,7 +8,6 @@ const router = express.Router();
 const secretKey = generateRandomString(64);
 
 router.post('/api/login', (req, res) => {
-    console.log("Logged in!")
     try {
         const token = jwt.sign(
             { secretKey },

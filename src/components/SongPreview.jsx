@@ -2,30 +2,53 @@ import { useState, useRef } from "react";
 
 export const SongPreview = ({ result }) => {
     const prevAudioRef = useRef(null);
-    const [currentAudio, setCurrentAudio] = useState(null);
-    const handleMouseOver = (previewUrl) => {
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [isHovered, setIsHovered] = useState(false);
+
+    const handleAudio = (previewUrl) => {
         if (prevAudioRef.current) {
             prevAudioRef.current.pause();
         }
+
         const audio = new Audio(previewUrl);
-        setCurrentAudio(audio);
-        audio.addEventListener('canplay', () => {
-            audio.play();
-        });
+
+        if (isPlaying) {
+            audio.pause();
+            setIsPlaying(false);
+        } else {
+            audio.addEventListener('canplay', () => {
+                audio.play();
+                setIsPlaying(true);
+            });
+        }
+
         prevAudioRef.current = audio;
     };
 
-    const handleMouseLeave = () => {
-        currentAudio.pause();
-        setCurrentAudio(null);
+    const handleMouseEnter = () => {
+        setIsHovered(true);
+        handleAudio(result.preview_url);
     };
+
+    const handleMouseLeave = () => {
+        setIsHovered(false);
+        setIsPlaying(false);
+        if (prevAudioRef.current) {
+            prevAudioRef.current.pause();
+        }
+    };
+
     return (
-        <img
-            src={result.album.images[0].url}
-            height="100"
-            alt=""
-            onMouseOver={() => handleMouseOver(result.preview_url)}
+        <div
+            onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-        />
+            style={{ width: "100px", height: "100px" }}
+        >
+            <img
+                src={result.album.images[0].url}
+                height="100"
+                alt=""
+            />
+        </div>
     )
 }

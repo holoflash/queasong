@@ -1,6 +1,6 @@
 import '../styles/song-search.scss';
 import { songSearch } from '../services/songSearch';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSongsLeft } from '../hooks/useSongsLeft';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faFloppyDisk } from '@fortawesome/free-regular-svg-icons';
@@ -21,6 +21,20 @@ export const SongSearch = ({ songs_to_suggest, party_id, suggested_by }) => {
         setSubmittedSongs(selectedSongs.length)
         setSelectedSongs([])
     };
+
+    useEffect(() => {
+        function handleClickOutside(event) {
+            const dropdown = document.querySelector('.dropdown');
+            if (dropdown && !dropdown.contains(event.target)) {
+                setSearchResults([]);
+            }
+        }
+
+        document.addEventListener('click', handleClickOutside);
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, [setSearchResults]);
 
     return (<>
         <div>
@@ -48,22 +62,30 @@ export const SongSearch = ({ songs_to_suggest, party_id, suggested_by }) => {
                     {(searchResults.length > 0 && query !== "") && (
                         <div className="dropdown">
                             <div className="dropdown-content">
-                                {searchResults.map((result) => (
-                                    <div className="result" key={result.uri}>
-                                        <SongPreview result={result} />
-                                        <p id="track-name">{result.name}</p>
-                                        {result.artists.map((artist) => (
-                                            <p id="track-artist" key={artist.id}>
-                                                {artist.name}
-                                            </p>
-                                        ))}
-                                        {selectedSongs.some((song) => song.uri === result.uri)
-                                            ? (< button onClick={() => setSelectedSongs(selectedSongs.filter((s) => s.uri !== result.uri))}>Remove</button>)
-                                            : (<button id="add" onClick={() => setSelectedSongs([...selectedSongs, result])}>
-                                                <FontAwesomeIcon icon={faFloppyDisk} /> Add</button>)
-                                        }
-                                    </div>
-                                ))}
+                                {searchResults
+                                    .filter((result) => !selectedSongs.some((s) => (s.uri === result.uri) || ((s.name === result.name) && (s.artists[0].name === result.artists[0].name))))
+                                    .map((result) => (
+                                        <div className="result" key={result.uri}>
+                                            <SongPreview result={result} />
+                                            <p id="track-name">{result.name}</p>
+                                            {result.artists.map((artist) => (
+                                                <p id="track-artist" key={artist.id}>
+                                                    {artist.name}
+                                                </p>
+                                            ))}
+                                            {selectedSongs.some((song) => song.uri === result.uri)
+                                                ? (< button onClick={() => setSelectedSongs(selectedSongs.filter((s) => s.uri !== result.uri))}>Remove</button>)
+                                                : (<button
+                                                    id="add"
+                                                    onClick={() => {
+                                                        setSelectedSongs([...selectedSongs, result]);
+                                                        setSearchResults([]); // clear the search results
+                                                    }}
+                                                >
+                                                    <FontAwesomeIcon icon={faFloppyDisk} /> Add</button>)
+                                            }
+                                        </div>
+                                    ))}
                             </div>
                         </div>
                     )}
@@ -75,7 +97,11 @@ export const SongSearch = ({ songs_to_suggest, party_id, suggested_by }) => {
                         <p>Selected songs:</p>
                         {selectedSongs.map((song) => (
                             <div key={song.uri}>
-                                <SongPreview result={song} />
+                                <img
+                                    src={song.album.images[0].url}
+                                    height="100"
+                                    alt=""
+                                />
                                 <p>{song.name}</p>
                                 < button onClick={() => setSelectedSongs(selectedSongs.filter((s) => s.uri !== song.uri))}>Remove</button>
                             </div>
