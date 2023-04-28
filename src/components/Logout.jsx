@@ -6,6 +6,7 @@ export const Logout = () => {
     const logout = () => {
         for (const property in LS_KEYS) {
             localStorage.removeItem(LS_KEYS[property]);
+            localStorage.removeItem("token")
         }
         navigate('/');
         window.location.reload();

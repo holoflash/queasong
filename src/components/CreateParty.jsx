@@ -8,6 +8,7 @@ import { GuestList } from "./GuestList";
 import { createPartyDb } from '../services/createPartyDb';
 import { createPlaylist } from '../services/createPlaylist';
 import { playlistDescription } from '../utils/playlistDescription'
+import { hostToken } from "../services/hostToken";
 
 export const CreateParty = ({ profile, setParty_id, setPlaylist_id }) => {
     const { members, numMembers, setNumMembers, handleMemberNameChange } = useMembers(1);
@@ -30,6 +31,7 @@ export const CreateParty = ({ profile, setParty_id, setPlaylist_id }) => {
             settings: { number_of_members: numMembers + 1, songs_per_member: songsPerMember },
             members: updatedMembers
         };
+        await hostToken();
         setParty_id(await createPartyDb(newParty));
         setPlaylist_id(await createPlaylist(profile.id, partyTitle, playlistDescription(updatedMembers)));
     };

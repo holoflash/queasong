@@ -8,6 +8,7 @@ export const DeleteParty = ({ party_id, playlist_id }) => {
         await deleteParty(party_id, playlist_id)
         localStorage.removeItem("party_id");
         localStorage.removeItem("playlist_id");
+        localStorage.removeItem("token")
         navigate('/');
         window.location.reload();
     };
