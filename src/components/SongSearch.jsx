@@ -2,10 +2,9 @@ import '../styles/song-search.scss';
 import { songSearch } from '../services/songSearch';
 import { useState, useEffect } from 'react';
 import { useSongsLeft } from '../hooks/useSongsLeft';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faFloppyDisk } from '@fortawesome/free-regular-svg-icons';
 import { addSuggestion } from '../services/addSuggestion';
 import { SongPreview } from './SongPreview';
+import { SpotifyLogo } from './SpotifyLogo'
 
 export const SongSearch = ({ songs_to_suggest, party_id, suggested_by }) => {
     const [searchResults, setSearchResults] = useState([])
@@ -37,19 +36,18 @@ export const SongSearch = ({ songs_to_suggest, party_id, suggested_by }) => {
     }, [setSearchResults]);
 
     return (<>
-        <div>
-            <p>Hello {suggested_by}!! Go ahead and add your songs.</p>
-            <p>Songs left to suggest: {songsLeft}</p>
-        </div>
+        <SpotifyLogo />
         <div id="song-search">
             {(songsLeft !== 0 && (songsLeft - selectedSongs.length !== 0))
                 ? <>
                     <div id="searchbar">
-                        <FontAwesomeIcon icon={faEye} size="xl" />
                         <input
                             type="text"
-                            placeholder="Search for song"
-                            maxLength={50}
+                            placeholder="What do you want to hear?"
+                            maxLength={800}
+                            autoCorrect='off'
+                            autoCapitalize='off'
+                            spellCheck="false"
                             value={query}
                             onChange={async (e) => {
                                 setQuery(e.target.value)
@@ -60,56 +58,69 @@ export const SongSearch = ({ songs_to_suggest, party_id, suggested_by }) => {
                         />
                     </div>
                     {(searchResults.length > 0 && query !== "") && (
-                        <div className="dropdown">
-                            <div className="dropdown-content">
-                                {searchResults
-                                    .filter((result) => !selectedSongs.some((s) => (s.uri === result.uri) || ((s.name === result.name) && (s.artists[0].name === result.artists[0].name))))
-                                    .map((result) => (
-                                        <div className="result" key={result.uri}>
-                                            <SongPreview result={result} />
-                                            <p id="track-name">{result.name}</p>
-                                            {result.artists.map((artist) => (
-                                                <p id="track-artist" key={artist.id}>
-                                                    {artist.name}
-                                                </p>
-                                            ))}
-                                            {selectedSongs.some((song) => song.uri === result.uri)
-                                                ? (< button onClick={() => setSelectedSongs(selectedSongs.filter((s) => s.uri !== result.uri))}>Remove</button>)
-                                                : (<button
-                                                    id="add"
-                                                    onClick={() => {
-                                                        setSelectedSongs([...selectedSongs, result]);
-                                                        setSearchResults([]); // clear the search results
-                                                    }}
-                                                >
-                                                    <FontAwesomeIcon icon={faFloppyDisk} /> Add</button>)
-                                            }
+                        <div className="search-results">
+                            {searchResults
+                                .filter((result) => !selectedSongs.some((s) => (s.uri === result.uri) || ((s.name === result.name) && (s.artists[0].name === result.artists[0].name))))
+                                .map((result, index) => (
+                                    <div
+                                        onClick={(e) => {
+                                            e.currentTarget.classList.toggle("selected");
+                                            setSelectedSongs((prev) =>
+                                                prev.some((song) => song.uri === result.uri)
+                                                    ? prev.filter((song) => song.uri !== result.uri)
+                                                    : [...prev, result]
+                                            );
+                                        }}
+                                        className="result"
+                                        key={result.uri}
+                                    >
+
+                                        <div id="number">{index + 1}</div>
+                                        <SongPreview result={result} />
+                                        <div id="name-artist">
+                                            <p id="name">{result.name}</p>
+                                            <div id='artists'>
+                                                {result.artists.map((artist, index) => (
+                                                    <div key={artist.id}>
+                                                        {artist.name}
+                                                        {index < result.artists.length - 1 && ', '}
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
-                                    ))}
-                            </div>
+                                    </div>
+                                ))
+                            }
                         </div>
-                    )}
-                </>
-                : <div>UR DONE!</div>}
-            {
-                selectedSongs.length > 0 && (
-                    <div id="selected-songs">
-                        <p>Selected songs:</p>
-                        {selectedSongs.map((song) => (
-                            <div key={song.uri}>
-                                <img
-                                    src={song.album.images[0].url}
-                                    height="100"
-                                    alt=""
-                                />
-                                <p>{song.name}</p>
-                                < button onClick={() => setSelectedSongs(selectedSongs.filter((s) => s.uri !== song.uri))}>Remove</button>
+                    )} </>
+                : <div>
+                    You are done!
+                </div>}
+            <div className="search-results">
+                {selectedSongs.length > 0 &&
+                    selectedSongs
+                        .map((result, index) => (
+                            <div
+                                onClick={() => setSelectedSongs(selectedSongs.filter((s) => s.uri !== result.uri))}
+                                className="result" key={result.uri}>
+                                <div id="number">{index + 1}</div>
+                                <SongPreview result={result} />
+                                <div id="name-artist">
+                                    <p id="name">{result.name}</p>
+                                    <div id='artists'>
+                                        {result.artists.map((artist, index) => (
+                                            <div key={artist.id}>
+                                                {artist.name}
+                                                {index < result.artists.length - 1 && ', '}
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
                             </div>
-                        ))}
-                        <button onClick={submitSuggestions}>Submit suggestions</button>
-                    </div>
-                )
-            }
+                        ))
+                }
+            </div>
+            <button onClick={submitSuggestions}>Submit suggestions</button>
         </div >
     </>
     )

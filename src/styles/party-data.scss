@@ -2,9 +2,9 @@
     @import './variables';
     @import './mixins';
 
-    @include flex-col;
     border: 1px solid #ccc;
     padding: 1rem;
+    width: 100%;
 
     .settings {
         // styles for the settings section

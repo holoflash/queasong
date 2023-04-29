@@ -39,16 +39,13 @@ export const SongPreview = ({ result }) => {
     };
 
     return (
-        <div
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            style={{ width: "100px", height: "100px" }}
-        >
-            <img
-                src={result.album.images[0].url}
-                height="100"
-                alt=""
-            />
-        </div>
+
+        <img
+            // onMouseEnter={handleMouseEnter}
+            // onMouseLeave={handleMouseLeave}
+            src={result.album.images[0].url}
+            height="40"
+            alt=""
+        />
     )
 }

@@ -1,107 +1,105 @@
-#song-search {
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #181818;
+@import './colors';
 
+// * {
+//     outline: solid red 1px;
+// }
+
+.spotify {
+    height: 50px;
+}
+
+#song-search {
+    width: 90vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     #searchbar {
+        width: 100%;
+        padding: 20px;
         display: flex;
         align-items: center;
-        margin-bottom: 10px;
+        justify-content: center;
+        input {
+            background-image: url('./search.svg');
+            background-repeat: no-repeat;
+            background-position: 0.8rem center;
+            white-space: nowrap;
+            pointer-events: auto;
+            text-transform: none;
+            -webkit-tap-highlight-color: transparent;
+            font-size: 0.8125rem;
+            border: 0;
+            outline: 0;
+            border-radius: 500px;
+            height: 40px;
+            padding: 6px 48px;
+            width: 100%;
+        }
+    }
 
-        button {
-            border: none;
-            background-color: transparent;
-            cursor: pointer;
-            margin-right: 10px;
-            padding: 5px;
-            color: #b3b3b3;
+    .search-results {
+        margin: auto;
+        min-width: 90vw;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        color: #b3b3b3;
+        text-transform: none;
+        line-height: 1.6;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        outline: 0;
+
+        .result {
+            margin: 0;
+            user-select: none;
+            padding: 0 16px;
+            border: 1px solid transparent;
+            background-color: $text-box;
+            border-radius: 4px;
+            font-size: 1rem;
+            position: relative;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
 
             &:hover {
-                color: #fff;
+                background-color: $box;
+            }
+
+            #number {
+                width: 0;
+            }
+            img {
+                padding-left: 40px;
+            }
+            #name-artist {
+                display: flex;
+                flex-direction: column;
+                padding: 1rem;
+            }
+            #name {
+                color: $text-main;
+                padding: 0;
+                margin: 0;
+            }
+            #artists {
+                font-size: 0.8rem;
+                display: flex;
+                flex-direction: row;
+            }
+            #album {
+                font-size: 0.8rem;
             }
         }
-
-        input {
-            border: none;
-            background-color: #282828;
-            font-size: 16px;
-            padding: 5px;
-            width: 100%;
-            color: #fff;
-
-            &:focus {
-                outline: none;
-            }
-        }
-    }
-
-    .dropdown {
-        position: relative;
-
-        .dropdown-content {
-            background-color: #282828;
-            border: none;
-            border-radius: 4px;
-            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-            max-height: 50vh;
-            overflow-y: auto;
-            position: absolute;
-            width: 100%;
-            z-index: 1;
-
-            .result {
-                border-bottom: 1px solid #b3b3b3;
-                padding: 5px;
-                height: fit-content;
-                color: #fff;
-
-                > * {
-                    margin: 0;
-                }
-                #track-name {
-                    color: yellow;
-                }
-                img:hover {
-                    outline: solid 5px white;
-                }
+        .selected {
+            #number {
+                color: green;
             }
         }
     }
-
     #selected-songs {
-        margin-top: 20px;
-
-        p {
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #fff;
-        }
-
-        div {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            p {
-                text-decoration: underline;
-            }
-
-            button {
-                border: none;
-                background-color: transparent;
-                color: #fff;
-                cursor: pointer;
-                padding: 5px 10px;
-                border-radius: 30px;
-                border: 1px solid #fff;
-
-                &:hover {
-                    background-color: #fff;
-                    color: #000;
-                }
-            }
-        }
+        display: flex;
     }
 }
