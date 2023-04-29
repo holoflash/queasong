@@ -1,4 +1,6 @@
 import './styles/App.scss';
+import './fonts/NunitoSans_10pt-Regular.ttf'
+import './fonts/NunitoSans_10pt-Bold.ttf'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { HostHomePage } from './pages/HostHomePage';
 import { SubmitPage } from './pages/SubmitPage';
