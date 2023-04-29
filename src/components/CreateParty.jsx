@@ -22,7 +22,7 @@ export const CreateParty = ({ profile, setParty_id, setPlaylist_id }) => {
             ...members
         ].map((member, index) => ({
             ...member,
-            name: member.name.trim() === "" ? `Guest ${index}` : encodeURIComponent(member.name),
+            name: member.name.trim() === "" ? `Guest_${index}` : encodeURIComponent(member.name),
             songs_to_suggest: songsPerMember
         }));
         const newParty = {

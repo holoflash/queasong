@@ -18,7 +18,7 @@ export const HostMain = () => {
 
     return (
         <>
-            {(!party_id && profile) &&
+            {(!partyData && profile) &&
                 <CreateParty profile={profile} setParty_id={setParty_id} setPlaylist_id={setPlaylist_id} />
             }
             {(party_id && profile && partyData) &&
