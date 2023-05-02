@@ -16,15 +16,33 @@ export const CreateParty = ({ profile, setParty_id, setPlaylist_id }) => {
     const [partyTitle, setPartyTitle] = useState("")
 
     const handleSubmit = async () => {
+        const duplicates = {};
+        const duplicateCheck = (name, index, members) => {
+            if (name === "") {
+                return `Guest_${index}`;
+            } else if (members.some((n) => n.name === name)) {
+                if (duplicates[name]) {
+                    duplicates[name]++;
+                } else {
+                    duplicates[name] = 1;
+                }
+                return encodeURIComponent(name + '_' + duplicates[name]);
+
+            } else {
+                return encodeURIComponent(name);
+            }
+        };
+
         const party_title = partyTitle.trim() === "" ? "Untitled Party" : encodeURIComponent(partyTitle);
         const updatedMembers = [
             { name: profile.display_name, is_done: false, songs_to_suggest: songsPerMember },
             ...members
         ].map((member, index) => ({
             ...member,
-            name: member.name.trim() === "" ? `Guest_${index}` : encodeURIComponent(member.name),
+            name: duplicateCheck(member.name.trim(), index, members),
             songs_to_suggest: songsPerMember
         }));
+
         const newParty = {
             host_name: profile.display_name,
             party_title,
@@ -33,7 +51,7 @@ export const CreateParty = ({ profile, setParty_id, setPlaylist_id }) => {
         };
         await hostToken();
         setParty_id(await createPartyDb(newParty));
-        setPlaylist_id(await createPlaylist(profile.id, partyTitle, playlistDescription(updatedMembers)));
+        setPlaylist_id(await createPlaylist(profile.id, party_title, playlistDescription(updatedMembers)));
     };
 
     return (
