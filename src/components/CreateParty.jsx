@@ -33,7 +33,7 @@ export const CreateParty = ({ profile, setParty_id, setPlaylist_id }) => {
             }
         };
 
-        const party_title = partyTitle.trim() === "" ? "Untitled Party" : encodeURIComponent(partyTitle);
+        const party_title = partyTitle.trim() === "" ? "Untitled Party" : partyTitle;
         const updatedMembers = [
             { name: profile.display_name, is_done: false, songs_to_suggest: songsPerMember },
             ...members
@@ -45,7 +45,7 @@ export const CreateParty = ({ profile, setParty_id, setPlaylist_id }) => {
 
         const newParty = {
             host_name: profile.display_name,
-            party_title,
+            party_title: encodeURIComponent(party_title),
             settings: { number_of_members: numMembers + 1, songs_per_member: songsPerMember },
             members: updatedMembers
         };
