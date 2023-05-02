@@ -46,7 +46,11 @@ const partySchema = new Schema(
             }
         ],
         songs_all_approve: [String],
-    }
-)
+        expire_at: { type: Date, default: Date.now, expires: 86400 }
+    },
+    { timestamps: true }
+);
 
-export const Party = model("party", partySchema)
+partySchema.index({ expire_at: 1 }, { expireAfterSeconds: 0 });
+
+export const Party = model("party", partySchema);
