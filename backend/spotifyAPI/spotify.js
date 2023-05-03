@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { response } from 'express';
 import querystring from 'querystring';
 import axios from 'axios';
 import { generateRandomString } from './generateRandomString.js';
@@ -119,6 +119,24 @@ async function getAccessToken() {
         res.status(500).send('Internal Server Error')
     }
 }
+
+router.get('/api/spotify/user', async (req, res) => {
+    const token = req.headers.authorization.split(' ')[1];
+    try {
+        const response = await axios({
+            method: 'get',
+            url: 'https://api.spotify.com/v1/me',
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'content-type': 'application/json',
+            },
+        });
+        const data = response.data;
+        res.json(data);
+    } catch (err) {
+        console.log(err);
+    }
+});
 
 //SPOTIFY song search
 router.get('/api/search/:query', async (req, res) => {
