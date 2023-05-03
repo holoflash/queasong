@@ -1,9 +1,0 @@
-@import './variables';
-@import './mixins';
-
-#add-suggestion {
-    margin: 10px;
-    button {
-        @include button;
-    }
-}

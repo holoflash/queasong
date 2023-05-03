@@ -10,10 +10,11 @@ export const SpotifyProfile = () => {
         <>
             {profile && (
                 <div id="profile">
+                    <div className='banner'>
+                        <img src={profile.images[0].url} alt="Avatar" />
+                        <Logout />
+                    </div>
                     <p>{greeting}</p>
-                    <img src={profile.images[0].url} alt="Avatar" />
-                    <h1>que-a-song</h1>
-                    <Logout />
                 </div>
             )}
         </>

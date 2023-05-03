@@ -1,10 +1,8 @@
 import { useState } from 'react';
 import { useMembers } from '../hooks/useMembers';
-import { Greeting } from "./Greeting";
-import { PartyTitle } from "./PartyTitle";
-import { PartyInstructions } from "./PartyInstructions";
 import { PartyOptions } from "./PartyOptions";
 import { createPartyDb } from '../services/createPartyDb';
+import { SpotifyProfile } from "./SpotifyProfile";
 import { createPlaylist } from '../services/createPlaylist';
 import { playlistDescription } from '../utils/playlistDescription'
 import { hostToken } from "../services/hostToken";
@@ -39,12 +37,10 @@ export const CreateParty = ({ profile, setParty_id, setPlaylist_id }) => {
 
     return (
         <>
+            <SpotifyProfile />
             <div id="create-party">
-                <Greeting profile={profile} />
-                <PartyTitle partyTitle={partyTitle} setPartyTitle={setPartyTitle} />
-                <PartyInstructions partyTitle={partyTitle} />
-                <PartyOptions numMembers={numMembers} members={members} handleMemberNameChange={handleMemberNameChange} setNumMembers={setNumMembers} songsPerMember={songsPerMember} setSongsPerMember={setSongsPerMember} />
-                <button className="submit-button" onClick={handleSubmit}>CREATE PARTY</button>
+                <PartyOptions numMembers={numMembers} members={members} handleMemberNameChange={handleMemberNameChange} setNumMembers={setNumMembers} songsPerMember={songsPerMember} setSongsPerMember={setSongsPerMember} partyTitle={partyTitle} setPartyTitle={setPartyTitle} />
+                <button onClick={handleSubmit}>Create party</button>
             </div>
         </>)
 };
