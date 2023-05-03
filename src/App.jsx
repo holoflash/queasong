@@ -2,19 +2,21 @@ import './styles/App.scss';
 import './fonts/NunitoSans_10pt-Regular.ttf'
 import './fonts/NunitoSans_10pt-Bold.ttf'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { HostHomePage } from './pages/HostHomePage';
-import { SubmitPage } from './pages/SubmitPage';
-import { VotingPage } from './pages/VotingPage';
-import { ResultsPage } from './pages/ResultsPage';
+import { PartyPage } from './pages/PartyPage';
+import { PartySubmitPage } from './pages/PartySubmitPage';
+import { CuratorPage } from './pages/CuratorPage';
+import { SubmitToCuratorsPage } from './pages/SubmitToCuratorsPage';
+import { Home } from './pages/Home';
 
 function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<HostHomePage />} />
-                <Route path="/vote" element={<VotingPage />} />
-                <Route path="/share" element={<ResultsPage />} />
-                <Route path="/:party_member/:party_id" element={<SubmitPage />} />
+                <Route path="/" element={<Home />} />
+                <Route path="/party" element={<PartyPage />} />
+                <Route path="/curate" element={<CuratorPage />} />
+                <Route path="/submit" element={<SubmitToCuratorsPage />} />
+                <Route path="/:party_member/:party_id" element={<PartySubmitPage />} />
             </Routes>
         </BrowserRouter>
     );

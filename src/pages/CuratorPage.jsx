@@ -1,7 +1,7 @@
-export const VotingPage = () => {
+export const CuratorPage = () => {
     return (
         <div className="page">
-            <p>Yes or no?</p>
+            <p>Coming soon</p>
         </div>
     );
 };
