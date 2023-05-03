@@ -1,6 +1,7 @@
 import { Logout } from './Logout';
 import { useSpotifyProfile } from '../hooks/useSpotifyProfile';
 import { getGreeting } from '../services/getGreeting';
+import { SpotifyLogo } from './SpotifyLogo'
 
 export const SpotifyProfile = () => {
     const profile = useSpotifyProfile();
@@ -11,6 +12,7 @@ export const SpotifyProfile = () => {
             {profile && (
                 <div id="profile">
                     <div className='banner'>
+                        <SpotifyLogo />
                         <img src={profile.images[0].url} alt="Avatar" />
                         <Logout />
                     </div>

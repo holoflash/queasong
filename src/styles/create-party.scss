@@ -24,7 +24,7 @@ button {
 
 #create-party {
     width: fit-content;
-    max-width: 800px;
+    max-width: 700px;
     border-radius: 13px;
     margin: 0 5rem;
     padding: 2rem;
@@ -114,7 +114,6 @@ button {
 #profile {
     font-size: 5rem;
     font-weight: 700;
-    max-width: 800px;
     margin: 1rem 5rem;
     padding-block: 2rem;
     display: flex;
@@ -127,17 +126,18 @@ button {
     .banner {
         display: flex;
         align-items: center;
-        padding: 1rem;
+        justify-content: space-between;
         img {
-            height: 80px;
+            margin-left: auto;
+            height: 50px;
             border-radius: 50%;
-            margin-right: 3rem;
+            margin-right: 1rem;
         }
     }
     p {
         padding: 0;
         margin: 0;
-        margin-top: 1rem;
+        margin-top: 3rem;
         font-size: 4rem;
     }
     h1 {
