@@ -21,21 +21,6 @@
     align-items: center;
 }
 
-@mixin input {
-    all: unset;
-    border-radius: $radius;
-    padding: 10px;
-    font-size: $maintext;
-    width: 90%;
-    background-color: white;
-    color: $primary-color;
-    cursor: text;
-    &:focus {
-        box-shadow: 0px 0px 20px #ac82c983;
-        transition: border-bottom 0.3s ease;
-    }
-}
-
 @mixin button {
     all: unset;
     border-radius: $radius;

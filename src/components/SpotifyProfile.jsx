@@ -4,7 +4,7 @@ import { getGreeting } from '../services/getGreeting';
 
 export const SpotifyProfile = () => {
     const profile = useSpotifyProfile();
-    const greeting = (profile !== null) ? getGreeting(profile.country) : "Hello"
+    const greeting = (profile) ? getGreeting(profile.country) : "Hello"
 
     return (
         <>

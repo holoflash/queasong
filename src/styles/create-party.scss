@@ -1,65 +1,24 @@
-@import './variables';
-@import './mixins';
-
 #create-party {
-    padding-top: 50px;
-    max-width: 1000px;
-    @include flex-col;
-    margin: 10px;
-    #party-options {
-        > * {
-            @include flex-row;
-            width: 100%;
+    .greeting {
+        font-size: 2rem;
+    }
+    .party-title {
+        background-color: aqua;
+    }
+    .party-instructions {
+        border: solid white 1px;
+    }
+    .party-options {
+        .number-of-guests {
+            border: solid yellow 1px;
         }
-    }
-    label {
-        margin-bottom: 1rem;
-        > select {
-            @include select;
+        .songs-per-guest {
+            border: solid green 1px;
         }
-        > input {
-            @include input;
+        .guests {
+            display: flex;
+            flex-direction: column;
         }
-    }
-    button {
-        @include button;
-    }
-    span {
-        color: $orang;
-    }
-    p {
-        text-align: justify;
-    }
-    #guests {
-        margin: 20px;
-        background-color: black;
-        @include flex-row;
-        > * {
-            margin-left: 10px;
-        }
-    }
-    h1 {
-        font-size: 3rem;
-        text-shadow: 0px 0px 10px $vibrant;
-    }
-}
-
-#submission-links {
-    display: flex;
-    flex-direction: column;
-    button {
-        @include button;
-    }
-}
-#submission-link {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    input {
-        @include input;
-    }
-    button {
-        @include button;
+        padding: 10rem;
     }
 }

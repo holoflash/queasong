@@ -4,7 +4,6 @@ import jwt from 'jsonwebtoken';
 import { generateRandomString } from '../spotifyAPI/generateRandomString.js'
 
 const router = express.Router();
-
 const secretKey = generateRandomString(64);
 
 router.post('/api/login', (req, res) => {
@@ -16,7 +15,6 @@ router.post('/api/login', (req, res) => {
 
         res.json({ token });
     } catch (err) {
-        console.log(err);
         res.status(500).json({ message: 'Internal server error' });
     }
 });
@@ -27,7 +25,6 @@ router.post('/api/party', verifyToken, async (req, res) => {
         const result = await party.save();
         res.json(result)
     } catch (err) {
-        console.log(err);
         res.status(500).json({ message: "Internal server error" })
     }
 });
@@ -44,10 +41,8 @@ router.put('/api/party/:id/suggestions/:suggested_by', async (req, res) => {
 
         party.suggestions.push(req.body);
         await party.save();
-
         res.status(200).json({ message: 'Suggestion added successfully' });
     } catch (err) {
-        console.error(err);
         res.status(500).json({ message: 'Internal server error' });
     }
 });
@@ -57,7 +52,6 @@ router.get('/api/party/:id', async (req, res) => {
         const party = await Party.findById(req.params.id);
         res.json(party);
     } catch (err) {
-        console.error(err);
         res.status(500).json({ message: 'Internal server error' });
     }
 });
@@ -67,17 +61,15 @@ router.get('/api/party/member/:id', async (req, res) => {
         const party = await Party.findOne({ 'members._id': req.params.id });
         res.json(party);
     } catch (err) {
-        console.error(err);
         res.status(500).json({ message: 'Internal server error' });
     }
 });
 
-router.delete('/api/party/:id', verifyToken, async (req, res) => {
+router.delete('/api/party/delete/:id', verifyToken, async (req, res) => {
     try {
         await Party.findByIdAndDelete(req.params.id);
         res.json({ message: 'Party deleted successfully' });
     } catch (err) {
-        console.error(err);
         res.status(500).json({ message: 'Internal server error' });
     }
 });

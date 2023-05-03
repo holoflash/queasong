@@ -1,6 +1,6 @@
 export function PartyInstructions({ partyTitle }) {
     return (
-        <p>
+        <p className="party-instructions">
             Select how many guests will be joining the party and how many songs each of
             you can pick. A playlist titled{" "}
             {partyTitle ? <span>{partyTitle} </span> : <span>Untitled Party </span>}

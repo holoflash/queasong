@@ -10,7 +10,7 @@ export const AddToPlaylist = ({ party_id, playlist_id }) => {
 
     const letsGo = async () => {
         await addSongsToPlaylist(playlist_id, uris)
-        await deleteParty(party_id, playlist_id)
+        await deleteParty(party_id)
         localStorage.removeItem("party_id");
         localStorage.removeItem("playlist_id");
         navigate('/');

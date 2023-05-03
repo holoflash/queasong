@@ -1,10 +1,13 @@
-export const PartyOptions = ({ numMembers, songsPerMember, setNumMembers, setSongsPerMember }) => {
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-regular-svg-icons';
+
+export const PartyOptions = ({ numMembers, songsPerMember, members, handleMemberNameChange, setNumMembers, setSongsPerMember }) => {
     const MAX_GUESTS = 10;
     const MAX_SONGS_PER_GUEST = 10;
 
     return (
-        <div id="party-options">
-            <label>
+        <div className="party-options">
+            <label className='number-of-guests'>
                 Number of Guests:
                 <select
                     value={numMembers}
@@ -16,7 +19,7 @@ export const PartyOptions = ({ numMembers, songsPerMember, setNumMembers, setSon
                         ))}
                 </select>
             </label>
-            <label>
+            <label className='songs-per-guest'>
                 Songs per Guest:
                 <select
                     value={songsPerMember}
@@ -28,6 +31,20 @@ export const PartyOptions = ({ numMembers, songsPerMember, setNumMembers, setSon
                         ))}
                 </select>
             </label>
+            <div className="guests">
+                {members.map((member, i) => (
+                    <div className='guest' key={i}>
+                        <FontAwesomeIcon icon={faUser} size="xl" />
+                        <input
+                            placeholder={'Guest ' + (i + 1) + ' name'}
+                            type="text"
+                            maxLength={50}
+                            value={member.name}
+                            onChange={(e) => handleMemberNameChange(i, e.target.value)}
+                        />
+                    </div>
+                ))}
+            </div>
         </div>
     );
 };

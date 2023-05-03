@@ -1,6 +1,6 @@
 export const PartyTitle = ({ partyTitle, setPartyTitle }) => {
     return (
-        <label>
+        <label className="party-title">
             Party title:
             <input
                 placeholder="Untitled Party"

@@ -4,11 +4,11 @@ import { Greeting } from "./Greeting";
 import { PartyTitle } from "./PartyTitle";
 import { PartyInstructions } from "./PartyInstructions";
 import { PartyOptions } from "./PartyOptions";
-import { GuestList } from "./GuestList";
 import { createPartyDb } from '../services/createPartyDb';
 import { createPlaylist } from '../services/createPlaylist';
 import { playlistDescription } from '../utils/playlistDescription'
 import { hostToken } from "../services/hostToken";
+import { duplicateCheck } from '../utils/duplicateCheck'
 
 export const CreateParty = ({ profile, setParty_id, setPlaylist_id }) => {
     const { members, numMembers, setNumMembers, handleMemberNameChange } = useMembers(1);
@@ -16,30 +16,13 @@ export const CreateParty = ({ profile, setParty_id, setPlaylist_id }) => {
     const [partyTitle, setPartyTitle] = useState("")
 
     const handleSubmit = async () => {
-        const duplicates = {};
-        const duplicateCheck = (name, index, members) => {
-            if (name === "") {
-                return `Guest_${index}`;
-            } else if (members.some((n) => n.name === name)) {
-                if (duplicates[name]) {
-                    duplicates[name]++;
-                } else {
-                    duplicates[name] = 1;
-                }
-                return encodeURIComponent(name + '_' + duplicates[name]);
-
-            } else {
-                return encodeURIComponent(name);
-            }
-        };
-
         const party_title = partyTitle.trim() === "" ? "Untitled Party" : partyTitle;
         const updatedMembers = [
             { name: profile.display_name, is_done: false, songs_to_suggest: songsPerMember },
             ...members
         ].map((member, index) => ({
             ...member,
-            name: duplicateCheck(member.name.trim(), index, members),
+            name: duplicateCheck(member.name.trim(), index),
             songs_to_suggest: songsPerMember
         }));
 
@@ -60,8 +43,7 @@ export const CreateParty = ({ profile, setParty_id, setPlaylist_id }) => {
                 <Greeting profile={profile} />
                 <PartyTitle partyTitle={partyTitle} setPartyTitle={setPartyTitle} />
                 <PartyInstructions partyTitle={partyTitle} />
-                <PartyOptions numMembers={numMembers} setNumMembers={setNumMembers} songsPerMember={songsPerMember} setSongsPerMember={setSongsPerMember} />
-                <GuestList members={members} handleMemberNameChange={handleMemberNameChange} />
+                <PartyOptions numMembers={numMembers} members={members} handleMemberNameChange={handleMemberNameChange} setNumMembers={setNumMembers} songsPerMember={songsPerMember} setSongsPerMember={setSongsPerMember} />
                 <button className="submit-button" onClick={handleSubmit}>CREATE PARTY</button>
             </div>
         </>)
