@@ -1,11 +1,17 @@
 import { Logout } from './Logout';
 import { useSpotifyProfile } from '../hooks/useSpotifyProfile';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Greeting } from './Greeting'
+import { useClickOutside } from '../hooks/useClickOutside';
 
 export const SpotifyProfile = () => {
     const profile = useSpotifyProfile();
     const [isOpen, setIsOpen] = useState(false);
+    const bannerRef = useRef(null);
+
+    useClickOutside(bannerRef, () => {
+        setIsOpen(false);
+    });
 
     const handleToggle = () => {
         setIsOpen(!isOpen);
@@ -16,7 +22,7 @@ export const SpotifyProfile = () => {
             {profile && (
                 <div id="profile">
                     <Greeting profile={profile} />
-                    <div className='banner' onClick={handleToggle}>
+                    <div className='banner' onClick={handleToggle} ref={bannerRef}>
                         <img src={profile.images[0].url} alt="Avatar" />
                         <span>{profile.display_name}</span>
                         <div className='toggle'>
@@ -44,3 +50,4 @@ export const SpotifyProfile = () => {
         </>
     );
 };
+

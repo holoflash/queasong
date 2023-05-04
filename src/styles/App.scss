@@ -41,7 +41,8 @@ html {
 }
 
 ul,
-li {
+li,
+a {
     all: unset;
 }
 
@@ -74,5 +75,10 @@ footer {
 
     .spotify {
         height: 40px;
+        fill: white;
+        &:hover {
+            cursor: pointer;
+            fill: $spotify-green;
+        }
     }
 }

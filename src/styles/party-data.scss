@@ -1,65 +1,113 @@
+.party-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: $site-width;
+    width: 100%;
+}
+
 #party-data {
-    @include content-box;
-
-    .settings {
+    width: 100%;
+    padding: 1rem;
+    h2 {
+        text-decoration: underline;
+        color: $spotify-green;
+        text-align: left;
+        font-size: 2rem;
         margin-bottom: 1rem;
+    }
+    details {
+        margin-top: 1rem;
+        border-radius: 14px;
+        overflow: hidden;
+    }
 
-        .setting {
-            display: flex;
-            align-items: center;
-            margin-bottom: 0.5rem;
-
-            .setting-label {
-                font-weight: bold;
-                margin-right: 0.5rem;
-            }
-
-            .setting-value {
-                font-style: italic;
-            }
+    details[open] {
+        summary {
+            color: $spotify-green;
         }
     }
 
-    .host-name {
-        font-weight: bold;
-        margin-bottom: 0.5rem;
+    summary {
+        padding: 0.5rem 1rem;
+        background-color: $background;
+        cursor: pointer;
+        outline: none;
+        border-radius: 14px;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        &:hover {
+            background-color: $box;
+        }
     }
 
-    .party-title {
-        font-size: 1.2rem;
-        margin-bottom: 1rem;
-    }
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
 
-    .members {
-        display: flex;
-        flex-wrap: wrap;
-
-        .member {
-            width: calc(50% - 1rem);
-            margin-right: 1rem;
-            margin-bottom: 1rem;
+        .status {
+            padding: 0.5rem 1rem;
+            display: flex;
+            justify-content: space-between;
 
             &:nth-child(even) {
-                margin-right: 0;
+                background-color: $box-active;
             }
-
-            .member-name {
-                font-weight: bold;
-            }
-
-            .member-detail {
-                display: flex;
-                flex-wrap: wrap;
-                margin-top: 0.5rem;
-
-                span {
-                    margin-right: 0.5rem;
-
-                    &:last-child {
-                        margin-right: 0;
-                    }
-                }
+            &:nth-child(odd) {
+                background-color: $box;
             }
         }
     }
+}
+
+@for $i from 1 through 10 {
+    .submission-link:nth-of-type(#{$i}):hover {
+        background-color: nth($colors, $i);
+        transition: background-color 0.2s linear;
+    }
+}
+
+#submission-links {
+    padding: 0;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 0.1rem;
+    max-width: $site-width;
+}
+.submission-link {
+    background-color: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    height: 200px;
+    width: 200px;
+    aspect-ratio: 1/1;
+    @include content-box;
+    padding: 1rem;
+    justify-content: center;
+}
+
+.add-songs {
+    margin: 1rem;
+}
+
+.delete-party {
+    margin: 1rem;
+    button {
+        &:hover {
+            background-color: #ff4136;
+        }
+    }
+}
+
+.link-copied {
+    color: white;
+}
+.copy-link {
+    color: $box-active;
 }

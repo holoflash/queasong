@@ -27,11 +27,13 @@ export const HostMain = () => {
             {(party_id && profile && partyData) &&
                 <>
                     <SpotifyProfile />
-                    <SongSearch songs_to_suggest={hostData.songs_to_suggest} party_id={party_id} suggested_by={hostData.name} />
                     <PartyData partyData={partyData} />
+                    <div className='party-container'>
+                        <SongSearch songs_to_suggest={hostData.songs_to_suggest} party_id={party_id} suggested_by={hostData.name} />
+                        <AddToPlaylist party_id={party_id} playlist_id={playlist_id} />
+                    </div>
                     <AllLinks partyData={partyData} profile={profile} party_id={party_id} />
                     <DeleteParty party_id={party_id} />
-                    <AddToPlaylist party_id={party_id} playlist_id={playlist_id} />
                 </>
             }
         </>

@@ -5,6 +5,9 @@ $text-main: #f5f5f5;
 $text-secondary: #b3b3b3;
 $text-box: #121212;
 $site-width: 800px;
+$colors: #ff4136, #0074d9, #2ecc40, #ffdc00, #aaaaaa, #85144b, #39cccc, #b10dc9,
+    #f012be, #3d9970;
+$spotify-green: #1db954;
 
 @mixin flex-col-center {
     display: flex;

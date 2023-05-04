@@ -61,6 +61,7 @@ export const SongSearch = ({ songs_to_suggest, party_id, suggested_by }) => {
                                 .map((result, index) => (
                                     <div
                                         onClick={(e) => {
+                                            setSearchResults([]);
                                             e.currentTarget.classList.toggle("selected");
                                             setSelectedSongs((prev) =>
                                                 prev.some((song) => song.uri === result.uri)
@@ -93,31 +94,37 @@ export const SongSearch = ({ songs_to_suggest, party_id, suggested_by }) => {
                 : <div>
                     You are done!
                 </div>}
-            <div className="search-results">
-                {selectedSongs.length > 0 &&
-                    selectedSongs
-                        .map((result, index) => (
-                            <div
-                                onClick={() => setSelectedSongs(selectedSongs.filter((s) => s.uri !== result.uri))}
-                                className="result" key={result.uri}>
-                                <div id="number">{index + 1}</div>
-                                <SongPreview result={result} />
-                                <div id="name-artist">
-                                    <p id="name">{result.name}</p>
-                                    <div id='artists'>
-                                        {result.artists.map((artist, index) => (
-                                            <div key={artist.id}>
-                                                {artist.name}
-                                                {index < result.artists.length - 1 && ', '}
-                                            </div>
-                                        ))}
-                                    </div>
+            {selectedSongs.length > 0 && (
+                <div className="selected-songs">
+                    {selectedSongs.map((result, index) => (
+                        <div
+                            onClick={() =>
+                                setSelectedSongs(
+                                    selectedSongs.filter((s) => s.uri !== result.uri)
+                                )
+                            }
+                            className="result"
+                            key={result.uri}
+                        >
+                            <div id="number">{index + 1}</div>
+                            <SongPreview result={result} />
+                            <div id="name-artist">
+                                <p id="name">{result.name}</p>
+                                <div id="artists">
+                                    {result.artists.map((artist, index) => (
+                                        <div key={artist.id}>
+                                            {artist.name}
+                                            {index < result.artists.length - 1 && ", "}
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
-                        ))
-                }
-            </div>
-            <button onClick={submitSuggestions}>Submit suggestions</button>
+                        </div>
+                    ))}
+                    <button onClick={submitSuggestions}>Submit suggestions</button>
+                </div>
+            )}
+
         </div >
     </>
     )
