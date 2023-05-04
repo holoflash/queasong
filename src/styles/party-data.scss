@@ -1,7 +1,5 @@
 #party-data {
-    border: 1px solid #ccc;
-    padding: 1rem;
-    width: 100%;
+    @include content-box;
 
     .settings {
         margin-bottom: 1rem;

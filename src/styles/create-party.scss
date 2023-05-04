@@ -1,13 +1,6 @@
 #create-party {
-    border-radius: 13px;
-    margin: 1rem;
-    padding: 2rem;
-    background-color: $box;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin-bottom: auto;
+    @include content-box;
+    align-items: normal;
     h1 {
         font-size: 2rem;
         margin: 0;
@@ -36,8 +29,13 @@
         select {
             background-color: $box-active;
             border: 1px solid transparent;
-            border-radius: 4px;
+            border-radius: 2px;
             color: #fff;
+            &:hover {
+                background-color: #333;
+                border: 1px solid #535353;
+                outline: none;
+            }
         }
     }
 
@@ -50,10 +48,7 @@
 
     button {
         align-self: flex-end;
-        transition: transform 0.1s linear;
-        &:hover {
-            transform: scale(1.1);
-        }
+        @include hover-resize;
     }
 
     input {

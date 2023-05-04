@@ -17,18 +17,9 @@ export const PartyLink = ({ party_member, party_id }) => {
 
     return (
         <>
-            <label>
-                <input
-                    type="text"
-                    value={fullUrl}
-                    readOnly={true}
-                    style={{ border: '1px solid #ccc', padding: '0.5em' }}
-                />
-
-                <button id="copy-link-button" onClick={() => copyToClipboard(fullUrl)}>
-                    COPY TO CLIPBOARD
-                </button>
-            </label>
+            <button id="copy-link-button" onClick={() => copyToClipboard(fullUrl)}>
+                {party_member}'s submission link
+            </button>
 
             {linkCopied && (
                 <p>Link copied to clipboard!</p>

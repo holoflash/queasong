@@ -1,7 +1,35 @@
 #home {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
+    background-color: $background;
     gap: 1rem;
+    grid-auto-flow: column;
+
+    div {
+        @include content-box;
+        align-items: flex-start;
+        margin: 0;
+        margin-block: 1rem;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 1rem;
+        border-radius: 14px;
+        padding: 1rem;
+    }
+
+    .dead,
+    button:disabled {
+        opacity: 0.3;
+        pointer-events: none;
+    }
+}
+
+p {
+    text-align: left;
+}
+button {
+    @include hover-resize;
+    &:hover {
+        background-color: #1db954;
+        color: white;
+    }
 }

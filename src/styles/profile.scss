@@ -1,12 +1,21 @@
 #profile {
+    margin-block: 2rem;
+    margin-top: 3rem;
+    padding-inline: 1rem;
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    align-self: flex-end;
-    font-weight: 700;
-    margin: 1rem;
+    width: $site-width;
+    max-width: 100%;
+    .greeting {
+        font-size: 5rem;
+        font-weight: 700;
+    }
 
     .banner {
-        position: relative;
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
         cursor: pointer;
         align-items: center;
         border: 0;

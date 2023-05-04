@@ -1,0 +1,10 @@
+#login {
+    @include content-box;
+    width: fit-content;
+    button {
+        font-weight: 400;
+        background-color: #1db954;
+        color: white;
+        @include hover-resize;
+    }
+}

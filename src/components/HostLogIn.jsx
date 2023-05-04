@@ -4,10 +4,13 @@ export const HostLogin = () => {
             ? 'http://localhost:8888/login'
             : 'https://queasong.onrender.com/login';
     return (
-        <div id="login">
-            <button onClick={() => { window.location.href = `${LOGIN_URI}` }}>
-                Log in to Spotify
-            </button>
+        <div className='page'>
+            <div id="login">
+                <p>Log in with spotify to proceed.</p>
+                <button onClick={() => { window.location.href = `${LOGIN_URI}` }}>
+                    Log in with Spotify
+                </button>
+            </div>
         </div>
     );
 };
