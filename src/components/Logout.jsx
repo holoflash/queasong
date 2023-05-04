@@ -13,7 +13,7 @@ export const Logout = () => {
     };
     return (
         <div id="logout">
-            <button onClick={logout}>Log out</button>
+            <div onClick={logout}>Log out</div>
         </div>
     );
 };

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 export const Home = () => {
     const navigate = useNavigate();
     return (
-        <div className="navigation">
+        <div id="home">
             <button onClick={() => navigate("/party")}>PARTY</button>
             <p>Login using your Spotify account, create a playlist and let your friends add songs to it via personalized links. Your friends don't need to have a Spotify account.</p>
             <button disabled onClick={() => navigate("/curate")}>CURATE</button>

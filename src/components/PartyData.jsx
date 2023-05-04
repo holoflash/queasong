@@ -1,4 +1,3 @@
-import '../styles/party-data.scss';
 import { playlistDescription } from '../utils/playlistDescription';
 
 export const PartyData = ({ partyData }) => {

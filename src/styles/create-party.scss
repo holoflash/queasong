@@ -1,38 +1,13 @@
-@import './colors';
-
-button {
-    font-weight: 700;
-    cursor: pointer;
-    text-transform: none;
-    user-select: none;
-    border: 0;
-    margin: 0;
-    height: 46px;
-    -webkit-tap-highlight-color: transparent;
-    background-color: #ffffff;
-    color: #000000;
-    display: flex;
-    border-radius: 500px;
-    font-size: 1rem;
-    align-items: center;
-    padding: 8px 32px;
-    transition: transform 0.1s linear;
-    &:hover {
-        transform: scale(1.03);
-    }
-}
-
 #create-party {
-    width: fit-content;
-    max-width: 700px;
     border-radius: 13px;
-    margin: 0 5rem;
+    margin: 1rem;
     padding: 2rem;
     background-color: $box;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     gap: 1rem;
+    margin-bottom: auto;
     h1 {
         font-size: 2rem;
         margin: 0;
@@ -52,9 +27,9 @@ button {
     }
 
     .party-options {
-        width: 250px;
+        width: 50%;
         > * {
-            margin: 16px;
+            margin-block: 16px;
             display: flex;
             justify-content: space-between;
         }
@@ -67,17 +42,18 @@ button {
     }
 
     .guests {
+        width: 50%;
         display: grid;
         grid-auto-flow: row;
         gap: 16px;
-        > * {
-            min-width: fit-content;
-            width: 300px;
-        }
     }
 
     button {
         align-self: flex-end;
+        transition: transform 0.1s linear;
+        &:hover {
+            transform: scale(1.1);
+        }
     }
 
     input {
@@ -95,8 +71,7 @@ button {
             color: $text-main;
         }
         &:focus,
-        &:hover,
-        &:focus ~ label {
+        &:hover {
             background-color: #333;
             border: 1px solid #535353;
             outline: none;
@@ -108,40 +83,5 @@ button {
 
     label {
         color: gray;
-    }
-}
-
-#profile {
-    font-size: 5rem;
-    font-weight: 700;
-    margin: 1rem 5rem;
-    padding-block: 2rem;
-    display: flex;
-    flex-direction: column;
-    button {
-        background-color: $text-box;
-        color: $text-main;
-        border: solid $text-secondary 1px;
-    }
-    .banner {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        img {
-            margin-left: auto;
-            height: 50px;
-            border-radius: 50%;
-            margin-right: 1rem;
-        }
-    }
-    p {
-        padding: 0;
-        margin: 0;
-        margin-top: 3rem;
-        font-size: 4rem;
-    }
-    h1 {
-        font-size: 0.8rem;
-        margin-right: auto;
     }
 }

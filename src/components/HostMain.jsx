@@ -1,4 +1,3 @@
-import '../styles/create-party.scss';
 import { useState } from 'react';
 import { useSpotifyProfile } from '../hooks/useSpotifyProfile';
 import { usePartyData } from '../hooks/usePartyData'
@@ -8,6 +7,8 @@ import { CreateParty } from './CreateParty';
 import { PartyData } from './PartyData';
 import { AddToPlaylist } from './AddToPlaylist';
 import { SongSearch } from './SongSearch';
+import { SpotifyProfile } from "./SpotifyProfile";
+import { Greeting } from './Greeting'
 
 export const HostMain = () => {
     const profile = useSpotifyProfile();
@@ -19,7 +20,11 @@ export const HostMain = () => {
     return (
         <>
             {(!partyData && profile) &&
-                <CreateParty profile={profile} setParty_id={setParty_id} setPlaylist_id={setPlaylist_id} />
+                <>
+                    <SpotifyProfile />
+                    <Greeting profile={profile} />
+                    <CreateParty profile={profile} setParty_id={setParty_id} setPlaylist_id={setPlaylist_id} />
+                </>
             }
             {(party_id && profile && partyData) &&
                 <>

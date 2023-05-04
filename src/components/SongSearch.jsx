@@ -1,10 +1,8 @@
-import '../styles/song-search.scss';
 import { songSearch } from '../services/songSearch';
 import { useState, useEffect } from 'react';
 import { useSongsLeft } from '../hooks/useSongsLeft';
 import { addSuggestion } from '../services/addSuggestion';
 import { SongPreview } from './SongPreview';
-import { SpotifyLogo } from './SpotifyLogo'
 
 export const SongSearch = ({ songs_to_suggest, party_id, suggested_by }) => {
     const [searchResults, setSearchResults] = useState([])
@@ -36,7 +34,6 @@ export const SongSearch = ({ songs_to_suggest, party_id, suggested_by }) => {
     }, [setSearchResults]);
 
     return (<>
-        <SpotifyLogo />
         <div id="song-search">
             {(songsLeft !== 0 && (songsLeft - selectedSongs.length !== 0))
                 ? <>

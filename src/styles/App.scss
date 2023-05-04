@@ -1,4 +1,9 @@
-@import './colors';
+@import 'mixins';
+@import 'profile';
+@import 'create-party';
+@import 'song-search';
+@import 'party-data';
+@import 'home';
 
 @font-face {
     font-family: 'Nunito';
@@ -16,25 +21,64 @@
 
 * {
     box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body,
 html {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
-    padding: 0;
+    width: 100%;
     font-family: 'Nunito', sans-serif;
     background-color: $background;
     color: $text-main;
     font-size: 16px;
+    overflow-x: hidden;
 }
 
 .App-link {
     all: unset;
 }
 
+ul,
+li {
+    all: unset;
+}
 .page {
-    height: 100%;
+    @include flex-col-center;
+    max-width: $site-width;
+    min-height: 100vh;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+button {
+    @include spotify-button;
+}
+
+.greeting {
+    font-size: 5rem;
+    font-weight: 700;
+    margin-inline: 1rem;
+    align-self: flex-start;
+}
+
+footer {
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    bottom: 1rem;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    background-color: $background;
+    .spotify {
+        height: 40px;
+    }
 }

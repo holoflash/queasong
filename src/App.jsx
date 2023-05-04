@@ -7,9 +7,10 @@ import { PartySubmitPage } from './pages/PartySubmitPage';
 import { CuratorPage } from './pages/CuratorPage';
 import { SubmitToCuratorsPage } from './pages/SubmitToCuratorsPage';
 import { Home } from './pages/Home';
+import { Footer } from './components/Footer'
 
 function App() {
-    return (
+    return (<>
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Home />} />
@@ -19,6 +20,8 @@ function App() {
                 <Route path="/:party_member/:party_id" element={<PartySubmitPage />} />
             </Routes>
         </BrowserRouter>
+        <Footer />
+    </>
     );
 }
 
