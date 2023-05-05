@@ -4,8 +4,8 @@ $box-active: #6c6c6c;
 $text-main: #f5f5f5;
 $text-secondary: #b3b3b3;
 $text-box: #121212;
-$site-width: 800px;
 $spotify-green: #1db954;
+$site-width: 800px;
 
 @mixin flex-col-center {
     display: flex;
@@ -34,7 +34,7 @@ $spotify-green: #1db954;
 
 @mixin content-box {
     border-radius: 13px;
-    margin: 1rem;
+    margin: 0;
     padding: 2rem;
     background-color: $box;
     display: flex;
@@ -42,6 +42,18 @@ $spotify-green: #1db954;
     align-items: center;
     flex-wrap: wrap;
     gap: 1rem;
+}
+
+@mixin seethru-box {
+    border: solid white 1px;
+    border-radius: 14px;
+    align-items: center;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 1rem;
+    padding: 1rem;
 }
 
 @mixin hover-resize {

@@ -4,6 +4,7 @@ export const SongPreview = ({ result }) => {
     const prevAudioRef = useRef(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
+    console.log(isHovered)
 
     const handleAudio = (previewUrl) => {
         if (prevAudioRef.current) {
@@ -41,8 +42,8 @@ export const SongPreview = ({ result }) => {
     return (
 
         <img
-            // onMouseEnter={handleMouseEnter}
-            // onMouseLeave={handleMouseLeave}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
             src={result.album.images[0].url}
             height="40"
             alt=""

@@ -1,14 +1,12 @@
-.greeting {
-    font-size: 4rem;
-    font-weight: 700;
-    margin: 1rem;
-    align-self: flex-start;
+.party-container {
+    @include seethru-box;
 }
 
 #create-party {
     max-width: $site-width;
     @include content-box;
     align-items: normal;
+
     h1 {
         color: $spotify-green;
         font-size: 2rem;
@@ -26,11 +24,12 @@
     }
 
     .party-options {
-        width: 50%;
+        width: 40%;
         > * {
             margin-block: 16px;
             display: flex;
             justify-content: space-between;
+            gap: 2rem;
         }
         select {
             background-color: $box-active;
@@ -46,7 +45,7 @@
     }
 
     .guests {
-        width: 50%;
+        width: 40%;
         display: grid;
         grid-auto-flow: row;
         gap: 16px;

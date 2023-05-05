@@ -2,32 +2,38 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    padding: 1rem;
-
+    & > * {
+        margin: 1rem;
+    }
     h2 {
         text-decoration: underline;
         text-align: left;
         font-size: 2rem;
-        margin-bottom: 1rem;
     }
-
+    span {
+        color: $text-secondary;
+        font-size: 0.8rem;
+    }
     ul {
         border: solid white 1px;
         border-radius: 14px;
         align-items: flex-start;
-        margin: 0;
-        padding: 0;
         list-style: none;
-        li {
-            all: unset;
-        }
         .options {
             display: flex;
             align-items: center;
             flex-direction: row;
-            border-top: solid $background 2px;
             justify-content: space-between;
             padding: 1rem;
+
+            button {
+                margin: 1rem;
+                @include hover-resize;
+                &:hover {
+                    background-color: $spotify-green;
+                    border: none;
+                }
+            }
 
             .delete-party {
                 button {
@@ -48,21 +54,33 @@
     background-color: $box;
     border-radius: 8px;
     font-size: 1rem;
-    margin: 1rem;
-    padding: 1rem;
-    &:hover {
+    margin: 1rem 2rem;
+    padding: 0.8rem;
+    &:hover:not(.host) {
         background-color: $box-active;
         transition: background-color 0.2s linear;
         transform: scale(1.01);
     }
 }
 
-.link-copied {
-    padding-block: 1rem;
+h4 {
+    text-align: center;
+    font-size: 1.2rem;
+    letter-spacing: 0.5rem;
+
+    padding: 1rem;
+}
+.host {
+    background-color: black;
+}
+
+.link-copied,
+.copy-link {
+    margin: 1rem;
+    text-align: center;
     color: white;
     font-style: italic;
 }
 .copy-link {
-    padding-block: 1rem;
-    color: $box-active;
+    font-style: normal;
 }

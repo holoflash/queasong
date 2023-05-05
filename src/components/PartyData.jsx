@@ -3,10 +3,18 @@ import { AddToPlaylist } from './AddToPlaylist';
 import { DeleteParty } from './DeleteParty';
 import { useState, useRef } from 'react';
 import { useClickOutside } from '../hooks/useClickOutside';
+import { SongSearch } from '../components/SongSearch'
 
-export const PartyData = ({ profile, partyData, party_id, playlist_id }) => {
+export const PartyData = ({ partyData, party_id, playlist_id }) => {
     const [linkCopied, setLinkCopied] = useState(false);
+    const { settings, party_title, members } = partyData;
+    const [host, ...otherMembers] = members;
     const copyRef = useRef(null);
+    const description = playlistDescription(members);
+
+    const numberOfSongsSuggested = (allowed, left) => {
+        return allowed - left;
+    };
     const URL =
         process.env.NODE_ENV !== 'production'
             ? 'http://localhost:3000'
@@ -21,50 +29,56 @@ export const PartyData = ({ profile, partyData, party_id, playlist_id }) => {
             setLinkCopied(true);
         });
     }
-    const { settings, party_title, members } = partyData;
-    const description = playlistDescription(members);
-
-    const numberOfSongsSuggested = (allowed, left) => {
-        return allowed - left;
-    };
 
     return (
         <div id='party-data'>
             <h2>{party_title}</h2>
             <p>{description}</p>
-            <div className='status'>
+            <ul className="members">
+                <h4>PARTY HOST</h4>
+                <div
+                    className="submission-link host"
+                    key={host._id}
+                >
+                    <h3>{host.name}</h3>
+                    {host.is_done ?
+                        <span>{numberOfSongsSuggested(settings.songs_per_member, host.songs_to_suggest)} songs submitted</span>
+                        : <span>0 songs submitted</span>}
+                    <SongSearch songs_to_suggest={host.songs_to_suggest} party_id={party_id} suggested_by={host} />
+                </div>
+            </ul>
+            <ul className="members">
+                <h4>GUESTS</h4>
                 {linkCopied ? (
                     <p className="link-copied">Link copied to clipboard!</p>
                 ) : (
                     <p className="copy-link">
-                        Click on a name to copy link to clipboard.
+                        Click on a name below to copy song submission link to clipboard:
                     </p>
                 )}
-                <ul className="members">
-                    {partyData.members.map((member) => {
-                        const fullUrl = `${URL}/${encodeURIComponent(member.name)}/${party_id}`;
-                        return (
-                            <div
-                                className="submission-link"
-                                key={member._id}
-                                ref={copyRef}
-                                onClick={() => copyToClipboard(fullUrl)}
-                            >
-                                <h3>{encodeURIComponent(member.name)}</h3>
-                                {member.is_done ?
-                                    <span>{numberOfSongsSuggested(settings.songs_per_member, member.songs_to_suggest)} songs submitted</span>
-                                    : <span>0 songs submitted</span>}
-                            </div>
-                        );
-                    })}
+                {otherMembers.map((member) => {
+                    const fullUrl = `${URL}/${encodeURIComponent(member.name)}/${party_id}`;
+                    return (
+                        <div
+                            className="submission-link"
+                            key={member._id}
+                            ref={copyRef}
+                            onClick={() => copyToClipboard(fullUrl)}
+                        >
+                            <h3>{encodeURIComponent(member.name)}</h3>
+                            {member.is_done ?
+                                <span>{numberOfSongsSuggested(settings.songs_per_member, member.songs_to_suggest)} songs submitted</span>
+                                : <span>0 songs submitted</span>}
+                        </div>
+                    );
+                })}
 
-                    <li className='options'>
-                        <AddToPlaylist party_id={party_id} playlist_id={playlist_id} />
-                        <DeleteParty party_id={party_id} />
-                    </li>
+                <li className='options'>
+                    <AddToPlaylist party_id={party_id} playlist_id={playlist_id} />
+                    <DeleteParty party_id={party_id} />
+                </li>
 
-                </ul>
-            </div>
+            </ul>
         </div >
     );
 };

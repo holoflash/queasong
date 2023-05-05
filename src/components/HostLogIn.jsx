@@ -6,11 +6,13 @@ export const HostLogin = () => {
     return (
         <div className='page'>
             <div className='logo'>que-a-song</div>
-            <div id="login">
-                <p>Log in with spotify to proceed.</p>
-                <button onClick={() => { window.location.href = `${LOGIN_URI}` }}>
-                    Log in with Spotify
-                </button>
+            <div className="wrapper">
+                <div id="login">
+                    <p>Log in with spotify to proceed.</p>
+                    <button onClick={() => { window.location.href = `${LOGIN_URI}` }}>
+                        Log in with Spotify
+                    </button>
+                </div>
             </div>
         </div>
     );

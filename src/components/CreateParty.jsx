@@ -35,10 +35,11 @@ export const CreateParty = ({ profile, setParty_id, setPlaylist_id }) => {
     };
 
     return (
-        <>
+        <div className='party-container'>
             <div id="create-party">
                 <PartyOptions numMembers={numMembers} members={members} handleMemberNameChange={handleMemberNameChange} setNumMembers={setNumMembers} songsPerMember={songsPerMember} setSongsPerMember={setSongsPerMember} partyTitle={partyTitle} setPartyTitle={setPartyTitle} />
                 <button onClick={handleSubmit}>Create party</button>
             </div>
-        </>)
+        </div>
+    )
 };

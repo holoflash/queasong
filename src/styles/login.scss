@@ -1,7 +1,13 @@
+.wrapper {
+    @include seethru-box;
+    width: 100%;
+    margin: 2rem;
+}
+
 #login {
     width: 100%;
     @include content-box;
-    width: fit-content;
+
     button {
         font-weight: 400;
         background-color: $spotify-green;

@@ -1,0 +1,27 @@
+#submit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    h1 {
+        font-size: 3rem;
+        color: $spotify-green;
+    }
+    p {
+        text-align: center;
+        margin-top: 3rem;
+        color: $text-secondary;
+    }
+    #song-search {
+        & > * {
+            padding-top: 0;
+        }
+        @include content-box;
+        background-color: $background;
+        width: 100%;
+
+        .search-results {
+            max-height: 100%;
+        }
+    }
+}

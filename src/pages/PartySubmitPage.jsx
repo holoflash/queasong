@@ -2,7 +2,7 @@ import { Submit } from '../components/Submit'
 
 export const PartySubmitPage = () => {
     return (
-        <div id="page">
+        <div className="page">
             <Submit />
         </div>
     );
