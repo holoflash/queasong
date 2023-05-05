@@ -1,45 +1,15 @@
-.party-container {
+#party-data {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    max-width: $site-width;
-    width: 100%;
-}
-
-#party-data {
     width: 100%;
     padding: 1rem;
+
     h2 {
         text-decoration: underline;
         color: $spotify-green;
         text-align: left;
         font-size: 2rem;
         margin-bottom: 1rem;
-    }
-    details {
-        margin-top: 1rem;
-        border-radius: 14px;
-        overflow: hidden;
-    }
-
-    details[open] {
-        summary {
-            color: $spotify-green;
-        }
-    }
-
-    summary {
-        padding: 0.5rem 1rem;
-        background-color: $background;
-        cursor: pointer;
-        outline: none;
-        border-radius: 14px;
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
-        &:hover {
-            background-color: $box;
-        }
     }
 
     ul {
@@ -51,52 +21,87 @@
             padding: 0.5rem 1rem;
             display: flex;
             justify-content: space-between;
-
-            &:nth-child(even) {
-                background-color: $box-active;
-            }
-            &:nth-child(odd) {
-                background-color: $box;
-            }
+            background-color: $box;
+        }
+        .add-to-playlist {
+            display: flex;
+            flex-direction: row;
+            background-color: $box;
+            border-top: solid $background 2px;
+            justify-content: flex-end;
+            padding: 1rem;
         }
     }
 }
 
+.options {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+details {
+    margin-top: 1rem;
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+details[open] {
+    summary {
+        color: white;
+    }
+}
+
+summary {
+    border-top: solid $box-active 1px;
+    color: $box-active;
+    font-size: 1.2rem;
+    padding: 0.5rem 1rem;
+    background-color: $background;
+    cursor: pointer;
+    outline: none;
+    border-radius: 14px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    &:hover {
+        background-color: $box;
+        color: white;
+    }
+}
+
 @for $i from 1 through 10 {
-    .submission-link:nth-of-type(#{$i}):hover {
+    .submission-link:nth-of-type(#{$i}) {
         background-color: nth($colors, $i);
         transition: background-color 0.2s linear;
     }
 }
 
+.link-menu {
+    width: 100%;
+}
+
 #submission-links {
-    padding: 0;
-    width: fit-content;
+    background-color: $box;
+    cursor: pointer;
+    outline: none;
+    border-radius: 14px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
     display: flex;
     align-items: center;
     flex-direction: row;
     justify-content: flex-start;
     flex-wrap: wrap;
-    gap: 0.1rem;
-    max-width: $site-width;
 }
 .submission-link {
-    background-color: none;
     border-radius: 8px;
     font-size: 1rem;
-    height: 200px;
-    width: 200px;
-    aspect-ratio: 1/1;
-    @include content-box;
-    padding: 1rem;
-    justify-content: center;
-}
-
-.add-songs {
     margin: 1rem;
+    padding: 1rem;
 }
 
 .delete-party {
+    align-self: flex-end;
     margin: 1rem;
     button {
         &:hover {
@@ -106,8 +111,11 @@
 }
 
 .link-copied {
+    padding: 1rem;
     color: white;
+    font-style: italic;
 }
 .copy-link {
+    padding: 1rem;
     color: $box-active;
 }

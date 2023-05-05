@@ -1,15 +1,21 @@
+.greeting {
+    font-size: 4rem;
+    font-weight: 700;
+    margin: 1rem;
+    align-self: flex-start;
+}
+
 #create-party {
+    max-width: $site-width;
     @include content-box;
     align-items: normal;
     h1 {
+        color: $spotify-green;
         font-size: 2rem;
         margin: 0;
         padding: 0;
     }
 
-    span {
-        color: orange;
-    }
     .party-instructions {
         cursor: default;
         margin: 0;

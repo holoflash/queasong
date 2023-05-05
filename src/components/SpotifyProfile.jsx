@@ -1,7 +1,6 @@
 import { Logout } from './Logout';
 import { useSpotifyProfile } from '../hooks/useSpotifyProfile';
 import { useState, useRef } from 'react';
-import { Greeting } from './Greeting'
 import { useClickOutside } from '../hooks/useClickOutside';
 
 export const SpotifyProfile = () => {
@@ -21,7 +20,6 @@ export const SpotifyProfile = () => {
         <>
             {profile && (
                 <div id="profile">
-                    <Greeting profile={profile} />
                     <div className='banner' onClick={handleToggle} ref={bannerRef}>
                         <img src={profile.images[0].url} alt="Avatar" />
                         <span>{profile.display_name}</span>

@@ -6,7 +6,6 @@ import { Footer } from '../components/Footer'
 export const PartyPage = () => {
     return (
         <div className="page">
-            <h1>que-a-song</h1>
             {!useSpotifyProfile() ? <HostLogin /> : <HostMain />}
             <Footer />
         </div>

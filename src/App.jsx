@@ -10,17 +10,15 @@ import { Home } from './pages/Home';
 
 function App() {
     return (
-        <>
-            <BrowserRouter>
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/party" element={<PartyPage />} />
-                    <Route path="/curate" element={<CuratorPage />} />
-                    <Route path="/submit" element={<SubmitToCuratorsPage />} />
-                    <Route path="/:party_member/:party_id" element={<PartySubmitPage />} />
-                </Routes>
-            </BrowserRouter>
-        </>
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/party" element={<PartyPage />} />
+                <Route path="/curate" element={<CuratorPage />} />
+                <Route path="/submit" element={<SubmitToCuratorsPage />} />
+                <Route path="/:party_member/:party_id" element={<PartySubmitPage />} />
+            </Routes>
+        </BrowserRouter>
     );
 }
 

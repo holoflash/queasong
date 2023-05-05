@@ -20,30 +20,33 @@ export const AllLinks = ({ partyData, party_id }) => {
     }
 
     return (
-        <>
-            {linkCopied ? (
-                <p className="link-copied">Link copied to clipboard!</p>
-            ) : (
-                <p className="copy-link">
-                    Click on a name to copy link to clipboard
-                </p>
-            )}
-            <div id="submission-links">
-                {partyData.members.slice(1).map((member) => {
-                    const fullUrl = `${URL}/${encodeURIComponent(member.name)}/${party_id}`;
-                    return (
-                        <div
-                            className="submission-link"
-                            key={member.name}
-                            ref={copyRef}
-                            onClick={() => copyToClipboard(fullUrl)}
-                        >
-                            <h2>{encodeURIComponent(member.name)}</h2>
-                        </div>
-                    );
-                })}
-            </div>
-        </>
+        <div className='link-menu'>
+            <details open>
+                <summary>Links</summary>
+                {linkCopied ? (
+                    <p className="link-copied">Link copied to clipboard!</p>
+                ) : (
+                    <p className="copy-link">
+                        Click on a name to copy link to clipboard
+                    </p>
+                )}
+                <div id="submission-links">
+                    {partyData.members.slice(1).map((member) => {
+                        const fullUrl = `${URL}/${encodeURIComponent(member.name)}/${party_id}`;
+                        return (
+                            <div
+                                className="submission-link"
+                                key={member.name}
+                                ref={copyRef}
+                                onClick={() => copyToClipboard(fullUrl)}
+                            >
+                                <h3>{encodeURIComponent(member.name)}</h3>
+                            </div>
+                        );
+                    })}
+                </div>
+            </details>
+        </div>
 
     );
 }

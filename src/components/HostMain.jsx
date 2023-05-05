@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import { useSpotifyProfile } from '../hooks/useSpotifyProfile';
 import { usePartyData } from '../hooks/usePartyData'
-import { DeleteParty } from './DeleteParty';
-import { AllLinks } from './AllLinks';
 import { CreateParty } from './CreateParty';
 import { PartyData } from './PartyData';
-import { AddToPlaylist } from './AddToPlaylist';
+
 import { SongSearch } from './SongSearch';
 import { SpotifyProfile } from "./SpotifyProfile";
+import { Greeting } from './Greeting'
 
 export const HostMain = () => {
     const profile = useSpotifyProfile();
@@ -21,19 +20,15 @@ export const HostMain = () => {
             {(!partyData && profile) &&
                 <>
                     <SpotifyProfile />
+                    <Greeting profile={profile} />
                     <CreateParty profile={profile} setParty_id={setParty_id} setPlaylist_id={setPlaylist_id} />
                 </>
             }
             {(party_id && profile && partyData) &&
                 <>
                     <SpotifyProfile />
-                    <PartyData partyData={partyData} />
-                    <div className='party-container'>
-                        <SongSearch songs_to_suggest={hostData.songs_to_suggest} party_id={party_id} suggested_by={hostData.name} />
-                        <AddToPlaylist party_id={party_id} playlist_id={playlist_id} />
-                    </div>
-                    <AllLinks partyData={partyData} profile={profile} party_id={party_id} />
-                    <DeleteParty party_id={party_id} />
+                    <PartyData profile={profile} partyData={partyData} party_id={party_id} playlist_id={playlist_id} />
+                    <SongSearch songs_to_suggest={hostData.songs_to_suggest} party_id={party_id} suggested_by={hostData.name} />
                 </>
             }
         </>

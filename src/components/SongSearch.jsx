@@ -37,6 +37,7 @@ export const SongSearch = ({ songs_to_suggest, party_id, suggested_by }) => {
         <div id="song-search">
             {(songsLeft !== 0 && (songsLeft - selectedSongs.length !== 0))
                 ? <>
+                    <h2>Select songs you'd like to add:</h2><small>(optional)</small>
                     <div id="searchbar">
                         <input
                             type="text"
@@ -96,6 +97,7 @@ export const SongSearch = ({ songs_to_suggest, party_id, suggested_by }) => {
                 </div>}
             {selectedSongs.length > 0 && (
                 <div className="selected-songs">
+                    <p>Your suggestions:</p>
                     {selectedSongs.map((result, index) => (
                         <div
                             onClick={() =>

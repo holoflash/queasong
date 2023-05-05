@@ -1,4 +1,4 @@
-#home {
+#navigation {
     background-color: $background;
     gap: 1rem;
     grid-auto-flow: column;
@@ -18,7 +18,7 @@
 
     .dead,
     button:disabled {
-        opacity: 0.3;
+        opacity: 0.2;
         pointer-events: none;
     }
 }
