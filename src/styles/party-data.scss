@@ -6,116 +6,63 @@
 
     h2 {
         text-decoration: underline;
-        color: $spotify-green;
         text-align: left;
         font-size: 2rem;
         margin-bottom: 1rem;
     }
 
     ul {
+        border: solid white 1px;
+        border-radius: 14px;
+        align-items: flex-start;
         margin: 0;
         padding: 0;
         list-style: none;
-
-        .status {
-            padding: 0.5rem 1rem;
-            display: flex;
-            justify-content: space-between;
-            background-color: $box;
+        li {
+            all: unset;
         }
-        .add-to-playlist {
+        .options {
             display: flex;
+            align-items: center;
             flex-direction: row;
-            background-color: $box;
             border-top: solid $background 2px;
-            justify-content: flex-end;
+            justify-content: space-between;
             padding: 1rem;
+
+            .delete-party {
+                button {
+                    background-color: $background;
+                    color: white;
+                    border: solid white 1px;
+                    &:hover {
+                        background-color: #ff4136;
+                        border: none;
+                    }
+                }
+            }
         }
     }
 }
 
-.options {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-}
-
-details {
-    margin-top: 1rem;
-    border-radius: 14px;
-    overflow: hidden;
-}
-
-details[open] {
-    summary {
-        color: white;
-    }
-}
-
-summary {
-    border-top: solid $box-active 1px;
-    color: $box-active;
-    font-size: 1.2rem;
-    padding: 0.5rem 1rem;
-    background-color: $background;
-    cursor: pointer;
-    outline: none;
-    border-radius: 14px;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-    &:hover {
-        background-color: $box;
-        color: white;
-    }
-}
-
-@for $i from 1 through 10 {
-    .submission-link:nth-of-type(#{$i}) {
-        background-color: nth($colors, $i);
-        transition: background-color 0.2s linear;
-    }
-}
-
-.link-menu {
-    width: 100%;
-}
-
-#submission-links {
-    background-color: $box;
-    cursor: pointer;
-    outline: none;
-    border-radius: 14px;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-}
 .submission-link {
+    background-color: $box;
     border-radius: 8px;
     font-size: 1rem;
     margin: 1rem;
     padding: 1rem;
-}
-
-.delete-party {
-    align-self: flex-end;
-    margin: 1rem;
-    button {
-        &:hover {
-            background-color: #ff4136;
-        }
+    &:hover {
+        background-color: $box-active;
+        transition: background-color 0.2s linear;
+        transform: scale(1.01);
     }
 }
 
 .link-copied {
-    padding: 1rem;
+    padding-block: 1rem;
     color: white;
     font-style: italic;
 }
 .copy-link {
-    padding: 1rem;
+    padding-block: 1rem;
     color: $box-active;
 }

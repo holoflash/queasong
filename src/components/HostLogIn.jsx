@@ -5,6 +5,7 @@ export const HostLogin = () => {
             : 'https://queasong.onrender.com/login';
     return (
         <div className='page'>
+            <div className='logo'>que-a-song</div>
             <div id="login">
                 <p>Log in with spotify to proceed.</p>
                 <button onClick={() => { window.location.href = `${LOGIN_URI}` }}>

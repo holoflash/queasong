@@ -18,9 +18,11 @@
         color: #fff;
         display: flex;
         height: 32px;
+        background-color: $background;
         &:hover:not(:has(.menu)) {
             background-color: $box;
         }
+        box-shadow: 0 16px 24px rgba(0, 0, 0, 0.3), 0 6px 8px rgba(0, 0, 0, 0.2);
 
         .menu {
             position: absolute;

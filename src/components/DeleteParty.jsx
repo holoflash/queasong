@@ -14,7 +14,7 @@ export const DeleteParty = ({ party_id }) => {
 
     return (
         <div className="delete-party">
-            <button onClick={() => deleteAllPartyData()}>DELETE PARTY</button>
+            <button onClick={() => deleteAllPartyData()}>Delete party</button>
         </div>
     );
 };

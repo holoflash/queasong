@@ -18,6 +18,6 @@ export const AddToPlaylist = ({ party_id, playlist_id }) => {
     }
 
     return (
-        <button onClick={async () => await letsGo()}>+ Add all submissions to playlist</button>
+        <button onClick={async () => await letsGo()}>Add all to playlist</button>
     );
 };

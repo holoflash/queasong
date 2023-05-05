@@ -1,9 +1,26 @@
 import { playlistDescription } from '../utils/playlistDescription';
 import { AddToPlaylist } from './AddToPlaylist';
 import { DeleteParty } from './DeleteParty';
-import { AllLinks } from './AllLinks';
+import { useState, useRef } from 'react';
+import { useClickOutside } from '../hooks/useClickOutside';
 
 export const PartyData = ({ profile, partyData, party_id, playlist_id }) => {
+    const [linkCopied, setLinkCopied] = useState(false);
+    const copyRef = useRef(null);
+    const URL =
+        process.env.NODE_ENV !== 'production'
+            ? 'http://localhost:3000'
+            : 'https://queasong.onrender.com';
+
+    useClickOutside(copyRef, () => {
+        setLinkCopied(false);
+    });
+
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            setLinkCopied(true);
+        });
+    }
     const { settings, party_title, members } = partyData;
     const description = playlistDescription(members);
 
@@ -15,26 +32,39 @@ export const PartyData = ({ profile, partyData, party_id, playlist_id }) => {
         <div id='party-data'>
             <h2>{party_title}</h2>
             <p>{description}</p>
-            <details open>
-                <summary>Status</summary>
+            <div className='status'>
+                {linkCopied ? (
+                    <p className="link-copied">Link copied to clipboard!</p>
+                ) : (
+                    <p className="copy-link">
+                        Click on a name to copy link to clipboard.
+                    </p>
+                )}
                 <ul className="members">
-                    {members.map((member) => (
-                        <li className="status" key={member._id}>
-                            {member.name}
-                            <div className="member-detail">
+                    {partyData.members.map((member) => {
+                        const fullUrl = `${URL}/${encodeURIComponent(member.name)}/${party_id}`;
+                        return (
+                            <div
+                                className="submission-link"
+                                key={member._id}
+                                ref={copyRef}
+                                onClick={() => copyToClipboard(fullUrl)}
+                            >
+                                <h3>{encodeURIComponent(member.name)}</h3>
                                 {member.is_done ?
                                     <span>{numberOfSongsSuggested(settings.songs_per_member, member.songs_to_suggest)} songs submitted</span>
                                     : <span>0 songs submitted</span>}
                             </div>
-                        </li>
-                    ))}
-                    <li className='add-to-playlist'>
-                        <div className='member-detail'><AddToPlaylist party_id={party_id} playlist_id={playlist_id} /></div>
+                        );
+                    })}
+
+                    <li className='options'>
+                        <AddToPlaylist party_id={party_id} playlist_id={playlist_id} />
+                        <DeleteParty party_id={party_id} />
                     </li>
+
                 </ul>
-            </details>
-            <AllLinks partyData={partyData} profile={profile} party_id={party_id} playlist_id={playlist_id} />
-            <DeleteParty party_id={party_id} />
-        </div>
+            </div>
+        </div >
     );
 };

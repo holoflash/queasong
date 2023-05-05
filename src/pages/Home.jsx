@@ -1,4 +1,3 @@
-import { Footer } from '../components/Footer'
 import { Navigation } from '../components/Navigation';
 
 export const Home = () => {
@@ -6,7 +5,6 @@ export const Home = () => {
         <div className='page'>
             <div className='logo'>que-a-song</div>
             <Navigation />
-            <Footer />
         </div>
     );
 };
