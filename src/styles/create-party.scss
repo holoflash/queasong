@@ -34,6 +34,7 @@
         select {
             background-color: $box-active;
             border: 1px solid transparent;
+            max-height: 2rem;
             border-radius: 2px;
             color: #fff;
             &:hover {
