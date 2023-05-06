@@ -5,7 +5,8 @@ $text-main: #f5f5f5;
 $text-secondary: #b3b3b3;
 $text-box: #121212;
 $spotify-green: #1db954;
-$site-width: 800px;
+$danger-red: #ff4136;
+$site-width: 900px;
 
 @mixin flex-col-center {
     display: flex;
@@ -26,7 +27,7 @@ $site-width: 800px;
     background-color: #ffffff;
     color: #000000;
     display: flex;
-    border-radius: 14px;
+    border-radius: 10px;
     font-size: 1rem;
     align-items: center;
     padding: 8px 19px;
@@ -46,7 +47,7 @@ $site-width: 800px;
 
 @mixin seethru-box {
     border: solid white 1px;
-    border-radius: 14px;
+    border-radius: 13px;
     align-items: center;
     margin: 0;
     display: flex;

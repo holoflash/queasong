@@ -39,7 +39,6 @@
         border-radius: 4px;
         width: 100%;
         .result {
-            margin: 0;
             user-select: none;
             padding: 0 16px;
             background-color: $text-box;
@@ -52,10 +51,6 @@
 
             &:hover {
                 background-color: $box;
-            }
-
-            #number {
-                width: 0;
             }
 
             img {
@@ -80,10 +75,12 @@
             #album {
                 font-size: 0.8rem;
             }
-        }
-        .selected {
-            #number {
-                color: $spotify-green;
+            .add-song {
+                margin-left: auto;
+                padding: 1rem;
+                &:hover {
+                    color: $spotify-green;
+                }
             }
         }
     }
@@ -101,7 +98,8 @@
         width: 100%;
         gap: 1rem;
         .result {
-            width: 100%;
+            width: fit-content;
+            min-width: 100%;
             margin: 0;
             user-select: none;
             padding: 0 16px;
@@ -118,9 +116,6 @@
                 background-color: $box;
             }
 
-            #number {
-                width: 0;
-            }
             img {
                 padding-left: 40px;
             }
@@ -142,6 +137,12 @@
             #album {
                 font-size: 0.8rem;
             }
+            .add-song {
+                margin-left: auto;
+                &:hover {
+                    color: $danger-red;
+                }
+            }
         }
         button {
             width: fit-content;
@@ -151,11 +152,6 @@
             &:hover {
                 background-color: $spotify-green;
                 border: none;
-            }
-        }
-        .selected {
-            #number {
-                color: green;
             }
         }
     }

@@ -1,8 +1,8 @@
 import { songSearch } from '../services/songSearch';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useSongsLeft } from '../hooks/useSongsLeft';
 import { addSuggestion } from '../services/addSuggestion';
-import { SongPreview } from './SongPreview';
+import { AudioPreview } from './AudioPreview';
 
 export const SongSearch = ({ songs_to_suggest, party_id, suggested_by }) => {
     const [searchResults, setSearchResults] = useState([])
@@ -10,6 +10,7 @@ export const SongSearch = ({ songs_to_suggest, party_id, suggested_by }) => {
     const [submittedSongs, setSubmittedSongs] = useState(0);
     const [query, setQuery] = useState("")
     const songsLeft = useSongsLeft(songs_to_suggest, submittedSongs);
+    const audioRef = useRef(new Audio());
 
     const submitSuggestions = () => {
         selectedSongs.forEach((song) => {
@@ -32,6 +33,16 @@ export const SongSearch = ({ songs_to_suggest, party_id, suggested_by }) => {
             document.removeEventListener('click', handleClickOutside);
         };
     }, [setSearchResults]);
+
+    const chooseSong = (e, result) => {
+        setSearchResults([]);
+        e.currentTarget.classList.toggle("selected");
+        setSelectedSongs((prev) =>
+            prev.some((song) => song.uri === result.uri)
+                ? prev.filter((song) => song.uri !== result.uri)
+                : [...prev, result]
+        );
+    }
 
     return (<>
         <div id="song-search">
@@ -59,28 +70,25 @@ export const SongSearch = ({ songs_to_suggest, party_id, suggested_by }) => {
                             {searchResults
                                 .filter((result) => !selectedSongs.some((s) => (s.uri === result.uri) || ((s.name === result.name) && (s.artists[0].name === result.artists[0].name))))
                                 .map((result, index) => (
-                                    <div
-                                        onClick={(e) => {
-                                            setSearchResults([]);
-                                            e.currentTarget.classList.toggle("selected");
-                                            setSelectedSongs((prev) =>
-                                                prev.some((song) => song.uri === result.uri)
-                                                    ? prev.filter((song) => song.uri !== result.uri)
-                                                    : [...prev, result]
-                                            );
-                                        }}
-                                        className="result"
-                                        key={result.uri}
-                                    >
-
-                                        <div id="number">{index + 1}</div>
-                                        <SongPreview result={result} />
+                                    <div className="result" key={result.uri}>
+                                        <AudioPreview audioRef={audioRef} index={index + 1} song={result} />
+                                        <img
+                                            src={result.album.images[0].url}
+                                            height="40"
+                                            alt=""
+                                        />
                                         <div id="name-artist">
                                             <p id="name">{result.name}</p>
                                             <div id='artists'>
                                                 {result.artists.map(artist => artist.name).join(', ')}
                                             </div>
                                         </div>
+                                        <div
+                                            onClick={(e) => {
+                                                chooseSong(e, result)
+                                            }}
+                                            className='add-song'
+                                        >ADD</div>
                                     </div>
                                 ))
                             }
@@ -94,16 +102,19 @@ export const SongSearch = ({ songs_to_suggest, party_id, suggested_by }) => {
                     <p>Your suggestions:</p>
                     {selectedSongs.map((result, index) => (
                         <div
-                            onClick={() =>
-                                setSelectedSongs(
-                                    selectedSongs.filter((s) => s.uri !== result.uri)
-                                )
-                            }
                             className="result"
                             key={result.uri}
                         >
+
                             <div id="number">{index + 1}</div>
-                            <SongPreview result={result} />
+
+                            <img
+                                src={result.album.images[0].url}
+                                height="40"
+                                alt=""
+                            />
+
+
                             <div id="name-artist">
                                 <p id="name">{result.name}</p>
                                 <div id="artists">
@@ -115,6 +126,13 @@ export const SongSearch = ({ songs_to_suggest, party_id, suggested_by }) => {
                                     ))}
                                 </div>
                             </div>
+                            <div
+                                onClick={(e) => {
+                                    chooseSong(e, result)
+
+                                }}
+                                className='add-song'
+                            >REMOVE</div>
                         </div>
                     ))}
                     <button onClick={submitSuggestions}>Submit suggestions</button>

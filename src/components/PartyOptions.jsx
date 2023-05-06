@@ -1,5 +1,3 @@
-
-
 export const PartyOptions = ({ numMembers, songsPerMember, members, handleMemberNameChange, setNumMembers, setSongsPerMember, partyTitle, setPartyTitle }) => {
     const MAX_GUESTS = 10;
     const MAX_SONGS_PER_GUEST = 10;
