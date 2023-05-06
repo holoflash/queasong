@@ -43,7 +43,7 @@
             padding: 0 16px;
             background-color: $text-box;
             border-radius: 4px;
-            font-size: 1rem;
+            font-size: 0.9rem;
             position: relative;
             display: flex;
             flex-direction: row;
@@ -52,10 +52,10 @@
             &:hover {
                 background-color: $box;
             }
-
-            img {
-                padding-left: 40px;
+            img:hover {
+                outline: solid white 1px;
             }
+
             #name-artist {
                 display: flex;
                 flex-direction: column;
@@ -70,12 +70,10 @@
                 display: flex;
                 flex-direction: row;
                 justify-content: flex-start;
-                font-size: 0.8rem;
-            }
-            #album {
-                font-size: 0.8rem;
+                font-size: 0.7rem;
             }
             .add-song {
+                font-size: 0.8rem;
                 margin-left: auto;
                 padding: 1rem;
                 &:hover {
@@ -83,67 +81,7 @@
                 }
             }
         }
-    }
 
-    .selected-songs {
-        max-height: 20rem;
-        overflow: scroll;
-        margin-top: 1rem;
-        display: flex;
-        flex-direction: column;
-        color: #b3b3b3;
-        text-transform: none;
-        line-height: 1.6;
-        border-radius: 4px;
-        width: 100%;
-        gap: 1rem;
-        .result {
-            width: fit-content;
-            min-width: 100%;
-            margin: 0;
-            user-select: none;
-            padding: 0 16px;
-            border: 1px solid transparent;
-            background-color: $text-box;
-            border-radius: 4px;
-            font-size: 1rem;
-            position: relative;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            align-self: flex-start;
-            &:hover {
-                background-color: $box;
-            }
-
-            img {
-                padding-left: 40px;
-            }
-            #name-artist {
-                display: flex;
-                flex-direction: column;
-                padding: 1rem;
-            }
-            #name {
-                color: $text-main;
-                padding: 0;
-                margin: 0;
-            }
-            #artists {
-                font-size: 0.8rem;
-                display: flex;
-                flex-direction: row;
-            }
-            #album {
-                font-size: 0.8rem;
-            }
-            .add-song {
-                margin-left: auto;
-                &:hover {
-                    color: $danger-red;
-                }
-            }
-        }
         button {
             width: fit-content;
             align-self: flex-start;

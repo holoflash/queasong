@@ -1,16 +1,17 @@
 import { songSearch } from '../services/songSearch';
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import { useSongsLeft } from '../hooks/useSongsLeft';
 import { addSuggestion } from '../services/addSuggestion';
-import { AudioPreview } from './AudioPreview';
+import { useAudioPlayer } from '../hooks/useAudioPlayer';
 
 export const SongSearch = ({ songs_to_suggest, party_id, suggested_by }) => {
-    const [searchResults, setSearchResults] = useState([])
+    const [searchResults, setSearchResults] = useState([]);
     const [selectedSongs, setSelectedSongs] = useState([]);
     const [submittedSongs, setSubmittedSongs] = useState(0);
-    const [query, setQuery] = useState("")
+    const [query, setQuery] = useState("");
     const songsLeft = useSongsLeft(songs_to_suggest, submittedSongs);
-    const audioRef = useRef(new Audio());
+    const { play } = useAudioPlayer();
+
 
     const submitSuggestions = () => {
         selectedSongs.forEach((song) => {
@@ -19,20 +20,6 @@ export const SongSearch = ({ songs_to_suggest, party_id, suggested_by }) => {
         setSubmittedSongs(selectedSongs.length)
         setSelectedSongs([])
     };
-
-    useEffect(() => {
-        function handleClickOutside(event) {
-            const dropdown = document.querySelector('.dropdown');
-            if (dropdown && !dropdown.contains(event.target)) {
-                setSearchResults([]);
-            }
-        }
-
-        document.addEventListener('click', handleClickOutside);
-        return () => {
-            document.removeEventListener('click', handleClickOutside);
-        };
-    }, [setSearchResults]);
 
     const chooseSong = (e, result) => {
         setSearchResults([]);
@@ -70,13 +57,16 @@ export const SongSearch = ({ songs_to_suggest, party_id, suggested_by }) => {
                             {searchResults
                                 .filter((result) => !selectedSongs.some((s) => (s.uri === result.uri) || ((s.name === result.name) && (s.artists[0].name === result.artists[0].name))))
                                 .map((result, index) => (
-                                    <div className="result" key={result.uri}>
-                                        <AudioPreview audioRef={audioRef} index={index + 1} song={result} />
+                                    <div
+                                        className="result" key={result.uri}>
+
                                         <img
+                                            onClick={() => play(result)}
                                             src={result.album.images[0].url}
                                             height="40"
                                             alt=""
                                         />
+
                                         <div id="name-artist">
                                             <p id="name">{result.name}</p>
                                             <div id='artists'>
@@ -98,17 +88,15 @@ export const SongSearch = ({ songs_to_suggest, party_id, suggested_by }) => {
                     You are done!
                 </div>}
             {selectedSongs.length > 0 && (
-                <div className="selected-songs">
+                <div className="search-results selected">
                     <p>Your suggestions:</p>
                     {selectedSongs.map((result, index) => (
                         <div
                             className="result"
                             key={result.uri}
                         >
-
-                            <div id="number">{index + 1}</div>
-
                             <img
+                                onClick={() => play(result)}
                                 src={result.album.images[0].url}
                                 height="40"
                                 alt=""
@@ -132,7 +120,7 @@ export const SongSearch = ({ songs_to_suggest, party_id, suggested_by }) => {
 
                                 }}
                                 className='add-song'
-                            >REMOVE</div>
+                            >DEL</div>
                         </div>
                     ))}
                     <button onClick={submitSuggestions}>Submit suggestions</button>

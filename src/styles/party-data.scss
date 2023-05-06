@@ -1,7 +1,7 @@
 #party-data {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 2rem;
     width: 100%;
 
     h2 {
@@ -15,7 +15,6 @@
     }
     ul {
         width: 100%;
-        border: solid white 1px;
         border-radius: 14px;
         align-items: flex-start;
         list-style: none;
@@ -53,12 +52,18 @@
     background-color: $box;
     border-radius: 8px;
     font-size: 1rem;
-    margin: 1rem;
-    padding: 0.8rem;
-    &:hover:not(.host) {
-        background-color: $box-active;
-        transition: background-color 0.2s linear;
-        transform: scale(1.01);
+    padding: 1rem;
+    button {
+        margin: 0;
+        margin-top: 1rem;
+        @include hover-resize;
+        &:hover {
+            background-color: $spotify-green;
+            border: none;
+        }
+    }
+    .copy {
+        padding-top: 1rem;
     }
 }
 
@@ -69,17 +74,7 @@ h4 {
     padding: 1rem;
 }
 .host {
-    background-color: black;
-}
-
-.link-copied,
-.copy-link {
-    margin: 1rem;
-    text-align: left;
-    padding: 1rem;
-    color: white;
-    font-style: italic;
-}
-.copy-link {
-    font-style: normal;
+    background-color: $background;
+    padding: 0;
+    padding-bottom: 3rem;
 }

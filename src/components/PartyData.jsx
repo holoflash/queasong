@@ -49,13 +49,6 @@ export const PartyData = ({ partyData, party_id, playlist_id }) => {
             </ul>
             <ul className="members">
                 <h4>GUESTS</h4>
-                {linkCopied ? (
-                    <p className="link-copied">Link copied to clipboard!</p>
-                ) : (
-                    <p className="copy-link">
-                        Click on a name below to copy song submission link to clipboard:
-                    </p>
-                )}
                 {otherMembers.map((member) => {
                     const fullUrl = `${URL}/${encodeURIComponent(member.name)}/${party_id}`;
                     return (
@@ -63,12 +56,19 @@ export const PartyData = ({ partyData, party_id, playlist_id }) => {
                             className="submission-link"
                             key={member._id}
                             ref={copyRef}
-                            onClick={() => copyToClipboard(fullUrl)}
                         >
                             <h3>{encodeURIComponent(member.name)}</h3>
                             {member.is_done ?
                                 <span>{numberOfSongsSuggested(settings.songs_per_member, member.songs_to_suggest)} songs submitted</span>
                                 : <span>0 songs submitted</span>}
+                            {linkCopied ? (
+                                <p className="copy">Link copied to clipboard!</p>
+                            ) : (
+                                <button
+                                    onClick={() => copyToClipboard(fullUrl)} className="copy-link">
+                                    COPY LINK
+                                </button>
+                            )}
                         </div>
                     );
                 })}
