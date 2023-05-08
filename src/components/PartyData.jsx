@@ -3,31 +3,19 @@ import { AddToPlaylist } from './AddToPlaylist';
 import { DeleteParty } from './DeleteParty';
 import { useState, useRef } from 'react';
 import { useClickOutside } from '../hooks/useClickOutside';
-import { SongSearch } from '../components/SongSearch'
 
 export const PartyData = ({ partyData, party_id, playlist_id }) => {
-    const [linkCopied, setLinkCopied] = useState(false);
-    const { settings, party_title, members } = partyData;
-    const [host, ...otherMembers] = members;
-    const copyRef = useRef(null);
+    const { settings, party_title, members, host_name } = partyData;
     const description = playlistDescription(members);
+    const copyRef = useRef(null);
+    const URL = process.env.NODE_ENV !== 'production' ? 'http://localhost:3000' : 'https://queasong.onrender.com';
+    const [linkCopied, setLinkCopied] = useState({ guests: members.reduce((acc, guest) => ({ ...acc, [guest._id]: false }), {}) });
+    const numberOfSongsSuggested = (allowed, left) => allowed - left;
 
-    const numberOfSongsSuggested = (allowed, left) => {
-        return allowed - left;
-    };
-    const URL =
-        process.env.NODE_ENV !== 'production'
-            ? 'http://localhost:3000'
-            : 'https://queasong.onrender.com';
+    useClickOutside(copyRef, () => setLinkCopied((prev) => ({ ...prev, guests: members.reduce((acc, guest) => ({ ...acc, [guest._id]: false }), {}) })));
 
-    useClickOutside(copyRef, () => {
-        setLinkCopied(false);
-    });
-
-    function copyToClipboard(text) {
-        navigator.clipboard.writeText(text).then(() => {
-            setLinkCopied(true);
-        });
+    function copyToClipboard(text, memberId) {
+        navigator.clipboard.writeText(text).then(() => setLinkCopied((prev) => ({ guests: { ...prev.guests, [memberId]: true } })));
     }
 
     return (
@@ -35,50 +23,40 @@ export const PartyData = ({ partyData, party_id, playlist_id }) => {
             <h2>{party_title}</h2>
             <p>{description}</p>
             <ul className="members">
-                <h4>PARTY HOST</h4>
-                <div
-                    className="submission-link host"
-                    key={host._id}
-                >
-                    <h3>{host.name}</h3>
-                    {host.is_done ?
-                        <span>{numberOfSongsSuggested(settings.songs_per_member, host.songs_to_suggest)} songs submitted</span>
-                        : <span>0 songs submitted</span>}
-                    <SongSearch songs_to_suggest={host.songs_to_suggest} party_id={party_id} suggested_by={host} />
-                </div>
-            </ul>
-            <ul className="members">
-                <h4>GUESTS</h4>
-                {otherMembers.map((member) => {
+                <h4>LINKS</h4>
+                {members.map((member) => {
                     const fullUrl = `${URL}/${encodeURIComponent(member.name)}/${party_id}`;
-                    return (
-                        <div
-                            className="submission-link"
-                            key={member._id}
-                            ref={copyRef}
-                        >
-                            <h3>{encodeURIComponent(member.name)}</h3>
-                            {member.is_done ?
-                                <span>{numberOfSongsSuggested(settings.songs_per_member, member.songs_to_suggest)} songs submitted</span>
-                                : <span>0 songs submitted</span>}
-                            {linkCopied ? (
-                                <p className="copy">Link copied to clipboard!</p>
-                            ) : (
-                                <button
-                                    onClick={() => copyToClipboard(fullUrl)} className="copy-link">
-                                    COPY LINK
-                                </button>
-                            )}
-                        </div>
-                    );
+                    if (member.name === host_name) {
+                        return (
+                            <div className="submission-link" key={member._id}>
+                                <div className='name-info'>
+                                    <h3>{encodeURIComponent(member.name)}</h3>
+                                    <span>{member.is_done ? `${numberOfSongsSuggested(settings.songs_per_member, member.songs_to_suggest)} songs submitted` : '0 songs submitted'}</span>
+                                </div>
+                                <a href={fullUrl}><button className="copy link host">SUBMIT</button></a>
+                            </div>
+                        );
+                    } else {
+                        return (
+                            <div className="submission-link" key={member._id} ref={copyRef}>
+                                <div className='name-info'>
+                                    <h3>{encodeURIComponent(member.name)}</h3>
+                                    <span>{member.is_done ? `${numberOfSongsSuggested(settings.songs_per_member, member.songs_to_suggest)} songs submitted` : '0 songs submitted'}</span>
+                                </div>
+                                {linkCopied.guests[member._id] ? <div className="copy">Link copied to clipboard!</div> :
+                                    <button className="copy link" onClick={() => copyToClipboard(fullUrl, member._id)}>COPY LINK</button>}
+                            </div>
+                        );
+                    }
                 })}
 
+
                 <li className='options'>
+                    <a href={localStorage.getItem("playlist_url")}>CLICK HERE</a>
                     <AddToPlaylist party_id={party_id} playlist_id={playlist_id} />
                     <DeleteParty party_id={party_id} />
                 </li>
-
-            </ul>
+            </ul >
         </div >
     );
 };

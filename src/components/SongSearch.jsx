@@ -1,28 +1,29 @@
 import { songSearch } from '../services/songSearch';
 import { useState } from 'react';
-import { useSongsLeft } from '../hooks/useSongsLeft';
 import { addSuggestion } from '../services/addSuggestion';
 import { useAudioPlayer } from '../hooks/useAudioPlayer';
 
 export const SongSearch = ({ songs_to_suggest, party_id, suggested_by }) => {
     const [searchResults, setSearchResults] = useState([]);
     const [selectedSongs, setSelectedSongs] = useState([]);
-    const [submittedSongs, setSubmittedSongs] = useState(0);
     const [query, setQuery] = useState("");
-    const songsLeft = useSongsLeft(songs_to_suggest, submittedSongs);
-    const { play } = useAudioPlayer();
+    const { play, pause } = useAudioPlayer();
 
+    document.addEventListener("click", (e) => {
+        if (e.target.tagName !== "IMG") {
+            pause()
+        }
+    })
 
     const submitSuggestions = () => {
         selectedSongs.forEach((song) => {
             addSuggestion(party_id, song.name, song.uri, suggested_by);
         });
-        setSubmittedSongs(selectedSongs.length)
         setSelectedSongs([])
+        window.location.reload()
     };
 
     const chooseSong = (e, result) => {
-        setSearchResults([]);
         e.currentTarget.classList.toggle("selected");
         setSelectedSongs((prev) =>
             prev.some((song) => song.uri === result.uri)
@@ -33,7 +34,7 @@ export const SongSearch = ({ songs_to_suggest, party_id, suggested_by }) => {
 
     return (<>
         <div id="song-search">
-            {(songsLeft !== 0 && (songsLeft - selectedSongs.length !== 0))
+            {songs_to_suggest !== 0
                 ? <>
                     <div id="searchbar">
                         <input
@@ -59,14 +60,12 @@ export const SongSearch = ({ songs_to_suggest, party_id, suggested_by }) => {
                                 .map((result, index) => (
                                     <div
                                         className="result" key={result.uri}>
-
                                         <img
                                             onClick={() => play(result)}
                                             src={result.album.images[0].url}
                                             height="40"
                                             alt=""
                                         />
-
                                         <div id="name-artist">
                                             <p id="name">{result.name}</p>
                                             <div id='artists'>
@@ -102,16 +101,10 @@ export const SongSearch = ({ songs_to_suggest, party_id, suggested_by }) => {
                                 alt=""
                             />
 
-
                             <div id="name-artist">
                                 <p id="name">{result.name}</p>
-                                <div id="artists">
-                                    {result.artists.map((artist, index) => (
-                                        <div key={artist.id}>
-                                            {artist.name}
-                                            {index < result.artists.length - 1 && ", "}
-                                        </div>
-                                    ))}
+                                <div id='artists'>
+                                    {result.artists.map(artist => artist.name).join(', ')}
                                 </div>
                             </div>
                             <div
@@ -126,7 +119,7 @@ export const SongSearch = ({ songs_to_suggest, party_id, suggested_by }) => {
                     <button onClick={submitSuggestions}>Submit suggestions</button>
                 </div>
             )}
-
+            <div className='songs-left'>You have {songs_to_suggest} songs left to suggest</div>
         </div >
     </>
     )

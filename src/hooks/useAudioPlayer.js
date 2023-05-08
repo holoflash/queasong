@@ -27,6 +27,11 @@ export const useAudioPlayer = () => {
 
     function play(song) {
         const audio = audioRef.current;
+        if (song === "stop") {
+            setCurrentSong(null);
+            setIsPlaying(false);
+            audio.pause();
+        }
         audio.pause();
         if (song === currentSong && isPlaying) {
             setCurrentSong(null);
@@ -40,5 +45,12 @@ export const useAudioPlayer = () => {
         }
     }
 
-    return { play, currentSong, isPlaying };
+    function pause() {
+        const audio = audioRef.current;
+        audio.pause()
+        setCurrentSong(null);
+        setIsPlaying(false);
+    }
+
+    return { play, pause, currentSong, isPlaying };
 }

@@ -24,35 +24,33 @@
     }
 
     .party-options {
-        width: 40%;
+        margin-block: 1rem;
+        max-width: fit-content;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        flex-wrap: wrap;
         > * {
-            margin-block: 16px;
             display: flex;
             justify-content: space-between;
-            gap: 2rem;
+            gap: 1rem;
         }
         select {
             background-color: $box-active;
             border: 1px solid transparent;
-            max-height: 2rem;
             border-radius: 2px;
             color: #fff;
-            &:hover {
-                background-color: #333;
-                border: 1px solid #535353;
-                outline: none;
-            }
         }
     }
 
     .guests {
-        width: 40%;
         display: grid;
-        grid-auto-flow: row;
+        grid-template-columns: 1fr 1fr;
         gap: 16px;
     }
 
     button {
+        margin-top: 1rem;
         align-self: flex-end;
         @include hover-resize;
     }

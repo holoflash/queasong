@@ -1,5 +1,6 @@
 $background: #121212;
 $box: #2a2a2a;
+$box-dark: #1a1a1a;
 $box-active: #6c6c6c;
 $text-main: #f5f5f5;
 $text-secondary: #b3b3b3;
@@ -60,6 +61,6 @@ $site-width: 900px;
 @mixin hover-resize {
     transition: transform 0.1s linear;
     &:hover {
-        transform: scale(1.05);
+        transform: scale(1.02);
     }
 }
