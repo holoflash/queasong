@@ -1,0 +1,19 @@
+#end {
+    @include seethru-box;
+    width: fit-content;
+    p {
+        width: fit-content;
+    }
+    button {
+        cursor: pointer;
+        width: fit-content;
+        align-self: flex-start;
+        margin: 1rem;
+        @include hover-resize;
+        &:hover {
+            background-color: $spotify-green;
+            color: white;
+            border: none;
+        }
+    }
+}

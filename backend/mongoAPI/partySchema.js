@@ -19,7 +19,7 @@ const partySchema = new Schema(
             },
             songs_per_member: {
                 type: Number,
-                default: 5
+                default: 1
             },
         },
         members: [
@@ -39,13 +39,10 @@ const partySchema = new Schema(
         ],
         suggestions: [
             {
-                song_info: String,
                 song_uri: String,
-                approved_by: [String],
                 suggested_by: String
             }
         ],
-        songs_all_approve: [String],
         expire_at: { type: Date, default: Date.now, expires: 86400 }
     },
     { timestamps: true }

@@ -30,29 +30,32 @@ export const PartyData = ({ partyData, party_id, playlist_id }) => {
                         return (
                             <div className="submission-link" key={member._id}>
                                 <div className='name-info'>
-                                    <h3>{encodeURIComponent(member.name)}</h3>
+                                    <h3>{member.name}</h3>
                                     <span>{member.is_done ? `${numberOfSongsSuggested(settings.songs_per_member, member.songs_to_suggest)} songs submitted` : '0 songs submitted'}</span>
                                 </div>
-                                <a href={fullUrl}><button className="copy link host">SUBMIT</button></a>
+                                {member.songs_to_suggest !== 0 &&
+                                    <a href={fullUrl}><button className="copy link host">ADD SONGS</button></a>}
                             </div>
                         );
                     } else {
                         return (
                             <div className="submission-link" key={member._id} ref={copyRef}>
                                 <div className='name-info'>
-                                    <h3>{encodeURIComponent(member.name)}</h3>
+                                    <h3>{member.name}</h3>
                                     <span>{member.is_done ? `${numberOfSongsSuggested(settings.songs_per_member, member.songs_to_suggest)} songs submitted` : '0 songs submitted'}</span>
                                 </div>
-                                {linkCopied.guests[member._id] ? <div className="copy">Link copied to clipboard!</div> :
-                                    <button className="copy link" onClick={() => copyToClipboard(fullUrl, member._id)}>COPY LINK</button>}
+                                {(!member.is_done) &&
+                                    (
+                                        linkCopied.guests[member._id] ? <div className="copy">Link copied to clipboard!</div> :
+                                            <button className="copy link" onClick={() => copyToClipboard(fullUrl, member._id)}>COPY LINK</button>
+                                    )
+                                }
                             </div>
                         );
                     }
                 })}
-
-
+                <button className='refresh' onClick={() => window.location.reload()}>REFRESH</button>
                 <li className='options'>
-                    <a href={localStorage.getItem("playlist_url")}>CLICK HERE</a>
                     <AddToPlaylist party_id={party_id} playlist_id={playlist_id} />
                     <DeleteParty party_id={party_id} />
                 </li>

@@ -8,16 +8,17 @@ export const AddToPlaylist = ({ party_id, playlist_id }) => {
     const uris = party?.suggestions.map((song) => song.song_uri)
     const navigate = useNavigate();
 
-    const letsGo = async () => {
+    const addToPlaylist = async () => {
         await addSongsToPlaylist(playlist_id, uris)
         await deleteParty(party_id)
-        localStorage.removeItem("party_id");
-        localStorage.removeItem("playlist_id");
-        navigate('/');
+        localStorage.removeItem("party_id")
+        localStorage.removeItem("playlist_id")
+        localStorage.removeItem("active")
+        navigate('/end');
         window.location.reload();
     }
 
     return (
-        <button onClick={async () => await letsGo()}>Add all to playlist</button>
+        <button className='add' onClick={async () => await addToPlaylist()}>Add all to playlist</button>
     );
 };

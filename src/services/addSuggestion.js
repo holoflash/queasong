@@ -1,8 +1,7 @@
 import axios from 'axios';
 
-export const addSuggestion = async (party_id, song_info, song_uri, suggested_by) => {
+export const addSuggestion = async (party_id, song_uri, suggested_by) => {
     const suggestion = {
-        song_info: song_info,
         song_uri: song_uri,
         suggested_by: suggested_by
     }

@@ -3,9 +3,11 @@
 @import 'create-party';
 @import 'song-search';
 @import 'party-data';
-@import 'navigation';
+@import 'home';
 @import 'login';
 @import 'submit-page';
+@import 'end-page';
+@import 'delete-party';
 
 @font-face {
     font-family: 'Nunito';
@@ -47,6 +49,7 @@ a {
 }
 
 .page {
+    position: relative;
     width: $site-width;
     max-width: 90vw;
     height: 100%;

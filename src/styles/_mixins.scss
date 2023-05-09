@@ -28,7 +28,7 @@ $site-width: 900px;
     background-color: #ffffff;
     color: #000000;
     display: flex;
-    border-radius: 10px;
+    border-radius: 14px;
     font-size: 1rem;
     align-items: center;
     padding: 8px 19px;
@@ -59,8 +59,21 @@ $site-width: 900px;
 }
 
 @mixin hover-resize {
-    transition: transform 0.1s linear;
+    transition: transform 0.2s linear, background-color 0.2s linear;
     &:hover {
-        transform: scale(1.02);
+        transform: scale(1.03);
     }
+}
+
+@mixin cool-title {
+    text-align: center;
+    font-size: 1.2rem;
+    letter-spacing: 0.5rem;
+    padding: 1rem;
+    @include seethru-box;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 14px;
+    margin-bottom: 1rem;
 }

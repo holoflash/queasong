@@ -1,13 +1,18 @@
-import { songSearch } from '../services/songSearch';
 import { useState } from 'react';
 import { addSuggestion } from '../services/addSuggestion';
 import { useAudioPlayer } from '../hooks/useAudioPlayer';
+import { useSongsLeft } from '../hooks/useSongsLeft';
+import { SearchResult } from './SearchResult';
+import { Searchbar } from './Searchbar';
+import { useNavigate } from 'react-router-dom';
 
 export const SongSearch = ({ songs_to_suggest, party_id, suggested_by }) => {
     const [searchResults, setSearchResults] = useState([]);
     const [selectedSongs, setSelectedSongs] = useState([]);
+    const songsLeft = useSongsLeft(songs_to_suggest, selectedSongs);
     const [query, setQuery] = useState("");
     const { play, pause } = useAudioPlayer();
+    const navigate = useNavigate();
 
     document.addEventListener("click", (e) => {
         if (e.target.tagName !== "IMG") {
@@ -17,13 +22,18 @@ export const SongSearch = ({ songs_to_suggest, party_id, suggested_by }) => {
 
     const submitSuggestions = () => {
         selectedSongs.forEach((song) => {
-            addSuggestion(party_id, song.name, song.uri, suggested_by);
+            addSuggestion(party_id, song.uri, suggested_by);
         });
         setSelectedSongs([])
-        window.location.reload()
+        if ((localStorage.getItem("spotify_access_token") !== null) && songsLeft === 0) {
+            navigate('/party');
+            window.location.reload()
+            return
+        }
     };
 
     const chooseSong = (e, result) => {
+        setSearchResults([])
         e.currentTarget.classList.toggle("selected");
         setSelectedSongs((prev) =>
             prev.some((song) => song.uri === result.uri)
@@ -34,92 +44,32 @@ export const SongSearch = ({ songs_to_suggest, party_id, suggested_by }) => {
 
     return (<>
         <div id="song-search">
-            {songs_to_suggest !== 0
-                ? <>
-                    <div id="searchbar">
-                        <input
-                            type="text"
-                            placeholder="What do you want to hear?"
-                            maxLength={800}
-                            autoCorrect='off'
-                            autoCapitalize='off'
-                            spellCheck="false"
-                            value={query}
-                            onChange={async (e) => {
-                                setQuery(e.target.value)
-                                if (e.target.value !== "") {
-                                    setSearchResults(await songSearch(e.target.value))
-                                }
-                            }}
-                        />
-                    </div>
+            {(songs_to_suggest !== 0) && (songsLeft !== 0)
+                && <>
+                    <div className='songs-left'>You have {songsLeft} song/s left to choose</div>
+                    <Searchbar query={query} setQuery={setQuery} setSearchResults={setSearchResults} />
                     {(searchResults.length > 0 && query !== "") && (
                         <div className="search-results">
                             {searchResults
                                 .filter((result) => !selectedSongs.some((s) => (s.uri === result.uri) || ((s.name === result.name) && (s.artists[0].name === result.artists[0].name))))
-                                .map((result, index) => (
-                                    <div
-                                        className="result" key={result.uri}>
-                                        <img
-                                            onClick={() => play(result)}
-                                            src={result.album.images[0].url}
-                                            height="40"
-                                            alt=""
-                                        />
-                                        <div id="name-artist">
-                                            <p id="name">{result.name}</p>
-                                            <div id='artists'>
-                                                {result.artists.map(artist => artist.name).join(', ')}
-                                            </div>
-                                        </div>
-                                        <div
-                                            onClick={(e) => {
-                                                chooseSong(e, result)
-                                            }}
-                                            className='add-song'
-                                        >ADD</div>
-                                    </div>
+                                .map((result) => (
+                                    <SearchResult key={result.uri} play={play} chooseSong={chooseSong} result={result} action={"ADD"} />
                                 ))
                             }
                         </div>
                     )} </>
-                : <div>
-                    You are done!
-                </div>}
+            }
             {selectedSongs.length > 0 && (
-                <div className="search-results selected">
-                    <p>Your suggestions:</p>
-                    {selectedSongs.map((result, index) => (
-                        <div
-                            className="result"
-                            key={result.uri}
-                        >
-                            <img
-                                onClick={() => play(result)}
-                                src={result.album.images[0].url}
-                                height="40"
-                                alt=""
-                            />
-
-                            <div id="name-artist">
-                                <p id="name">{result.name}</p>
-                                <div id='artists'>
-                                    {result.artists.map(artist => artist.name).join(', ')}
-                                </div>
-                            </div>
-                            <div
-                                onClick={(e) => {
-                                    chooseSong(e, result)
-
-                                }}
-                                className='add-song'
-                            >DEL</div>
-                        </div>
+                <div className="selected">
+                    <p className='suggestions'>SUGGESTIONS</p>
+                    {selectedSongs.map((result) => (
+                        <SearchResult key={result.uri} play={play} chooseSong={chooseSong} result={result} action={"DEL"} />
                     ))}
                     <button onClick={submitSuggestions}>Submit suggestions</button>
                 </div>
             )}
-            <div className='songs-left'>You have {songs_to_suggest} songs left to suggest</div>
+            {songs_to_suggest === 0 &&
+                <div className='complete'>Your songs have been submited.</div>}
         </div >
     </>
     )

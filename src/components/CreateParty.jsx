@@ -9,7 +9,7 @@ import { duplicateCheck } from '../utils/duplicateCheck'
 
 export const CreateParty = ({ profile, setParty_id, setPlaylist_id }) => {
     const { members, numMembers, setNumMembers, handleMemberNameChange } = useMembers(1);
-    const [songsPerMember, setSongsPerMember] = useState(5);
+    const [songsPerMember, setSongsPerMember] = useState(1);
     const [partyTitle, setPartyTitle] = useState("")
 
     const handleSubmit = async () => {

@@ -12,8 +12,7 @@ export const Submit = () => {
             <div className='logo'>que-a-song</div>
             {party && (
                 <div id='submit'>
-                    <h1>Hello {thisMember.name}!</h1>
-                    <p>Select songs you'd like to submit:</p>
+                    <h1>Hey {thisMember.name}!</h1>
                     <SongSearch songs_to_suggest={thisMember.songs_to_suggest} party_id={party_id} suggested_by={party_member} />
                 </div>
             )

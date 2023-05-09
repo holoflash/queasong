@@ -4,20 +4,20 @@ import './fonts/NunitoSans_10pt-Bold.ttf'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { PartyPage } from './pages/PartyPage';
 import { PartySubmitPage } from './pages/PartySubmitPage';
-import { CuratorPage } from './pages/CuratorPage';
-import { SubmitToCuratorsPage } from './pages/SubmitToCuratorsPage';
-import { Home } from './pages/Home';
+import { HomePage } from './pages/HomePage';
+import { EndPage } from './pages/EndPage';
+import { Footer } from './components/Footer'
 
 function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Home />} />
+                <Route path="/" element={<HomePage />} />
                 <Route path="/party" element={<PartyPage />} />
-                <Route path="/curate" element={<CuratorPage />} />
-                <Route path="/submit" element={<SubmitToCuratorsPage />} />
                 <Route path="/:party_member/:party_id" element={<PartySubmitPage />} />
+                <Route path="/end" element={<EndPage />} />
             </Routes>
+            <Footer />
         </BrowserRouter>
     );
 }
