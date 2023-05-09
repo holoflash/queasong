@@ -8,12 +8,12 @@ export const SearchResult = ({ result, play, chooseSong, action }) => {
                 height="40"
                 alt=""
             />
-            <div id="name-artist">
+            <a href={result.external_urls.spotify} target="_blank" rel="noreferrer"><div id="name-artist">
                 <p id="name">{result.name}</p>
                 <div id='artists'>
                     {result.artists.map(artist => artist.name).join(', ')}
                 </div>
-            </div>
+            </div></a>
             <div onClick={(e) => { chooseSong(e, result) }} className='add-song'>
                 {action}
             </div>
