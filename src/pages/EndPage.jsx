@@ -15,7 +15,7 @@ export const EndPage = () => {
                     <div id="end">
                         <p>All of your submissions have been added to the playlist</p>
                         <a href={localStorage.getItem("playlist_url")} target='_blank' rel="noreferrer"><button>GO TO PLAYLIST</button></a>
-                        <button onClick={() => navigate("/party")}>CREATE A NEW PLAYLIST</button>
+                        <button onClick={() => navigate("/party")}>CREATE A NEW PARTY</button>
                     </div>
                 </div></>)}
     </>

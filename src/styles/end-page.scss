@@ -7,7 +7,6 @@
     button {
         cursor: pointer;
         width: fit-content;
-        align-self: flex-start;
         margin: 1rem;
         @include hover-resize;
         &:hover {
