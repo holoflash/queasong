@@ -15,7 +15,6 @@ export const AddToPlaylist = ({ party_id, playlist_id }) => {
         await deleteParty(party_id)
         localStorage.removeItem("party_id")
         localStorage.removeItem("playlist_id")
-        localStorage.removeItem("active")
         navigate('/end');
         window.location.reload();
     }

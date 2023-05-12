@@ -22,7 +22,7 @@ export const EndPage = () => {
                         <div className="social">
                             <p>Don't forget to share <strong>que-a-song</strong> with your friends!</p>
                             {!linkCopied ?
-                                <p className="share" onClick={() => navigator.clipboard.writeText("https://queasong.onrender.com") && setLinkCopied(true)}>COPY WEBSITE LINK</p> :
+                                <p className="share" onClick={() => setLinkCopied(true)}>COPY WEBSITE LINK</p> :
                                 <p className="share after" onClick={() => setLinkCopied(false)}>Link copied to clipboard</p>}
                         </div>
                     </div>

@@ -1,9 +1,7 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { deleteParty } from '../services/deleteParty'
 
 export const DeleteParty = ({ party_id }) => {
-    const navigate = useNavigate();
     const [confirmed, setConfirmed] = useState(false);
 
     const deleteAllPartyData = async () => {
@@ -12,7 +10,6 @@ export const DeleteParty = ({ party_id }) => {
         localStorage.removeItem("playlist_id");
         localStorage.removeItem("playlist_url");
         localStorage.removeItem("active")
-        navigate('/');
         window.location.reload();
     };
 
