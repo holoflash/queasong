@@ -7,11 +7,13 @@
 
     div {
         @include seethru-box;
+
         div {
             em {
                 color: palevioletred;
                 font-size: 2rem;
             }
+
             all: unset;
             padding: 1rem;
 
@@ -24,10 +26,11 @@
         opacity: 0.2;
         pointer-events: none;
     }
+
     p {
         border-radius: 13px;
         margin: 0;
-        padding: 2rem;
+        padding: 1rem;
         background-color: $box;
         display: flex;
         flex-direction: column;
@@ -35,13 +38,19 @@
         width: 100%;
         text-align: left;
     }
+
     button {
         font-size: 2rem;
         padding: 2rem;
-        @include hover-resize;
-        &:hover {
-            background-color: #1db954;
-            color: white;
-        }
+    }
+
+    .action {
+        all: unset;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+        width: fit-content;
+        align-self: center;
     }
 }

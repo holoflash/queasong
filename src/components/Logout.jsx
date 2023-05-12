@@ -9,7 +9,6 @@ export const Logout = () => {
             localStorage.removeItem("token")
         }
         navigate('/');
-        window.location.reload();
     };
     return (
         <div id="logout">

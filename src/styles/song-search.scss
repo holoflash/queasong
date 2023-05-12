@@ -5,12 +5,14 @@
     align-items: center;
     gap: 1rem;
     width: 100%;
+
     #searchbar {
         width: 100%;
 
         display: flex;
         align-items: center;
         justify-content: center;
+
         input {
             background-image: url('./search.svg');
             background-repeat: no-repeat;
@@ -40,6 +42,7 @@
         text-transform: none;
         line-height: 1.6;
         border-radius: 4px;
+
         .result {
             user-select: none;
             padding: 0 16px;
@@ -54,6 +57,7 @@
             &:hover {
                 background-color: $box;
             }
+
             img:hover {
                 outline: solid white 1px;
                 cursor: pointer;
@@ -65,22 +69,26 @@
                 flex-direction: column;
                 padding: 1rem;
             }
+
             #name {
                 color: $text-main;
                 padding: 0;
                 margin: 0;
             }
+
             #artists {
                 display: flex;
                 flex-direction: row;
                 justify-content: flex-start;
                 font-size: 0.7rem;
             }
+
             .add-song {
                 cursor: pointer;
                 font-size: 0.8rem;
                 margin-left: auto;
                 padding: 1rem;
+
                 &:hover {
                     color: $spotify-green;
                 }
@@ -90,13 +98,8 @@
         button {
             cursor: pointer;
             width: fit-content;
-            align-self: flex-start;
+            align-self: center;
             margin: 1rem;
-            @include hover-resize;
-            &:hover {
-                background-color: $spotify-green;
-                border: none;
-            }
         }
     }
 
@@ -120,5 +123,24 @@
         font-size: 2rem;
         padding-block: 1rem;
         align-self: flex-start;
+    }
+}
+
+hr {
+    width: 100%;
+}
+
+.home {
+    border-radius: 14px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    margin: 1rem;
+    background-color: $box-dark;
+    color: $text-main;
+    align-self: center;
+
+    &:hover {
+        color: white;
+        background-color: $box;
     }
 }

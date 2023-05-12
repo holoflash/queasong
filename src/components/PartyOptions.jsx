@@ -1,13 +1,13 @@
 export const PartyOptions = ({ numMembers, songsPerMember, members, handleMemberNameChange, setNumMembers, setSongsPerMember, partyTitle, setPartyTitle }) => {
     const MAX_GUESTS = 10;
-    const MAX_SONGS_PER_GUEST = 10;
+    const MAX_SONGS_PER_GUEST = 25;
 
     return (
         <>
-            <h1>Create a new party:</h1>
+            <h1>Create a New party:</h1>
             <p className="party-instructions">
-                Give your playlist a title and add your friends. When you click on "Create party"
-                a Spotify playlist will be created in your account and unique links to share with your friends will be generated.
+                Title your playlist and add your friends. When you click "Create Party", a Spotify playlist will be generated in your account and unique submission
+                links will be created to share with your friends.
             </p>
             <label className="title-label">
                 Title:
@@ -22,7 +22,7 @@ export const PartyOptions = ({ numMembers, songsPerMember, members, handleMember
             </label>
             <div className="party-options">
                 <label className='songs-per-guest'>
-                    Songs per guest:
+                    Number of songs per guest:
                     <select
                         value={songsPerMember}
                         onChange={(e) => setSongsPerMember(parseInt(e.target.value))}
@@ -48,7 +48,7 @@ export const PartyOptions = ({ numMembers, songsPerMember, members, handleMember
             </div>
             <div className="guests">
                 {members.map((member, i) => (
-                    <label className='guest' key={i}>
+                    <label className='guest' key={member.name}>
                         Name:
                         <div>
                             <input

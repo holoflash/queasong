@@ -12,7 +12,7 @@ export const Searchbar = ({ query, setQuery, setSearchResults }) => {
                 autoCapitalize='off'
                 spellCheck="false"
                 value={query}
-                debounceTimeout={300}
+                debounceTimeout={400}
                 onChange={async (e) => {
                     setQuery(e.target.value)
                     if (e.target.value !== "") {

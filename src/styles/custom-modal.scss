@@ -1,46 +1,53 @@
-.delete-party {
+.custom-modal {
     text-align: center;
-    button {
+
+    .delete-button {
         background-color: $background;
         color: white;
+
         &:hover {
             background-color: $danger-red;
         }
     }
+
     .yes-no {
         width: fit-content;
         position: absolute;
         top: 0;
         left: 0;
+
         hr {
             width: 100%;
         }
+
         @include seethru-box;
         display: flex;
         align-items: center;
-        flex-direction: row;
+        flex-direction: column;
         justify-content: space-between;
-        margin-top: 1rem;
-        padding: 1rem;
-        background-color: $box-active;
         margin: 0;
+        background-color: $box;
         box-shadow: 0 0 20px 20px rgba(0, 0, 0, 0.271);
+
         a {
             display: block;
             color: $spotify-green;
             text-decoration: underline;
             cursor: pointer;
         }
+
         .buttons {
-            button {
-                background-color: $box;
-            }
             display: flex;
             gap: 1rem;
-            button:hover {
+
+            button {
+                color: white;
                 background-color: $background;
             }
+
+            button:hover {
+                background-color: $box-active;
+            }
         }
-        flex-direction: column;
     }
 }

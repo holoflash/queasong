@@ -1,18 +1,54 @@
 #end {
     @include seethru-box;
     width: fit-content;
+
     p {
-        width: fit-content;
+        text-align: center;
     }
+
     button {
-        cursor: pointer;
         width: fit-content;
-        margin: 1rem;
-        @include hover-resize;
-        &:hover {
-            background-color: $spotify-green;
-            color: white;
-            border: none;
+        margin-bottom: 1rem;
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    .social {
+        padding: 1rem;
+        border-radius: 14px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        font-size: 0.9rem;
+
+        .share {
+            outline: solid white 1px;
+            padding: 1rem;
+            border-radius: 14px;
+            cursor: pointer;
+            color: $text-main;
+            margin: 0;
+            transition: transform linear 0.2s;
+
+            &:hover {
+                color: $spotify-green;
+            }
+
+        }
+
+        .after {
+            color: $text-secondary;
+            outline: none;
+
+            &:hover {
+                transform: scale(1);
+                color: $text-secondary;
+            }
+
+            font-style: italic;
         }
     }
 }

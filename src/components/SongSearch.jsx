@@ -27,9 +27,8 @@ export const SongSearch = ({ songs_to_suggest, party_id, suggested_by }) => {
         setSelectedSongs([])
         if ((localStorage.getItem("spotify_access_token") !== null) && songsLeft === 0) {
             navigate('/party');
-            window.location.reload()
-            return
         }
+        window.location.reload()
     };
 
     const chooseSong = (e, result) => {
@@ -46,13 +45,13 @@ export const SongSearch = ({ songs_to_suggest, party_id, suggested_by }) => {
         <div id="song-search">
             {(songs_to_suggest !== 0) && (songsLeft !== 0)
                 && <>
-                    <div className='songs-left'>You have {songsLeft} song/s left to choose</div>
+                    <div className='songs-left'>You have {songsLeft} song/s left to choose.</div>
                     <Searchbar query={query} setQuery={setQuery} setSearchResults={setSearchResults} />
                     {(searchResults.length > 0 && query !== "") && (
                         <div className="search-results">
                             {searchResults
-                                .filter((result) => !selectedSongs.some((s) => (s.uri === result.uri) || ((s.name === result.name) && (s.artists[0].name === result.artists[0].name))))
-                                .map((result) => (
+                                .filter(result => !selectedSongs.some((s) => (s.uri === result.uri) || ((s.name === result.name) && (s.artists[0].name === result.artists[0].name))))
+                                .map(result => (
                                     <SearchResult key={result.uri} play={play} chooseSong={chooseSong} result={result} action={"ADD"} />
                                 ))
                             }
@@ -62,14 +61,16 @@ export const SongSearch = ({ songs_to_suggest, party_id, suggested_by }) => {
             {selectedSongs.length > 0 && (
                 <div className="selected">
                     <p className='suggestions'>SUGGESTIONS</p>
-                    {selectedSongs.map((result) => (
+                    {selectedSongs.map(result => (
                         <SearchResult key={result.uri} play={play} chooseSong={chooseSong} result={result} action={"DEL"} />
                     ))}
-                    <button onClick={submitSuggestions}>Submit suggestions</button>
+                    <button onClick={submitSuggestions}>SUBMIT SUGGESTIONS</button>
                 </div>
             )}
             {songs_to_suggest === 0 &&
-                <div className='complete'>Your songs have been submited.</div>}
+                <div className='complete'>Your songs have been submitted.</div>}
+            {(localStorage.getItem("spotify_access_token") !== null) &&
+                <button className='home' onClick={() => navigate("/party")}>HOME</button>}
         </div >
     </>
     )

@@ -24,7 +24,7 @@ export const PartyData = ({ partyData, party_id, playlist_id }) => {
             <p>{description}</p>
             <ul className="members">
                 <h4>LINKS</h4>
-                {members.map((member) => {
+                {members.map(member => {
                     const fullUrl = `${URL}/${encodeURIComponent(member.name)}/${party_id}`;
                     if (member.name === host_name) {
                         return (
@@ -54,11 +54,12 @@ export const PartyData = ({ partyData, party_id, playlist_id }) => {
                         );
                     }
                 })}
-                <button className='refresh' onClick={() => window.location.reload()}>REFRESH</button>
                 <li className='options'>
-                    <AddToPlaylist party_id={party_id} playlist_id={playlist_id} />
+                    {members.some((member) => member.is_done === true) &&
+                        <AddToPlaylist party_id={party_id} playlist_id={playlist_id} />}
                     <DeleteParty party_id={party_id} />
                 </li>
+                <button className='refresh' onClick={() => window.location.reload()}>REFRESH</button>
             </ul >
         </div >
     );

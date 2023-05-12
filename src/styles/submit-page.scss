@@ -3,10 +3,12 @@
     flex-direction: column;
     width: 100%;
     align-items: flex-start;
+
     h1 {
         font-size: 3rem;
         color: $spotify-green;
     }
+
     p {
         margin-top: 3rem;
         color: $text-secondary;

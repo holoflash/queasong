@@ -7,7 +7,7 @@ $text-secondary: #b3b3b3;
 $text-box: #121212;
 $spotify-green: #1db954;
 $danger-red: #ff4136;
-$site-width: 900px;
+$site-width: 700px;
 
 @mixin flex-col-center {
     display: flex;
@@ -32,6 +32,15 @@ $site-width: 900px;
     font-size: 1rem;
     align-items: center;
     padding: 8px 19px;
+    transition: transform 0.2s linear, background-color 0.2s linear;
+
+    &:hover {
+        background-color: $spotify-green;
+        color: white;
+        transform-origin: center;
+        transform: scale(1.03);
+    }
+
 }
 
 @mixin content-box {
@@ -56,13 +65,6 @@ $site-width: 900px;
     width: 100%;
     gap: 1rem;
     padding: 1rem;
-}
-
-@mixin hover-resize {
-    transition: transform 0.2s linear, background-color 0.2s linear;
-    &:hover {
-        transform: scale(1.03);
-    }
 }
 
 @mixin cool-title {

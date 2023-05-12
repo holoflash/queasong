@@ -6,7 +6,6 @@ import { PartyPage } from './pages/PartyPage';
 import { PartySubmitPage } from './pages/PartySubmitPage';
 import { HomePage } from './pages/HomePage';
 import { EndPage } from './pages/EndPage';
-import { Footer } from './components/Footer'
 
 function App() {
     return (
@@ -17,7 +16,6 @@ function App() {
                 <Route path="/:party_member/:party_id" element={<PartySubmitPage />} />
                 <Route path="/end" element={<EndPage />} />
             </Routes>
-            <Footer />
         </BrowserRouter>
     );
 }

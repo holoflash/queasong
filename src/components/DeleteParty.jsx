@@ -17,9 +17,9 @@ export const DeleteParty = ({ party_id }) => {
     };
 
     return (
-        <div className="delete-party">
+        <div className="custom-modal">
             {!confirmed && (
-                <button onClick={() => setConfirmed(true)}>Delete party</button>
+                <button className="delete-button" onClick={() => setConfirmed(true)}>Delete party</button>
             )}
             {confirmed && (
                 <div className="yes-no">
