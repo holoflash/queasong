@@ -48,7 +48,7 @@ export const PartyOptions = ({ numMembers, songsPerMember, members, handleMember
             </div>
             <div className="guests">
                 {members.map((member, i) => (
-                    <label className='guest' key={member.name}>
+                    <label className='guest' key={i}>
                         Name:
                         <div>
                             <input
