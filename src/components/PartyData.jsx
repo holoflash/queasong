@@ -8,7 +8,7 @@ export const PartyData = ({ partyData, party_id, playlist_id }) => {
     const { settings, party_title, members, host_name } = partyData;
     const description = playlistDescription(members);
     const copyRef = useRef(null);
-    const URL = process.env.NODE_ENV !== 'production' ? 'http://localhost:3000' : 'https://queasong.onrender.com';
+    const URL = process.env.REACT_APP_URL;
     const [linkCopied, setLinkCopied] = useState({ guests: members.reduce((acc, guest) => ({ ...acc, [guest._id]: false }), {}) });
     const numberOfSongsSuggested = (allowed, left) => allowed - left;
 

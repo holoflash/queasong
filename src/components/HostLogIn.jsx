@@ -1,8 +1,5 @@
 export const HostLogin = () => {
-    const LOGIN_URI =
-        process.env.NODE_ENV !== 'production'
-            ? 'http://localhost:8888/login'
-            : 'https://queasong.onrender.com/login';
+    const LOGIN_URI = process.env.REACT_APP_LOGIN_URI;
     return (
         <div className='page'>
             <div className='logo'>que-a-song</div>
