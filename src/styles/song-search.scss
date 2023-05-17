@@ -83,6 +83,16 @@
                 font-size: 0.7rem;
             }
 
+            svg {
+                cursor: pointer;
+                fill: white;
+                height: 24px;
+
+                &:hover {
+                    fill: $spotify-green;
+                }
+            }
+
             .add-song {
                 cursor: pointer;
                 font-size: 0.8rem;
