@@ -70,7 +70,7 @@ export const SongSearch = ({ songs_to_suggest, party_id, suggested_by }) => {
             {songs_to_suggest === 0 &&
                 <div className='complete'>Your songs have been submitted.</div>}
             {(localStorage.getItem("spotify_access_token") !== null) &&
-                <button className='home' onClick={() => navigate("/party")}>HOME</button>}
+                <button className='home' title="Go home" onClick={() => navigate("/party")}>HOME</button>}
         </div >
     </>
     )
